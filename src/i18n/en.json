@@ -1,0 +1,80 @@
+{
+  "app": {
+    "title": "Salary Formula",
+    "subtitle": "Transparent, formula-driven compensation based on Management 3.0"
+  },
+  "nav": {
+    "builder": "Formula Builder",
+    "calculator": "Calculator",
+    "comparison": "Comparison"
+  },
+  "home": {
+    "headline": "Transparent Salary Formula",
+    "intro": "Make compensation transparent and formula-driven. Define factors (seniority, skills, location, performance), set weights, and calculate salaries consistently — removing the opacity and bias from salary negotiations.",
+    "newFormula": "New Formula",
+    "loadFormula": "Load Saved",
+    "noSaved": "No saved formulas",
+    "delete": "Delete",
+    "continue": "Continue",
+    "why": "Why Transparent Salaries?",
+    "whyText": "When people don't know how salaries are determined, they assume the worst — politics, favoritism, gender gaps. A transparent formula doesn't just fix the number; it fixes the conversation. It shifts focus from negotiation power to merit factors that the organization actually values.",
+    "antipatterns": "Common Pitfalls",
+    "antipatternsList": [
+      "Too many factors — keep it to 3–6 for clarity",
+      "Factors that can't be measured objectively — define clear scales",
+      "Ignoring market rates — the formula output should be benchmarked",
+      "Set-and-forget — revisit factors annually as the org evolves"
+    ],
+    "template": "Load M3.0 Template"
+  },
+  "builder": {
+    "title": "Formula Builder",
+    "baseSalary": "Base Salary",
+    "currency": "Currency",
+    "formulaName": "Formula Name",
+    "formulaNamePlaceholder": "e.g. Engineering Team 2025",
+    "factors": "Salary Factors",
+    "addFactor": "Add Factor",
+    "factorName": "Factor Name",
+    "factorNamePlaceholder": "e.g. Seniority",
+    "description": "Description",
+    "descriptionPlaceholder": "What does this factor measure?",
+    "min": "Min",
+    "max": "Max",
+    "step": "Step",
+    "weight": "Weight",
+    "isMultiplier": "Multiplier (×)",
+    "isAdditive": "Additive (+)",
+    "remove": "Remove",
+    "save": "Save",
+    "saved": "Saved ✓",
+    "explainer": "How the formula works",
+    "explainerText": "Additive factors contribute proportionally to their max value (weighted). Multiplier factors are applied last as direct multipliers on the combined result."
+  },
+  "calculator": {
+    "title": "Salary Calculator",
+    "result": "Calculated Salary",
+    "formula": "Formula: Base × (1 + weighted additive score) × multipliers",
+    "adjust": "Adjust factor values to calculate salary",
+    "noFormula": "Set up your formula first in the Formula Builder.",
+    "breakdown": "Calculation Breakdown"
+  },
+  "comparison": {
+    "title": "Comparison View",
+    "addPerson": "Add Person",
+    "name": "Name",
+    "namePlaceholder": "Team member name",
+    "salary": "Salary",
+    "remove": "Remove",
+    "noPersons": "Add people above to compare salaries.",
+    "export": "Export CSV"
+  },
+  "common": {
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "language": "RU"
+  }
+}
