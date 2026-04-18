@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Salary Formula"
+  },
+  "nav": {
+    "calculator": "Calculator",
+    "comparison": "Compare",
+    "learn": "Learn"
+  },
+  "home": {
+    "headline": "Transparent Salary Formula",
+    "subheadline": "Make compensation fair, visible, and formula-driven — not opaque negotiation.",
+    "cta": "Open Calculator",
+    "why_title": "Why Transparent Salaries?",
+    "why_body": "When salary rules are hidden, people fill the gap with rumors and assumptions. Management 3.0 advocates for making the formula public — not the individual numbers — so everyone understands how compensation is determined and can see it is fair.",
+    "how_title": "How It Works",
+    "step1": "Set your market base salary for the role.",
+    "step2": "Adjust multipliers: seniority, skills, location, performance.",
+    "step3": "See the formula compute the result in real time.",
+    "step4": "Compare profiles or export for your records."
+  },
+  "calculator": {
+    "title": "Salary Calculator",
+    "result_label": "Calculated Salary",
+    "formula_label": "Formula",
+    "currency_label": "Currency",
+    "reset": "Reset to Defaults",
+    "save": "Save Profile",
+    "profile_name_placeholder": "Profile name (e.g. Senior Dev, Berlin)",
+    "saved": "Profile saved!"
+  },
+  "comparison": {
+    "title": "Profile Comparison",
+    "add": "Add Profile",
+    "empty": "Add at least one saved profile to compare.",
+    "delete": "Remove",
+    "no_saved": "No saved profiles yet. Calculate a salary and save it first."
+  },
+  "learn": {
+    "title": "About the Salary Formula",
+    "intro": "The Management 3.0 Salary Formula is a structured approach to transparent compensation. Instead of arbitrary negotiation, every salary is the product of clearly defined factors that anyone can inspect.",
+    "principles_title": "Core Principles",
+    "p1_title": "Transparency over secrecy",
+    "p1_body": "Publish the formula, not necessarily every individual's number. People should be able to compute what their salary would be if they move to a different level.",
+    "p2_title": "Formula, not negotiation",
+    "p2_body": "Salaries should not depend on how well someone negotiates. The formula removes that bias and makes outcomes consistent.",
+    "p3_title": "Regular revision",
+    "p3_body": "Review the formula periodically (e.g. annually) with team input. The formula itself should evolve.",
+    "pitfalls_title": "Common Pitfalls",
+    "pitfall1": "Overcomplicating — too many factors make the formula opaque again.",
+    "pitfall2": "Ignoring market data — the base rate must reflect real market rates.",
+    "pitfall3": "Static formulas — if the formula never changes, it stops reflecting reality.",
+    "pitfall4": "Gaming — be explicit about how each factor is assessed (not self-rated).",
+    "factors_title": "Factor Guide"
+  },
+  "factors": {
+    "base": {
+      "label": "Base Market Rate",
+      "desc": "The annual market salary for this role and function in this region, before any multipliers. Source: job boards, salary surveys, HR data.",
+      "unit": ""
+    },
+    "seniority": {
+      "label": "Seniority Multiplier",
+      "desc": "Reflects experience level and scope of impact. From intern (0.6×) to C-level (1.8×). Defined by agreed career levels in your org.",
+      "unit": "×"
+    },
+    "skills": {
+      "label": "Skills Score",
+      "desc": "Based on a structured skill assessment (not self-rating). Measures breadth and depth of relevant competencies: 0.7× (narrow/developing) to 1.4× (broad/expert).",
+      "unit": "×"
+    },
+    "location": {
+      "label": "Location Coefficient",
+      "desc": "Adjusts for cost of living differences between cities or countries. 1.0 = base city. Lower for lower-cost regions, higher for expensive metros.",
+      "unit": "×"
+    },
+    "performance": {
+      "label": "Performance Multiplier",
+      "desc": "Reflects team and individual performance over the review period. Typically assessed quarterly or annually. Range: 0.85× to 1.25×.",
+      "unit": "×"
+    }
+  }
+}
