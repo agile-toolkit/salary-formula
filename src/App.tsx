@@ -4,6 +4,7 @@ import type { Screen, Factor, Profile } from './types'
 import { DEFAULT_FACTORS } from './data/presets'
 import HomeScreen from './components/HomeScreen'
 import SalaryCalculator from './components/SalaryCalculator'
+import FormulaBuilder from './components/FormulaBuilder'
 import ComparisonView from './components/ComparisonView'
 import LearnView from './components/LearnView'
 
@@ -47,6 +48,7 @@ export default function App() {
 
   const navItems: { key: Screen; label: string }[] = [
     { key: 'calculator', label: t('nav.calculator') },
+    { key: 'builder', label: t('nav.builder') },
     { key: 'comparison', label: t('nav.comparison') },
     { key: 'learn', label: t('nav.learn') },
   ]
@@ -96,6 +98,9 @@ export default function App() {
             onCurrencyChange={setCurrency}
             onSaveProfile={handleSaveProfile}
           />
+        )}
+        {screen === 'builder' && (
+          <FormulaBuilder factors={factors} currency={currency} onFactorsChange={setFactors} />
         )}
         {screen === 'comparison' && (
           <ComparisonView

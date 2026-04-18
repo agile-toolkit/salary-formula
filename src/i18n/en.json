@@ -4,8 +4,21 @@
   },
   "nav": {
     "calculator": "Calculator",
+    "builder": "Formula",
     "comparison": "Compare",
     "learn": "Learn"
+  },
+  "builder": {
+    "title": "Formula parameters",
+    "subtitle": "Adjust min, max, and step for each factor. Sliders on the calculator screen stay within these bounds.",
+    "preview": "Live preview",
+    "preview_hint": "Uses current slider values.",
+    "base_badge": "Base",
+    "min": "Min",
+    "max": "Max",
+    "step": "Step",
+    "current_value": "Current",
+    "disclaimer": "Changing ranges does not alter saved profiles — only how new adjustments behave in the calculator."
   },
   "home": {
     "headline": "Transparent Salary Formula",
