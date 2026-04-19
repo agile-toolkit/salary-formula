@@ -1,38 +1,29 @@
-# BRIEF — Salary Formula
+# BRIEF
 
-## What this app does
-A transparent salary calculation tool based on Management 3.0's Salary Formula approach. Team members and managers can input parameters (skill level, experience, market rate, performance factors) and see how a salary is calculated — making compensation transparent and formula-driven rather than opaque negotiation.
+Derived per [`agent-state.NO-BRIEF.md`](https://github.com/agile-toolkit/.github/blob/main/agent-state.NO-BRIEF.md). There was **no prior** `BRIEF.md`. Sources: `README.md`, `src/i18n/en.json` / `ru.json`, `src/`. Generated **2026-04-19**.
 
-## Target users
-HR managers, team leads, and team members in organizations that want to adopt transparent, formula-based compensation. Works for both individual self-assessment and team-wide salary reviews.
+## Product scope (from `README.md`)
 
-## Core features (MVP)
-- Formula builder: define factors (base, seniority multiplier, skill score, location coefficient, etc.)
-- Input sliders/fields for each factor with live salary calculation
-- Comparison view: see how different factor values affect the outcome
-- Save and export formula configuration + results as PDF/CSV
-- Pre-built formula template based on the source material
+- **Salary Formula** — transparent, formula-driven compensation; every factor visible.
+- Stack: React 18, TypeScript, Vite, Tailwind, react-i18next (EN/RU).
 
-## Educational layer
-- Explanation of each formula factor with the Management 3.0 rationale
-- "Why transparent salaries?" intro panel
-- Common pitfalls and anti-patterns in salary formulas
-- Reference to source material
+## Build
 
-## Tech stack
-React 18 + TypeScript + Vite + Tailwind CSS. No backend (localStorage for saved formulas). GitHub Pages deployment.
+- `npm run build` — **passes** (verified **2026-04-19**).
 
-## Source materials in `.artefacts/`
-- `salary formula.pdf` — Management 3.0 salary formula methodology and examples
+## TODO / FIXME in `src/`
 
-## i18n
-English + Russian (react-i18next). Currency formatting must be locale-aware.
+- None.
 
-## Agentic pipeline roles
-- `/vadavik` — spec & requirements validation
-- `/lojma` — UX/UI design (formula builder, live calculator, comparison view)
-- `/laznik` — architecture (formula engine, state management)
-- `@cmok` — implementation
-- `@bahnik` — QA (calculation accuracy, edge cases with 0/negative values)
-- `@piarun` — documentation
-- `@zlydni` — git commits & GitHub Pages deploy
+## i18n — orphaned keys
+
+- **`comparison.add`**, **`comparison.empty`** — present in locale files, **not** referenced in `src/` (`ComparisonView.tsx` uses `comparison.title`, `comparison.no_saved`, `comparison.delete`). Either add UI (empty state CTA + add row) or remove keys.
+
+## Hardcoded user-visible strings
+
+- No extra findings in this pass.
+
+## Classification (NO-BRIEF)
+
+- **Status:** `in-progress` — small locale/UI drift on comparison screen.
+- **First next task:** In `src/components/ComparisonView.tsx`, wire **`comparison.empty`** when the saved-comparisons list is empty and **`comparison.add`** on the control that opens “add scenario” (or delete both keys from `en.json` / `ru.json` if product drops that flow).
