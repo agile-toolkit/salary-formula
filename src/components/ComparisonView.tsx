@@ -19,7 +19,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
         <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('comparison.title')}</h1>
         <div className="card text-center py-12 text-gray-500">
           <div className="text-4xl mb-4">📊</div>
-          <p>{t('comparison.no_saved')}</p>
+          <p>{t('comparison.empty')}</p>
         </div>
       </div>
     )
@@ -56,7 +56,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
                     onClick={() => onLoad(profile)}
                     className="btn-ghost text-brand-600"
                   >
-                    Load
+                    {t('comparison.add')}
                   </button>
                   <button
                     onClick={() => onDelete(profile.id)}
