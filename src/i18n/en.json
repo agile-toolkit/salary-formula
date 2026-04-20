@@ -46,8 +46,7 @@
     "title": "Profile Comparison",
     "add": "Add Profile",
     "empty": "Add at least one saved profile to compare.",
-    "delete": "Remove",
-    "no_saved": "No saved profiles yet. Calculate a salary and save it first."
+    "delete": "Remove"
   },
   "learn": {
     "title": "About the Salary Formula",
