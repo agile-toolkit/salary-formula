@@ -12,11 +12,22 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 
 ## Backlog
 
+<!-- Issues awaiting human review; agent appends here during research runs -->
+- [ ] [#2] Research: ES + BE locale support
+- [ ] [#3] Integration: link salary profiles to Work Profiles app
+- [ ] [#4] Feature: export comparison as image or CSV
+
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-04-25 — research: market + integration + UX opportunities
+
+- Done: created issues #2 (ES+BE locale support), #3 (Work Profiles integration via localStorage bridge), #4 (comparison export as image/CSV)
+- Waiting for human review on all three
+- Next task: check needs-review issues for human feedback (#2 ES+BE locales, #3 Work Profiles integration, #4 export/share)
 
 ### 2026-04-20 — feat: wire comparison.empty and comparison.add i18n keys
 
