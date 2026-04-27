@@ -16,12 +16,21 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [ ] [#2] Research: ES + BE locale support
 - [ ] [#3] Integration: link salary profiles to Work Profiles app
 - [ ] [#4] Feature: export comparison as image or CSV
+- [ ] [#5] Technical: keyboard navigation and accessibility audit for factor sliders
+- [ ] [#6] Feature: what-if scenario comparison — save and diff multiple formula configurations
+- [ ] [#7] Integration: Sprint Metrics — team payroll budget dashboard
 
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-04-27 — research: accessibility, scenario modelling, Sprint Metrics integration
+
+- Done: created issues #5 (accessibility audit for sliders), #6 (what-if scenario comparison mode), #7 (Sprint Metrics team payroll budget bridge)
+- Waiting for human review on all three; existing #2/#3/#4 also still needs-review
+- Next task: check needs-review issues for human feedback (#2 ES+BE locales, #3 Work Profiles integration, #4 export/share, #5 accessibility, #6 scenario comparison, #7 Sprint Metrics integration)
 
 ### 2026-04-25 — research: market + integration + UX opportunities
 
