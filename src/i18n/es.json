@@ -1,0 +1,95 @@
+{
+  "app": {
+    "title": "Fórmula Salarial"
+  },
+  "nav": {
+    "calculator": "Calculadora",
+    "builder": "Fórmula",
+    "comparison": "Comparar",
+    "learn": "Aprender"
+  },
+  "builder": {
+    "title": "Parámetros de la fórmula",
+    "subtitle": "Ajusta el mínimo, máximo y paso para cada factor. Los controles deslizantes de la calculadora permanecen dentro de estos límites.",
+    "preview": "Vista previa",
+    "preview_hint": "Usa los valores actuales de los controles.",
+    "base_badge": "Base",
+    "min": "Mín",
+    "max": "Máx",
+    "step": "Paso",
+    "current_value": "Actual",
+    "disclaimer": "Cambiar los rangos no altera los perfiles guardados — solo el comportamiento de los nuevos ajustes en la calculadora."
+  },
+  "home": {
+    "headline": "Fórmula Salarial Transparente",
+    "subheadline": "Haz que la compensación sea justa, visible y basada en fórmulas — no en negociaciones opacas.",
+    "cta": "Abrir Calculadora",
+    "why_title": "¿Por qué salarios transparentes?",
+    "why_body": "Cuando las reglas salariales están ocultas, las personas llenan el vacío con rumores y suposiciones. Management 3.0 aboga por hacer pública la fórmula — no los números individuales — para que todos entiendan cómo se determina la compensación y puedan ver que es justa.",
+    "how_title": "Cómo funciona",
+    "step1": "Establece el salario base de mercado para el rol.",
+    "step2": "Ajusta los multiplicadores: antigüedad, habilidades, ubicación, desempeño.",
+    "step3": "Ve cómo la fórmula calcula el resultado en tiempo real.",
+    "step4": "Compara perfiles o exporta para tus registros."
+  },
+  "calculator": {
+    "title": "Calculadora Salarial",
+    "result_label": "Salario Calculado",
+    "formula_label": "Fórmula",
+    "currency_label": "Moneda",
+    "reset": "Restablecer valores predeterminados",
+    "save": "Guardar Perfil",
+    "profile_name_placeholder": "Nombre del perfil (ej. Dev Senior, Buenos Aires)",
+    "saved": "¡Perfil guardado!"
+  },
+  "comparison": {
+    "title": "Comparación de Perfiles",
+    "add": "Agregar Perfil",
+    "empty": "Agrega al menos un perfil guardado para comparar.",
+    "delete": "Eliminar"
+  },
+  "learn": {
+    "title": "Acerca de la Fórmula Salarial",
+    "intro": "La Fórmula Salarial de Management 3.0 es un enfoque estructurado para una compensación transparente. En lugar de negociaciones arbitrarias, cada salario es el producto de factores claramente definidos que cualquiera puede inspeccionar.",
+    "principles_title": "Principios Fundamentales",
+    "p1_title": "Transparencia sobre el secretismo",
+    "p1_body": "Publica la fórmula, no necesariamente el número de cada persona. Las personas deben poder calcular cuál sería su salario si cambian a un nivel diferente.",
+    "p2_title": "Fórmula, no negociación",
+    "p2_body": "Los salarios no deben depender de qué tan bien negocia alguien. La fórmula elimina ese sesgo y hace que los resultados sean consistentes.",
+    "p3_title": "Revisión periódica",
+    "p3_body": "Revisa la fórmula periódicamente (ej. anualmente) con participación del equipo. La fórmula en sí debe evolucionar.",
+    "pitfalls_title": "Errores Comunes",
+    "pitfall1": "Complicar en exceso — demasiados factores vuelven la fórmula opaca nuevamente.",
+    "pitfall2": "Ignorar los datos del mercado — la tarifa base debe reflejar las tasas reales del mercado.",
+    "pitfall3": "Fórmulas estáticas — si la fórmula nunca cambia, deja de reflejar la realidad.",
+    "pitfall4": "Manipulación — sé explícito sobre cómo se evalúa cada factor (no autoevaluación).",
+    "factors_title": "Guía de Factores"
+  },
+  "factors": {
+    "base": {
+      "label": "Tarifa Base de Mercado",
+      "desc": "El salario anual de mercado para este rol y función en esta región, antes de aplicar multiplicadores. Fuente: bolsas de trabajo, encuestas salariales, datos de RR.HH.",
+      "unit": ""
+    },
+    "seniority": {
+      "label": "Multiplicador de Antigüedad",
+      "desc": "Refleja el nivel de experiencia y el alcance del impacto. Desde pasante (0.6×) hasta nivel C (1.8×). Definido por los niveles de carrera acordados en tu organización.",
+      "unit": "×"
+    },
+    "skills": {
+      "label": "Puntuación de Habilidades",
+      "desc": "Basada en una evaluación estructurada de habilidades (no autoevaluación). Mide la amplitud y profundidad de las competencias relevantes: 0.7× (limitadas/en desarrollo) a 1.4× (amplias/experto).",
+      "unit": "×"
+    },
+    "location": {
+      "label": "Coeficiente de Ubicación",
+      "desc": "Ajusta por diferencias en el costo de vida entre ciudades o países. 1.0 = ciudad base. Menor para regiones de menor costo, mayor para metrópolis costosas.",
+      "unit": "×"
+    },
+    "performance": {
+      "label": "Multiplicador de Desempeño",
+      "desc": "Refleja el desempeño del equipo e individual durante el período de revisión. Típicamente evaluado trimestral o anualmente. Rango: 0.85× a 1.25×.",
+      "unit": "×"
+    }
+  }
+}

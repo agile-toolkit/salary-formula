@@ -79,10 +79,18 @@ export default function App() {
                 </button>
               ))}
             <button
-              onClick={() => i18n.changeLanguage(i18n.language.startsWith('ru') ? 'en' : 'ru')}
+              onClick={() => {
+                const langs = ['en', 'es', 'be', 'ru']
+                const current = langs.find(l => i18n.language.startsWith(l)) ?? 'en'
+                i18n.changeLanguage(langs[(langs.indexOf(current) + 1) % langs.length])
+              }}
               className="ml-2 text-sm text-gray-500 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100 transition-colors"
             >
-              {i18n.language.startsWith('ru') ? 'EN' : 'RU'}
+              {(() => {
+                const langs = ['en', 'es', 'be', 'ru']
+                const current = langs.find(l => i18n.language.startsWith(l)) ?? 'en'
+                return langs[(langs.indexOf(current) + 1) % langs.length].toUpperCase()
+              })()}
             </button>
           </div>
         </div>
