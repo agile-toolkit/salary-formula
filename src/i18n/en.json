@@ -6,6 +6,7 @@
     "calculator": "Calculator",
     "builder": "Formula",
     "comparison": "Compare",
+    "scenarios": "Scenarios",
     "learn": "Learn"
   },
   "builder": {
@@ -52,6 +53,21 @@
     "add": "Add Profile",
     "empty": "Add at least one saved profile to compare.",
     "delete": "Remove"
+  },
+  "scenario": {
+    "title": "Scenario Comparison",
+    "save": "Save Scenario",
+    "name_placeholder": "Scenario name (e.g. Latin America rates, 2025 revision)",
+    "save_btn": "Save",
+    "saved": "Saved!",
+    "save_hint": "Saves the current formula parameters (min, max, step, value) as a named scenario.",
+    "empty": "No scenarios saved yet.",
+    "empty_hint": "Open the Formula tab, adjust parameters, and save a scenario.",
+    "diff_label": "Delta values are shown relative to the first (baseline) scenario.",
+    "baseline_badge": "baseline",
+    "delete": "Delete scenario",
+    "factor_col": "Factor",
+    "total_row": "Total salary"
   },
   "learn": {
     "title": "About the Salary Formula",

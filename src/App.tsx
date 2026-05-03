@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Screen, Factor, Profile } from './types'
+import type { Screen, Factor, Profile, Scenario } from './types'
 import { DEFAULT_FACTORS } from './data/presets'
 import HomeScreen from './components/HomeScreen'
 import SalaryCalculator from './components/SalaryCalculator'
 import FormulaBuilder from './components/FormulaBuilder'
 import ComparisonView from './components/ComparisonView'
+import ScenarioView from './components/ScenarioView'
 import LearnView from './components/LearnView'
 
 const STORAGE_KEY = 'salary-formula-profiles'
+const SCENARIOS_KEY = 'salary_scenarios_v1'
 
 function loadProfiles(): Profile[] {
   try {
@@ -22,12 +24,25 @@ function saveProfiles(profiles: Profile[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles))
 }
 
+function loadScenarios(): Scenario[] {
+  try {
+    return JSON.parse(localStorage.getItem(SCENARIOS_KEY) ?? '[]')
+  } catch {
+    return []
+  }
+}
+
+function saveScenarios(scenarios: Scenario[]) {
+  localStorage.setItem(SCENARIOS_KEY, JSON.stringify(scenarios))
+}
+
 export default function App() {
   const { t, i18n } = useTranslation()
   const [screen, setScreen] = useState<Screen>('home')
   const [factors, setFactors] = useState<Factor[]>(DEFAULT_FACTORS)
   const [currency, setCurrency] = useState('USD')
   const [profiles, setProfiles] = useState<Profile[]>(loadProfiles)
+  const [scenarios, setScenarios] = useState<Scenario[]>(loadScenarios)
 
   const handleSaveProfile = (profile: Profile) => {
     const updated = [...profiles, profile]
@@ -46,10 +61,23 @@ export default function App() {
     setScreen('calculator')
   }
 
+  const handleSaveScenario = (scenario: Scenario) => {
+    const updated = [...scenarios, scenario]
+    setScenarios(updated)
+    saveScenarios(updated)
+  }
+
+  const handleDeleteScenario = (id: string) => {
+    const updated = scenarios.filter(s => s.id !== id)
+    setScenarios(updated)
+    saveScenarios(updated)
+  }
+
   const navItems: { key: Screen; label: string }[] = [
     { key: 'calculator', label: t('nav.calculator') },
     { key: 'builder', label: t('nav.builder') },
     { key: 'comparison', label: t('nav.comparison') },
+    { key: 'scenarios', label: t('nav.scenarios') },
     { key: 'learn', label: t('nav.learn') },
   ]
 
@@ -108,7 +136,12 @@ export default function App() {
           />
         )}
         {screen === 'builder' && (
-          <FormulaBuilder factors={factors} currency={currency} onFactorsChange={setFactors} />
+          <FormulaBuilder
+            factors={factors}
+            currency={currency}
+            onFactorsChange={setFactors}
+            onSaveScenario={handleSaveScenario}
+          />
         )}
         {screen === 'comparison' && (
           <ComparisonView
@@ -117,6 +150,13 @@ export default function App() {
             currency={currency}
             onDelete={handleDeleteProfile}
             onLoad={handleLoadProfile}
+          />
+        )}
+        {screen === 'scenarios' && (
+          <ScenarioView
+            scenarios={scenarios}
+            factors={factors}
+            onDelete={handleDeleteScenario}
           />
         )}
         {screen === 'learn' && <LearnView />}

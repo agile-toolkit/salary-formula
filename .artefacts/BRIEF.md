@@ -11,6 +11,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Comparison i18n — `comparison.empty` wired to empty state; `comparison.add` wired to Load button; dead `comparison.no_saved` removed from locales
 - [x] ES + BE locale support — `src/i18n/es.json` and `src/i18n/be.json` added; language switcher cycles EN → ES → BE → RU
 - [x] Work Profiles integration (#3) — "Import from Work Profiles" button on Skills Score slider; reads `wp-profiles-export` localStorage; maps avg proficiency (1–5) to 0.7–1.4 multiplier; shows "Linked to: <name>" badge; unlinks on manual slider drag or reset
+- [x] What-if scenario comparison (#6) — "Save Scenario" form in FormulaBuilder tab; `ScenarioView` tab shows named scenarios side-by-side with delta badges vs baseline; persisted to `salary_scenarios_v1` localStorage; all 4 locales
 
 ## Backlog
 
@@ -19,7 +20,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#3] Integration: link salary profiles to Work Profiles app — implemented
 - [ ] [#4] Feature: export comparison as image or CSV
 - [ ] [#5] Technical: keyboard navigation and accessibility audit for factor sliders
-- [ ] [#6] Feature: what-if scenario comparison — save and diff multiple formula configurations
+- [x] [#6] Feature: what-if scenario comparison — implemented
 - [ ] [#7] Integration: Sprint Metrics — team payroll budget dashboard
 
 ## Tech notes
@@ -27,6 +28,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-03 — feat: what-if scenario comparison (#6)
+- Done: added `ScenarioFactor` and `Scenario` types to `types.ts`; added `Screen = 'scenarios'`; new `ScenarioView.tsx` shows saved scenarios side-by-side in a table with colour-coded delta badges vs baseline; added "Save Scenario" form at bottom of `FormulaBuilder.tsx`; wired `scenarios` state + handlers in `App.tsx` (localStorage key `salary_scenarios_v1`); added `nav.scenarios` + `scenario.*` i18n keys to all 4 locales (EN/ES/BE/RU)
+- Issue #6 status → In Review
+- Remaining backlog: #4 (export), #5 (accessibility), #7 (Sprint Metrics integration)
+- Next task: implement #7 (Sprint Metrics integration — "Share with Sprint Metrics" button in ComparisonView writes `sprint_metrics_salary_bridge_v1` localStorage key with array of {name, annualSalary, currency})
 
 ### 2026-05-03 — feat: Work Profiles integration (#3)
 - Done: added "Import from Work Profiles" button below Skills Score slider in `SalaryCalculator.tsx`; reads `wp-profiles-export` from localStorage (written by work-profiles app); maps average proficiency (1–5 scale) to skills multiplier (0.7–1.4) via linear interpolation rounded to 0.05 step; shows "Linked to: <name>" green badge; shows profile picker when multiple profiles exist; unlinks automatically on manual slider drag or reset; all four locales updated

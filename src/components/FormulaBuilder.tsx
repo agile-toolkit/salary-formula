@@ -1,19 +1,42 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Factor } from '../types'
+import type { Factor, Scenario } from '../types'
 import { calculateSalary, formatCurrency } from '../utils/salary'
 
 interface Props {
   factors: Factor[]
   currency: string
   onFactorsChange: (factors: Factor[]) => void
+  onSaveScenario: (scenario: Scenario) => void
 }
 
-export default function FormulaBuilder({ factors, currency, onFactorsChange }: Props) {
+export default function FormulaBuilder({ factors, currency, onFactorsChange, onSaveScenario }: Props) {
   const { t } = useTranslation()
+  const [scenarioName, setScenarioName] = useState('')
+  const [saved, setSaved] = useState(false)
   const preview = calculateSalary(factors)
 
   function patchFactor(id: string, partial: Partial<Factor>) {
     onFactorsChange(factors.map(f => (f.id === id ? { ...f, ...partial } : f)))
+  }
+
+  function handleSave() {
+    const name = scenarioName.trim()
+    if (!name) return
+    const factorMap: Scenario['factors'] = {}
+    factors.forEach(f => {
+      factorMap[f.id] = { value: f.value, min: f.min, max: f.max, step: f.step }
+    })
+    onSaveScenario({
+      id: crypto.randomUUID(),
+      name,
+      savedAt: new Date().toISOString(),
+      factors: factorMap,
+      currency,
+    })
+    setScenarioName('')
+    setSaved(true)
+    setTimeout(() => setSaved(false), 2000)
   }
 
   return (
@@ -101,6 +124,28 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange }: P
       </div>
 
       <p className="text-xs text-gray-400">{t('builder.disclaimer')}</p>
+
+      <div className="card">
+        <h2 className="font-semibold text-gray-900 mb-3">{t('scenario.save')}</h2>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            className="input flex-1"
+            placeholder={t('scenario.name_placeholder')}
+            value={scenarioName}
+            onChange={e => setScenarioName(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSave()}
+          />
+          <button
+            onClick={handleSave}
+            disabled={!scenarioName.trim()}
+            className="btn-primary disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {saved ? t('scenario.saved') : t('scenario.save_btn')}
+          </button>
+        </div>
+        <p className="text-xs text-gray-400 mt-2">{t('scenario.save_hint')}</p>
+      </div>
     </div>
   )
 }
