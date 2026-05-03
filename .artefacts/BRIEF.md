@@ -9,11 +9,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Formula builder and main calculator UI
 - [x] Comparison view — title, empty state when none saved, delete (`ComparisonView.tsx`)
 - [x] Comparison i18n — `comparison.empty` wired to empty state; `comparison.add` wired to Load button; dead `comparison.no_saved` removed from locales
+- [x] ES + BE locale support — `src/i18n/es.json` and `src/i18n/be.json` added; language switcher cycles EN → ES → BE → RU
 
 ## Backlog
 
 <!-- Issues awaiting human review; agent appends here during research runs -->
-- [ ] [#2] Research: ES + BE locale support
+- [x] [#2] Research: ES + BE locale support — implemented
 - [ ] [#3] Integration: link salary profiles to Work Profiles app
 - [ ] [#4] Feature: export comparison as image or CSV
 - [ ] [#5] Technical: keyboard navigation and accessibility audit for factor sliders
@@ -25,6 +26,11 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-03 — feat: ES + BE locale support (#2)
+- Done: created `src/i18n/es.json` (Spanish, Latin American register) and `src/i18n/be.json` (Belarusian); registered both in `src/i18n/index.ts`; updated language switcher in `App.tsx` to cycle EN → ES → BE → RU (same pattern as Moving Motivators)
+- Issue #2 marked Done in project; issues #3, #6, #7 approved and queued
+- Next task: implement #3 (Work Profiles integration — "Import from Work Profiles" button on Skills Score slider, reads `work_profiles_v1` localStorage, maps aggregate skill score to 0.7–1.4 range, shows "Linked to: <name>" badge)
 
 ### 2026-04-27 — research: accessibility, scenario modelling, Sprint Metrics integration
 
