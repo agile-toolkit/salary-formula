@@ -40,7 +40,12 @@
     "reset": "Restablecer valores predeterminados",
     "save": "Guardar Perfil",
     "profile_name_placeholder": "Nombre del perfil (ej. Dev Senior, Buenos Aires)",
-    "saved": "¡Perfil guardado!"
+    "saved": "¡Perfil guardado!",
+    "wp_import": "Importar desde Perfiles de Trabajo",
+    "wp_linked": "Vinculado a: {{name}}",
+    "wp_unlink": "Desvincular",
+    "wp_no_data": "No se encontraron Perfiles de Trabajo. Abre la aplicación Work Profiles primero.",
+    "wp_cancel": "Cancelar"
   },
   "comparison": {
     "title": "Comparación de Perfiles",

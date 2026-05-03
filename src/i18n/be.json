@@ -40,7 +40,12 @@
     "reset": "Скінуць да прадвызначаных",
     "save": "Захаваць профіль",
     "profile_name_placeholder": "Назва профілю (напр. Senior Dev, Мінск)",
-    "saved": "Профіль захаваны!"
+    "saved": "Профіль захаваны!",
+    "wp_import": "Імпартаваць з Work Profiles",
+    "wp_linked": "Звязана з: {{name}}",
+    "wp_unlink": "Адвязаць",
+    "wp_no_data": "Work Profiles не знойдзены. Спачатку адкрыйце праграму Work Profiles.",
+    "wp_cancel": "Адмяніць"
   },
   "comparison": {
     "title": "Параўнанне профіляў",
