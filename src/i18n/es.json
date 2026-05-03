@@ -6,6 +6,7 @@
     "calculator": "Calculadora",
     "builder": "Fórmula",
     "comparison": "Comparar",
+    "scenarios": "Escenarios",
     "learn": "Aprender"
   },
   "builder": {
@@ -52,6 +53,21 @@
     "add": "Agregar Perfil",
     "empty": "Agrega al menos un perfil guardado para comparar.",
     "delete": "Eliminar"
+  },
+  "scenario": {
+    "title": "Comparación de Escenarios",
+    "save": "Guardar Escenario",
+    "name_placeholder": "Nombre del escenario (ej. Tasas Latinoamérica, revisión 2025)",
+    "save_btn": "Guardar",
+    "saved": "¡Guardado!",
+    "save_hint": "Guarda los parámetros actuales de la fórmula (mín, máx, paso, valor) como un escenario con nombre.",
+    "empty": "Aún no hay escenarios guardados.",
+    "empty_hint": "Abre la pestaña Fórmula, ajusta los parámetros y guarda un escenario.",
+    "diff_label": "Los valores delta se muestran en relación al primer escenario (línea base).",
+    "baseline_badge": "línea base",
+    "delete": "Eliminar escenario",
+    "factor_col": "Factor",
+    "total_row": "Salario total"
   },
   "learn": {
     "title": "Acerca de la Fórmula Salarial",

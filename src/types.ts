@@ -1,4 +1,4 @@
-export type Screen = 'home' | 'calculator' | 'builder' | 'comparison' | 'learn'
+export type Screen = 'home' | 'calculator' | 'builder' | 'comparison' | 'scenarios' | 'learn'
 
 export interface Factor {
   id: string
@@ -20,4 +20,19 @@ export interface Profile {
   id: string
   name: string
   factors: Record<string, number>
+}
+
+export interface ScenarioFactor {
+  value: number
+  min: number
+  max: number
+  step: number
+}
+
+export interface Scenario {
+  id: string
+  name: string
+  savedAt: string
+  factors: Record<string, ScenarioFactor>
+  currency: string
 }
