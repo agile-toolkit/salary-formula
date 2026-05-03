@@ -40,7 +40,12 @@
     "reset": "Сбросить",
     "save": "Сохранить профиль",
     "profile_name_placeholder": "Название профиля (напр. Senior Dev, Москва)",
-    "saved": "Профиль сохранён!"
+    "saved": "Профиль сохранён!",
+    "wp_import": "Импортировать из Work Profiles",
+    "wp_linked": "Связано с: {{name}}",
+    "wp_unlink": "Отвязать",
+    "wp_no_data": "Профили Work Profiles не найдены. Сначала откройте приложение Work Profiles.",
+    "wp_cancel": "Отмена"
   },
   "comparison": {
     "title": "Сравнение профилей",

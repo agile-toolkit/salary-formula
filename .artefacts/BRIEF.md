@@ -10,12 +10,13 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Comparison view — title, empty state when none saved, delete (`ComparisonView.tsx`)
 - [x] Comparison i18n — `comparison.empty` wired to empty state; `comparison.add` wired to Load button; dead `comparison.no_saved` removed from locales
 - [x] ES + BE locale support — `src/i18n/es.json` and `src/i18n/be.json` added; language switcher cycles EN → ES → BE → RU
+- [x] Work Profiles integration (#3) — "Import from Work Profiles" button on Skills Score slider; reads `wp-profiles-export` localStorage; maps avg proficiency (1–5) to 0.7–1.4 multiplier; shows "Linked to: <name>" badge; unlinks on manual slider drag or reset
 
 ## Backlog
 
 <!-- Issues awaiting human review; agent appends here during research runs -->
 - [x] [#2] Research: ES + BE locale support — implemented
-- [ ] [#3] Integration: link salary profiles to Work Profiles app
+- [x] [#3] Integration: link salary profiles to Work Profiles app — implemented
 - [ ] [#4] Feature: export comparison as image or CSV
 - [ ] [#5] Technical: keyboard navigation and accessibility audit for factor sliders
 - [ ] [#6] Feature: what-if scenario comparison — save and diff multiple formula configurations
@@ -26,6 +27,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-03 — feat: Work Profiles integration (#3)
+- Done: added "Import from Work Profiles" button below Skills Score slider in `SalaryCalculator.tsx`; reads `wp-profiles-export` from localStorage (written by work-profiles app); maps average proficiency (1–5 scale) to skills multiplier (0.7–1.4) via linear interpolation rounded to 0.05 step; shows "Linked to: <name>" green badge; shows profile picker when multiple profiles exist; unlinks automatically on manual slider drag or reset; all four locales updated
+- Issue #3 status → In Review
+- Remaining backlog: #4 (export), #5 (accessibility), #6 (scenario comparison), #7 (Sprint Metrics)
+- Next task: check issues for human feedback (#4, #5, #6, #7); implement next approved backlog item
 
 ### 2026-05-03 — feat: ES + BE locale support (#2)
 - Done: created `src/i18n/es.json` (Spanish, Latin American register) and `src/i18n/be.json` (Belarusian); registered both in `src/i18n/index.ts`; updated language switcher in `App.tsx` to cycle EN → ES → BE → RU (same pattern as Moving Motivators)

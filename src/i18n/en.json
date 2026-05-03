@@ -40,7 +40,12 @@
     "reset": "Reset to Defaults",
     "save": "Save Profile",
     "profile_name_placeholder": "Profile name (e.g. Senior Dev, Berlin)",
-    "saved": "Profile saved!"
+    "saved": "Profile saved!",
+    "wp_import": "Import from Work Profiles",
+    "wp_linked": "Linked to: {{name}}",
+    "wp_unlink": "Unlink",
+    "wp_no_data": "No Work Profiles found. Open the Work Profiles app first.",
+    "wp_cancel": "Cancel"
   },
   "comparison": {
     "title": "Profile Comparison",
