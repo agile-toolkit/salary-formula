@@ -52,7 +52,9 @@
     "title": "Profile Comparison",
     "add": "Add Profile",
     "empty": "Add at least one saved profile to compare.",
-    "delete": "Remove"
+    "delete": "Remove",
+    "share_sprint_metrics": "Share with Sprint Metrics",
+    "share_done": "Shared!"
   },
   "scenario": {
     "title": "Scenario Comparison",
