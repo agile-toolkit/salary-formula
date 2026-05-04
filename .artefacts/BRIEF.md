@@ -12,6 +12,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] ES + BE locale support — `src/i18n/es.json` and `src/i18n/be.json` added; language switcher cycles EN → ES → BE → RU
 - [x] Work Profiles integration (#3) — "Import from Work Profiles" button on Skills Score slider; reads `wp-profiles-export` localStorage; maps avg proficiency (1–5) to 0.7–1.4 multiplier; shows "Linked to: <name>" badge; unlinks on manual slider drag or reset
 - [x] What-if scenario comparison (#6) — "Save Scenario" form in FormulaBuilder tab; `ScenarioView` tab shows named scenarios side-by-side with delta badges vs baseline; persisted to `salary_scenarios_v1` localStorage; all 4 locales
+- [x] Sprint Metrics integration (#7) — "Share with Sprint Metrics" button in ComparisonView header; writes `sprint_metrics_salary_bridge_v1` localStorage key with `{profiles: [{name, annualSalary, currency}], exportedAt}`; 2-second "Shared!" flash feedback; all 4 locales
 
 ## Backlog
 
@@ -21,13 +22,19 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [ ] [#4] Feature: export comparison as image or CSV
 - [ ] [#5] Technical: keyboard navigation and accessibility audit for factor sliders
 - [x] [#6] Feature: what-if scenario comparison — implemented
-- [ ] [#7] Integration: Sprint Metrics — team payroll budget dashboard
+- [x] [#7] Integration: Sprint Metrics — team payroll budget dashboard — implemented
 
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-04 — feat: Sprint Metrics integration (#7)
+- Done: added "Share with Sprint Metrics" button to ComparisonView header; on click writes `sprint_metrics_salary_bridge_v1` localStorage key with `{profiles: [{name, annualSalary, currency}], exportedAt}`; button shows 2-second "Shared!" flash on success; added `comparison.share_sprint_metrics` and `comparison.share_done` i18n keys to all 4 locales (EN/ES/BE/RU)
+- Issue #7 status → In Review
+- Remaining backlog: #4 (export), #5 (accessibility)
+- Next task: check issues for human feedback (#4 export, #5 accessibility); run research for new backlog items
 
 ### 2026-05-03 — feat: what-if scenario comparison (#6)
 - Done: added `ScenarioFactor` and `Scenario` types to `types.ts`; added `Screen = 'scenarios'`; new `ScenarioView.tsx` shows saved scenarios side-by-side in a table with colour-coded delta badges vs baseline; added "Save Scenario" form at bottom of `FormulaBuilder.tsx`; wired `scenarios` state + handlers in `App.tsx` (localStorage key `salary_scenarios_v1`); added `nav.scenarios` + `scenario.*` i18n keys to all 4 locales (EN/ES/BE/RU)

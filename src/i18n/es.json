@@ -52,7 +52,9 @@
     "title": "Comparación de Perfiles",
     "add": "Agregar Perfil",
     "empty": "Agrega al menos un perfil guardado para comparar.",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "share_sprint_metrics": "Compartir con Sprint Metrics",
+    "share_done": "¡Compartido!"
   },
   "scenario": {
     "title": "Comparación de Escenarios",

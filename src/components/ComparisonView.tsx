@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Profile, Factor } from '../types'
 import { calcSalary, formatSalary } from '../data/presets'
+
+const SPRINT_METRICS_KEY = 'sprint_metrics_salary_bridge_v1'
 
 interface Props {
   profiles: Profile[]
@@ -12,6 +15,7 @@ interface Props {
 
 export default function ComparisonView({ profiles, factors, currency, onDelete, onLoad }: Props) {
   const { t } = useTranslation()
+  const [shared, setShared] = useState(false)
 
   if (profiles.length === 0) {
     return (
@@ -32,9 +36,30 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
     })
   )
 
+  function handleShareWithSprintMetrics() {
+    const data = {
+      profiles: profiles.map(p => {
+        const merged = factors.map(f => ({ ...f, value: p.factors[f.id] ?? f.value }))
+        return { name: p.name, annualSalary: calcSalary(merged), currency }
+      }),
+      exportedAt: new Date().toISOString(),
+    }
+    localStorage.setItem(SPRINT_METRICS_KEY, JSON.stringify(data))
+    setShared(true)
+    setTimeout(() => setShared(false), 2000)
+  }
+
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('comparison.title')}</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">{t('comparison.title')}</h1>
+        <button
+          onClick={handleShareWithSprintMetrics}
+          className="btn-ghost text-sm text-indigo-600 border border-indigo-200 rounded-lg px-3 py-1.5 hover:bg-indigo-50 transition-colors"
+        >
+          {shared ? t('comparison.share_done') : t('comparison.share_sprint_metrics')}
+        </button>
+      </div>
 
       <div className="space-y-4">
         {profiles.map(profile => {
