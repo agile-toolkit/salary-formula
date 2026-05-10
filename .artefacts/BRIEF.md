@@ -23,12 +23,21 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [ ] [#5] Technical: keyboard navigation and accessibility audit for factor sliders
 - [x] [#6] Feature: what-if scenario comparison — implemented
 - [x] [#7] Integration: Sprint Metrics — team payroll budget dashboard — implemented
+- [ ] [#12] Feature: factor contribution breakdown chart in Calculator
+- [ ] [#13] Integration: Team Identity — import team members as salary profiles
+- [ ] [#14] Feature: formula review date reminder
 
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-10 — research: factor breakdown, Team Identity integration, formula review reminder
+- Done: created issues #12 (factor contribution breakdown chart — pure-CSS progress bars in SalaryCalculator.tsx), #13 (Team Identity import — read team-identity:charter localStorage to pre-fill profile names), #14 (formula review date reminder — banner after 180 days, stores salary-formula:lastReviewed)
+- Notes: issues #3 and #7 are `approved`-labeled but already fully implemented; project has no "In Review" option so status update skipped
+- Waiting for human review on #4, #5, #12, #13, #14
+- Next task: check issues for human feedback; implement first approved item
 
 ### 2026-05-04 — feat: Sprint Metrics integration (#7)
 - Done: added "Share with Sprint Metrics" button to ComparisonView header; on click writes `sprint_metrics_salary_bridge_v1` localStorage key with `{profiles: [{name, annualSalary, currency}], exportedAt}`; button shows 2-second "Shared!" flash on success; added `comparison.share_sprint_metrics` and `comparison.share_done` i18n keys to all 4 locales (EN/ES/BE/RU)
