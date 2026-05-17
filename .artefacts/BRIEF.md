@@ -26,12 +26,24 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [ ] [#12] Feature: factor contribution breakdown chart in Calculator
 - [ ] [#13] Integration: Team Identity — import team members as salary profiles
 - [ ] [#14] Feature: formula review date reminder
+- [ ] [#15] Integration: Dashboard localStorage key (salary-formula:lastSession)
+- [ ] [#16] Feature: formula templates library for faster onboarding
+- [ ] [#17] Feature: shareable formula URL for collaborative review
+- [ ] [#18] Feature: pay equity analysis view (EquityView, salary distribution + ratio)
+- [ ] [#19] Integration: Scrum Facilitator — meeting cost calculator (salary-formula:teamHourlyRate key)
+- [ ] [#20] Integration: Change Planner — log formula changes as change records
 
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-17 — research: pay equity view, Scrum Facilitator integration, Change Planner integration
+- Done: created issues #18 (pay equity analysis view — EquityView.tsx with salary distribution bar, equity ratio, per-factor spread, no chart library), #19 (Scrum Facilitator integration — salary-formula:teamHourlyRate localStorage key, meeting cost display in Scrum Facilitator), #20 (Change Planner integration — salary-formula:pendingChangeRecord key on scenario save, pre-fill Change Planner new-change form)
+- Notes: issues #3 and #7 are approved-labeled but already fully implemented; skipped re-implementation
+- Waiting for human review on #4, #5, #12, #13, #14, #15, #16, #17, #18, #19, #20
+- Next task: check issues for human feedback; implement first approved item
 
 ### 2026-05-10 — research: factor breakdown, Team Identity integration, formula review reminder
 - Done: created issues #12 (factor contribution breakdown chart — pure-CSS progress bars in SalaryCalculator.tsx), #13 (Team Identity import — read team-identity:charter localStorage to pre-fill profile names), #14 (formula review date reminder — banner after 180 days, stores salary-formula:lastReviewed)
