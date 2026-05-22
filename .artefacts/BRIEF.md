@@ -13,6 +13,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Work Profiles integration (#3) — "Import from Work Profiles" button on Skills Score slider; reads `wp-profiles-export` localStorage; maps avg proficiency (1–5) to 0.7–1.4 multiplier; shows "Linked to: <name>" badge; unlinks on manual slider drag or reset
 - [x] What-if scenario comparison (#6) — "Save Scenario" form in FormulaBuilder tab; `ScenarioView` tab shows named scenarios side-by-side with delta badges vs baseline; persisted to `salary_scenarios_v1` localStorage; all 4 locales
 - [x] Sprint Metrics integration (#7) — "Share with Sprint Metrics" button in ComparisonView header; writes `sprint_metrics_salary_bridge_v1` localStorage key with `{profiles: [{name, annualSalary, currency}], exportedAt}`; 2-second "Shared!" flash feedback; all 4 locales
+- [x] Dashboard localStorage key (#15) — writes `salary-formula:lastSession` on every profile or scenario save; shape: `{lastScenario, profileCount, totalSalaryRange: {min, max, currency} | null, updatedAt}`
 
 ## Backlog
 
@@ -26,18 +27,32 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [ ] [#12] Feature: factor contribution breakdown chart in Calculator
 - [ ] [#13] Integration: Team Identity — import team members as salary profiles
 - [ ] [#14] Feature: formula review date reminder
-- [ ] [#15] Integration: Dashboard localStorage key (salary-formula:lastSession)
+- [x] [#15] Integration: Dashboard localStorage key (salary-formula:lastSession) — implemented
 - [ ] [#16] Feature: formula templates library for faster onboarding
 - [ ] [#17] Feature: shareable formula URL for collaborative review
 - [ ] [#18] Feature: pay equity analysis view (EquityView, salary distribution + ratio)
 - [ ] [#19] Integration: Scrum Facilitator — meeting cost calculator (salary-formula:teamHourlyRate key)
 - [ ] [#20] Integration: Change Planner — log formula changes as change records
 
+## localStorage keys
+
+| Key | Written by | Shape |
+|-----|-----------|-------|
+| `salary-formula:lastSession` | `App.tsx` `handleSaveProfile` / `handleSaveScenario` | `{lastScenario: string\|null, profileCount: number, totalSalaryRange: {min, max, currency}\|null, updatedAt: ISO string}` |
+| `salary-formula-profiles` | `App.tsx` `saveProfiles` | `Profile[]` |
+| `salary_scenarios_v1` | `App.tsx` `saveScenarios` | `Scenario[]` |
+| `sprint_metrics_salary_bridge_v1` | `ComparisonView.tsx` share button | `{profiles: [{name, annualSalary, currency}], exportedAt}` |
+
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-22 — feat: Dashboard localStorage key (#15)
+- Done: added `salary-formula:lastSession` localStorage key; written in `App.tsx` `handleSaveProfile` and `handleSaveScenario`; shape `{lastScenario, profileCount, totalSalaryRange: {min, max, currency} | null, updatedAt}`; documented in `## localStorage keys` section
+- Issue #15 status → In Review
+- Next task: add `readSalaryFormula()` reader to `agile-toolkit.github.io/src/` and update Dashboard card for salary-formula (run on agile-toolkit.github.io); then implement next approved issue among #16, #17, #18, #19, #20 in salary-formula
 
 ### 2026-05-17 — research: pay equity view, Scrum Facilitator integration, Change Planner integration
 - Done: created issues #18 (pay equity analysis view — EquityView.tsx with salary distribution bar, equity ratio, per-factor spread, no chart library), #19 (Scrum Facilitator integration — salary-formula:teamHourlyRate localStorage key, meeting cost display in Scrum Facilitator), #20 (Change Planner integration — salary-formula:pendingChangeRecord key on scenario save, pre-fill Change Planner new-change form)

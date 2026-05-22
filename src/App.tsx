@@ -11,6 +11,7 @@ import LearnView from './components/LearnView'
 
 const STORAGE_KEY = 'salary-formula-profiles'
 const SCENARIOS_KEY = 'salary_scenarios_v1'
+const LAST_SESSION_KEY = 'salary-formula:lastSession'
 
 function loadProfiles(): Profile[] {
   try {
@@ -36,6 +37,34 @@ function saveScenarios(scenarios: Scenario[]) {
   localStorage.setItem(SCENARIOS_KEY, JSON.stringify(scenarios))
 }
 
+function writeLastSession(
+  profiles: Profile[],
+  scenarios: Scenario[],
+  currency: string,
+  factors: Factor[]
+) {
+  const salaries = profiles.map(p => {
+    const base = p.factors['base'] ?? factors.find(f => f.isBase)?.value ?? 0
+    const multiplier = factors
+      .filter(f => !f.isBase)
+      .reduce((acc, f) => acc * (p.factors[f.id] ?? f.value), 1)
+    return Math.round(base * multiplier)
+  })
+  const lastScenario = scenarios.length > 0 ? scenarios[scenarios.length - 1].name : null
+  localStorage.setItem(
+    LAST_SESSION_KEY,
+    JSON.stringify({
+      lastScenario,
+      profileCount: profiles.length,
+      totalSalaryRange:
+        salaries.length > 0
+          ? { min: Math.min(...salaries), max: Math.max(...salaries), currency }
+          : null,
+      updatedAt: new Date().toISOString(),
+    })
+  )
+}
+
 export default function App() {
   const { t, i18n } = useTranslation()
   const [screen, setScreen] = useState<Screen>('home')
@@ -48,6 +77,7 @@ export default function App() {
     const updated = [...profiles, profile]
     setProfiles(updated)
     saveProfiles(updated)
+    writeLastSession(updated, scenarios, currency, factors)
   }
 
   const handleDeleteProfile = (id: string) => {
@@ -65,6 +95,7 @@ export default function App() {
     const updated = [...scenarios, scenario]
     setScenarios(updated)
     saveScenarios(updated)
+    writeLastSession(profiles, updated, currency, factors)
   }
 
   const handleDeleteScenario = (id: string) => {
