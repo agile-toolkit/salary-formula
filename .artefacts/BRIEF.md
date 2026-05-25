@@ -14,6 +14,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] What-if scenario comparison (#6) — "Save Scenario" form in FormulaBuilder tab; `ScenarioView` tab shows named scenarios side-by-side with delta badges vs baseline; persisted to `salary_scenarios_v1` localStorage; all 4 locales
 - [x] Sprint Metrics integration (#7) — "Share with Sprint Metrics" button in ComparisonView header; writes `sprint_metrics_salary_bridge_v1` localStorage key with `{profiles: [{name, annualSalary, currency}], exportedAt}`; 2-second "Shared!" flash feedback; all 4 locales
 - [x] Dashboard localStorage key (#15) — writes `salary-formula:lastSession` on every profile or scenario save; shape: `{lastScenario, profileCount, totalSalaryRange: {min, max, currency} | null, updatedAt}`
+- [x] Formula templates library (#16) — "Start from template" button in FormulaBuilder; 4 templates (Balanced, Remote-first, Startup, Enterprise flat band); `src/data/templates.ts`; `TemplatesModal.tsx`; `builder.templates` / `builder.template_applied` i18n keys in all 4 locales
 
 ## Backlog
 
@@ -28,7 +29,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [ ] [#13] Integration: Team Identity — import team members as salary profiles
 - [ ] [#14] Feature: formula review date reminder
 - [x] [#15] Integration: Dashboard localStorage key (salary-formula:lastSession) — implemented
-- [ ] [#16] Feature: formula templates library for faster onboarding
+- [x] [#16] Feature: formula templates library for faster onboarding — implemented
 - [ ] [#17] Feature: shareable formula URL for collaborative review
 - [ ] [#18] Feature: pay equity analysis view (EquityView, salary distribution + ratio)
 - [ ] [#19] Integration: Scrum Facilitator — meeting cost calculator (salary-formula:teamHourlyRate key)
@@ -48,6 +49,11 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-25 — feat: formula templates library (#16)
+- Done: `src/data/templates.ts` with 4 templates (Balanced, Remote-first, Startup, Enterprise flat band); `TemplatesModal.tsx` modal with preview salary; "Start from template" button in `FormulaBuilder.tsx`; `builder.templates`, `builder.template_applied`, `builder.template_use`, `builder.template_preview`, `builder.template_hint` + `templates.*` i18n keys in all 4 locales
+- Issue #16 status → In Review
+- Next task: implement #17 (shareable formula URL: base64-encode FormulaConfig to window.location.hash on every factors change, hydrate from hash on load, "Copy link" button in FormulaBuilder with navigator.clipboard.writeText, builder.copy_link / builder.link_copied i18n keys in all 4 locales)
 
 ### 2026-05-22 — feat: Dashboard localStorage key (#15)
 - Done: added `salary-formula:lastSession` localStorage key; written in `App.tsx` `handleSaveProfile` and `handleSaveScenario`; shape `{lastScenario, profileCount, totalSalaryRange: {min, max, currency} | null, updatedAt}`; documented in `## localStorage keys` section

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Factor, Scenario } from '../types'
 import { calculateSalary, formatCurrency } from '../utils/salary'
+import TemplatesModal from './TemplatesModal'
 
 interface Props {
   factors: Factor[]
@@ -14,7 +15,15 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
   const { t } = useTranslation()
   const [scenarioName, setScenarioName] = useState('')
   const [saved, setSaved] = useState(false)
+  const [templateApplied, setTemplateApplied] = useState(false)
+  const [showTemplates, setShowTemplates] = useState(false)
   const preview = calculateSalary(factors)
+
+  function handleApplyTemplate(newFactors: Factor[]) {
+    onFactorsChange(newFactors)
+    setTemplateApplied(true)
+    setTimeout(() => setTemplateApplied(false), 2000)
+  }
 
   function patchFactor(id: string, partial: Partial<Factor>) {
     onFactorsChange(factors.map(f => (f.id === id ? { ...f, ...partial } : f)))
@@ -41,9 +50,25 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('builder.title')}</h1>
-        <p className="text-gray-500 text-sm">{t('builder.subtitle')}</p>
+      {showTemplates && (
+        <TemplatesModal
+          currency={currency}
+          onApply={handleApplyTemplate}
+          onClose={() => setShowTemplates(false)}
+        />
+      )}
+
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('builder.title')}</h1>
+          <p className="text-gray-500 text-sm">{t('builder.subtitle')}</p>
+        </div>
+        <button
+          onClick={() => setShowTemplates(true)}
+          className="btn-secondary shrink-0"
+        >
+          {templateApplied ? t('builder.template_applied') : t('builder.templates')}
+        </button>
       </div>
 
       <div className="card flex flex-wrap items-baseline justify-between gap-3">
