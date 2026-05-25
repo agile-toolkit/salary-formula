@@ -19,7 +19,30 @@
     "max": "Max",
     "step": "Step",
     "current_value": "Current",
-    "disclaimer": "Changing ranges does not alter saved profiles — only how new adjustments behave in the calculator."
+    "disclaimer": "Changing ranges does not alter saved profiles — only how new adjustments behave in the calculator.",
+    "templates": "Start from template",
+    "template_applied": "Template applied!",
+    "template_use": "Use",
+    "template_preview": "Sample salary",
+    "template_hint": "Templates set a starting configuration. All values can be freely edited after applying."
+  },
+  "templates": {
+    "balanced": {
+      "name": "Balanced",
+      "desc": "Equal factor weights — a good starting point for teams new to transparent compensation formulas."
+    },
+    "remote_first": {
+      "name": "Remote-first team",
+      "desc": "Higher location coefficient for hub cities. Moderate seniority and baseline performance range."
+    },
+    "startup": {
+      "name": "Startup (growth-focused)",
+      "desc": "Lower base, strong skills and performance emphasis. Reflects equity-supplemented compensation."
+    },
+    "enterprise": {
+      "name": "Enterprise flat band",
+      "desc": "Narrow multiplier range (0.9–1.1×) for all factors. Predictable, compliance-friendly structure."
+    }
   },
   "home": {
     "headline": "Transparent Salary Formula",

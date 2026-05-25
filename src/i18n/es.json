@@ -19,7 +19,12 @@
     "max": "Máx",
     "step": "Paso",
     "current_value": "Actual",
-    "disclaimer": "Cambiar los rangos no altera los perfiles guardados — solo el comportamiento de los nuevos ajustes en la calculadora."
+    "disclaimer": "Cambiar los rangos no altera los perfiles guardados — solo el comportamiento de los nuevos ajustes en la calculadora.",
+    "templates": "Empezar desde plantilla",
+    "template_applied": "¡Plantilla aplicada!",
+    "template_use": "Usar",
+    "template_preview": "Salario de ejemplo",
+    "template_hint": "Las plantillas configuran un punto de partida. Todos los valores se pueden editar libremente después de aplicar."
   },
   "home": {
     "headline": "Fórmula Salarial Transparente",
@@ -113,6 +118,24 @@
       "label": "Multiplicador de Desempeño",
       "desc": "Refleja el desempeño del equipo e individual durante el período de revisión. Típicamente evaluado trimestral o anualmente. Rango: 0.85× a 1.25×.",
       "unit": "×"
+    }
+  },
+  "templates": {
+    "balanced": {
+      "name": "Equilibrada",
+      "desc": "Pesos de factores iguales — un buen punto de partida para equipos nuevos en fórmulas de compensación transparentes."
+    },
+    "remote_first": {
+      "name": "Equipo remoto",
+      "desc": "Mayor coeficiente de ubicación para ciudades principales. Antigüedad moderada y rango de rendimiento base."
+    },
+    "startup": {
+      "name": "Startup (orientada al crecimiento)",
+      "desc": "Base baja, fuerte énfasis en habilidades y rendimiento. Refleja compensación complementada con equity."
+    },
+    "enterprise": {
+      "name": "Banda plana corporativa",
+      "desc": "Rango de multiplicador estrecho (0,9–1,1×) para todos los factores. Estructura predecible y compatible con normativas."
     }
   }
 }
