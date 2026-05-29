@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Screen, Factor, Profile, Scenario } from './types'
+import type { Screen, Factor, FormulaConfig, Profile, Scenario } from './types'
 import { DEFAULT_FACTORS } from './data/presets'
 import HomeScreen from './components/HomeScreen'
 import SalaryCalculator from './components/SalaryCalculator'
@@ -8,6 +8,19 @@ import FormulaBuilder from './components/FormulaBuilder'
 import ComparisonView from './components/ComparisonView'
 import ScenarioView from './components/ScenarioView'
 import LearnView from './components/LearnView'
+
+function loadFromHash(): { factors: Factor[]; currency: string } | null {
+  try {
+    const hash = window.location.hash
+    if (!hash.startsWith('#formula=')) return null
+    const encoded = hash.slice('#formula='.length)
+    const config = JSON.parse(decodeURIComponent(atob(encoded))) as FormulaConfig
+    if (!Array.isArray(config.factors) || !config.currency) return null
+    return { factors: config.factors, currency: config.currency }
+  } catch {
+    return null
+  }
+}
 
 const STORAGE_KEY = 'salary-formula-profiles'
 const SCENARIOS_KEY = 'salary_scenarios_v1'
@@ -68,8 +81,15 @@ function writeLastSession(
 export default function App() {
   const { t, i18n } = useTranslation()
   const [screen, setScreen] = useState<Screen>('home')
-  const [factors, setFactors] = useState<Factor[]>(DEFAULT_FACTORS)
-  const [currency, setCurrency] = useState('USD')
+  const fromHash = loadFromHash()
+  const [factors, setFactors] = useState<Factor[]>(fromHash?.factors ?? DEFAULT_FACTORS)
+  const [currency, setCurrency] = useState(fromHash?.currency ?? 'USD')
+
+  useEffect(() => {
+    const config: FormulaConfig = { factors, currency }
+    const encoded = btoa(encodeURIComponent(JSON.stringify(config)))
+    history.replaceState(null, '', `#formula=${encoded}`)
+  }, [factors, currency])
   const [profiles, setProfiles] = useState<Profile[]>(loadProfiles)
   const [scenarios, setScenarios] = useState<Scenario[]>(loadScenarios)
 

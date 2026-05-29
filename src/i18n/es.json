@@ -20,6 +20,8 @@
     "step": "Paso",
     "current_value": "Actual",
     "disclaimer": "Cambiar los rangos no altera los perfiles guardados — solo el comportamiento de los nuevos ajustes en la calculadora.",
+    "copy_link": "Copiar enlace",
+    "link_copied": "¡Enlace copiado!",
     "templates": "Empezar desde plantilla",
     "template_applied": "¡Plantilla aplicada!",
     "template_use": "Usar",

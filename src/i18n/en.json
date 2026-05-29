@@ -20,6 +20,8 @@
     "step": "Step",
     "current_value": "Current",
     "disclaimer": "Changing ranges does not alter saved profiles — only how new adjustments behave in the calculator.",
+    "copy_link": "Copy link",
+    "link_copied": "Link copied!",
     "templates": "Start from template",
     "template_applied": "Template applied!",
     "template_use": "Use",
