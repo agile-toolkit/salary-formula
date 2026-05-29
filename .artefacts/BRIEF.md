@@ -15,6 +15,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Sprint Metrics integration (#7) — "Share with Sprint Metrics" button in ComparisonView header; writes `sprint_metrics_salary_bridge_v1` localStorage key with `{profiles: [{name, annualSalary, currency}], exportedAt}`; 2-second "Shared!" flash feedback; all 4 locales
 - [x] Dashboard localStorage key (#15) — writes `salary-formula:lastSession` on every profile or scenario save; shape: `{lastScenario, profileCount, totalSalaryRange: {min, max, currency} | null, updatedAt}`
 - [x] Formula templates library (#16) — "Start from template" button in FormulaBuilder; 4 templates (Balanced, Remote-first, Startup, Enterprise flat band); `src/data/templates.ts`; `TemplatesModal.tsx`; `builder.templates` / `builder.template_applied` i18n keys in all 4 locales
+- [x] Shareable formula URL (#17) — base64-encodes `FormulaConfig` (factors + currency) to `window.location.hash` via `history.replaceState` on every change; hydrates from `#formula=<base64>` on load; "Copy link" button in `FormulaBuilder.tsx` with `navigator.clipboard.writeText`; `builder.copy_link` / `builder.link_copied` i18n keys in all 4 locales
 
 ## Backlog
 
@@ -30,7 +31,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [ ] [#14] Feature: formula review date reminder
 - [x] [#15] Integration: Dashboard localStorage key (salary-formula:lastSession) — implemented
 - [x] [#16] Feature: formula templates library for faster onboarding — implemented
-- [ ] [#17] Feature: shareable formula URL for collaborative review
+- [x] [#17] Feature: shareable formula URL for collaborative review — implemented
 - [ ] [#18] Feature: pay equity analysis view (EquityView, salary distribution + ratio)
 - [ ] [#19] Integration: Scrum Facilitator — meeting cost calculator (salary-formula:teamHourlyRate key)
 - [ ] [#20] Integration: Change Planner — log formula changes as change records
@@ -49,6 +50,11 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-05-29 — feat: shareable formula URL (#17)
+- Done: `loadFromHash()` in `App.tsx` parses `#formula=<base64>` on load and hydrates `factors` + `currency`; `useEffect` calls `history.replaceState` to update hash on every factors/currency change; "Copy link" button in `FormulaBuilder.tsx` writes `window.location.href` to clipboard and shows 2s flash; `builder.copy_link` / `builder.link_copied` i18n keys in all 4 locales (EN/ES/BE/RU)
+- Issue #17 status → In Review
+- Next task: implement #18 (pay equity analysis view — EquityView.tsx with salary distribution bars, equity ratio, per-factor spread; no chart library)
 
 ### 2026-05-25 — feat: formula templates library (#16)
 - Done: `src/data/templates.ts` with 4 templates (Balanced, Remote-first, Startup, Enterprise flat band); `TemplatesModal.tsx` modal with preview salary; "Start from template" button in `FormulaBuilder.tsx`; `builder.templates`, `builder.template_applied`, `builder.template_use`, `builder.template_preview`, `builder.template_hint` + `templates.*` i18n keys in all 4 locales

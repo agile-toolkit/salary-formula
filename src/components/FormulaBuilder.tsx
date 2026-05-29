@@ -17,6 +17,14 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
   const [saved, setSaved] = useState(false)
   const [templateApplied, setTemplateApplied] = useState(false)
   const [showTemplates, setShowTemplates] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  function handleCopyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
   const preview = calculateSalary(factors)
 
   function handleApplyTemplate(newFactors: Factor[]) {
@@ -63,12 +71,20 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
           <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('builder.title')}</h1>
           <p className="text-gray-500 text-sm">{t('builder.subtitle')}</p>
         </div>
-        <button
-          onClick={() => setShowTemplates(true)}
-          className="btn-secondary shrink-0"
-        >
-          {templateApplied ? t('builder.template_applied') : t('builder.templates')}
-        </button>
+        <div className="flex gap-2 shrink-0">
+          <button
+            onClick={handleCopyLink}
+            className="btn-secondary"
+          >
+            {copied ? t('builder.link_copied') : t('builder.copy_link')}
+          </button>
+          <button
+            onClick={() => setShowTemplates(true)}
+            className="btn-secondary"
+          >
+            {templateApplied ? t('builder.template_applied') : t('builder.templates')}
+          </button>
+        </div>
       </div>
 
       <div className="card flex flex-wrap items-baseline justify-between gap-3">
