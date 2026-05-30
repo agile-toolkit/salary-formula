@@ -7,7 +7,21 @@
     "builder": "Formula",
     "comparison": "Compare",
     "scenarios": "Scenarios",
+    "equity": "Equity",
     "learn": "Learn"
+  },
+  "equity": {
+    "title": "Pay Equity Analysis",
+    "ratio": "Equity Ratio (highest ÷ lowest)",
+    "median": "Median",
+    "spread": "Per-Factor Spread",
+    "ranked": "Profiles Ranked by Salary",
+    "no_profiles": "Save at least 2 profiles to see the equity analysis.",
+    "ratio_warn": "Equity ratio exceeds 2×. Management 3.0 recommends keeping this ratio low for transparent compensation.",
+    "ratio_high": "Equity ratio exceeds 3×. Consider reviewing factor values for significant pay disparities.",
+    "at_median": "at median",
+    "sort_asc": "Sort: high → low",
+    "sort_desc": "Sort: low → high"
   },
   "builder": {
     "title": "Formula parameters",

@@ -1,4 +1,4 @@
-export type Screen = 'home' | 'calculator' | 'builder' | 'comparison' | 'scenarios' | 'learn'
+export type Screen = 'home' | 'calculator' | 'builder' | 'comparison' | 'scenarios' | 'learn' | 'equity'
 
 export interface Factor {
   id: string

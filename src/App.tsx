@@ -8,6 +8,7 @@ import FormulaBuilder from './components/FormulaBuilder'
 import ComparisonView from './components/ComparisonView'
 import ScenarioView from './components/ScenarioView'
 import LearnView from './components/LearnView'
+import EquityView from './components/EquityView'
 
 function loadFromHash(): { factors: Factor[]; currency: string } | null {
   try {
@@ -129,6 +130,7 @@ export default function App() {
     { key: 'builder', label: t('nav.builder') },
     { key: 'comparison', label: t('nav.comparison') },
     { key: 'scenarios', label: t('nav.scenarios') },
+    { key: 'equity', label: t('nav.equity') },
     { key: 'learn', label: t('nav.learn') },
   ]
 
@@ -223,6 +225,9 @@ export default function App() {
             factors={factors}
             onDelete={handleDeleteScenario}
           />
+        )}
+        {screen === 'equity' && (
+          <EquityView profiles={profiles} factors={factors} currency={currency} />
         )}
         {screen === 'learn' && <LearnView />}
       </main>
