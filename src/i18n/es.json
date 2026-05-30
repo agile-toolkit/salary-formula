@@ -7,7 +7,21 @@
     "builder": "Fórmula",
     "comparison": "Comparar",
     "scenarios": "Escenarios",
+    "equity": "Equidad",
     "learn": "Aprender"
+  },
+  "equity": {
+    "title": "Análisis de equidad salarial",
+    "ratio": "Índice de equidad (mayor ÷ menor)",
+    "median": "Mediana",
+    "spread": "Variación por factor",
+    "ranked": "Perfiles ordenados por salario",
+    "no_profiles": "Guarda al menos 2 perfiles para ver el análisis de equidad.",
+    "ratio_warn": "El índice de equidad supera 2×. Management 3.0 recomienda mantener este índice bajo para una compensación transparente.",
+    "ratio_high": "El índice de equidad supera 3×. Considera revisar los valores de los factores para reducir las disparidades salariales.",
+    "at_median": "en la mediana",
+    "sort_asc": "Ordenar: alto → bajo",
+    "sort_desc": "Ordenar: bajo → alto"
   },
   "builder": {
     "title": "Parámetros de la fórmula",
