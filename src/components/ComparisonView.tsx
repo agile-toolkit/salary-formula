@@ -61,6 +61,13 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
         </button>
       </div>
 
+      <div className="mb-4 flex items-center gap-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2 text-sm text-blue-700">
+        <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z" />
+        </svg>
+        {t('comparison.team_rate_shared')}
+      </div>
+
       <div className="space-y-4">
         {profiles.map(profile => {
           const merged = factors.map(f => ({ ...f, value: profile.factors[f.id] ?? f.value }))

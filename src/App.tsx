@@ -26,6 +26,7 @@ function loadFromHash(): { factors: Factor[]; currency: string } | null {
 const STORAGE_KEY = 'salary-formula-profiles'
 const SCENARIOS_KEY = 'salary_scenarios_v1'
 const LAST_SESSION_KEY = 'salary-formula:lastSession'
+const TEAM_HOURLY_RATE_KEY = 'salary-formula:teamHourlyRate'
 
 function loadProfiles(): Profile[] {
   try {
@@ -49,6 +50,30 @@ function loadScenarios(): Scenario[] {
 
 function saveScenarios(scenarios: Scenario[]) {
   localStorage.setItem(SCENARIOS_KEY, JSON.stringify(scenarios))
+}
+
+function writeTeamHourlyRate(profiles: Profile[], currency: string, factors: Factor[]) {
+  if (profiles.length === 0) {
+    localStorage.removeItem(TEAM_HOURLY_RATE_KEY)
+    return
+  }
+  const totalAnnual = profiles.reduce((sum, p) => {
+    const base = p.factors['base'] ?? factors.find(f => f.isBase)?.value ?? 0
+    const multiplier = factors
+      .filter(f => !f.isBase)
+      .reduce((acc, f) => acc * (p.factors[f.id] ?? f.value), 1)
+    return sum + Math.round(base * multiplier)
+  }, 0)
+  localStorage.setItem(
+    TEAM_HOURLY_RATE_KEY,
+    JSON.stringify({
+      totalAnnual,
+      currency,
+      profileCount: profiles.length,
+      hourlyRate: Math.round(totalAnnual / 52 / 40),
+      updatedAt: new Date().toISOString(),
+    })
+  )
 }
 
 function writeLastSession(
@@ -99,12 +124,14 @@ export default function App() {
     setProfiles(updated)
     saveProfiles(updated)
     writeLastSession(updated, scenarios, currency, factors)
+    writeTeamHourlyRate(updated, currency, factors)
   }
 
   const handleDeleteProfile = (id: string) => {
     const updated = profiles.filter(p => p.id !== id)
     setProfiles(updated)
     saveProfiles(updated)
+    writeTeamHourlyRate(updated, currency, factors)
   }
 
   const handleLoadProfile = (profile: Profile) => {

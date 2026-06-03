@@ -75,7 +75,8 @@
     "empty": "Добавьте хотя бы один сохранённый профиль для сравнения.",
     "delete": "Удалить",
     "share_sprint_metrics": "Поделиться с Sprint Metrics",
-    "share_done": "Отправлено!"
+    "share_done": "Отправлено!",
+    "team_rate_shared": "Часовая ставка команды передана в Scrum Facilitator."
   },
   "scenario": {
     "title": "Сравнение сценариев",
