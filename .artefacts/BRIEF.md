@@ -17,6 +17,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Formula templates library (#16) — "Start from template" button in FormulaBuilder; 4 templates (Balanced, Remote-first, Startup, Enterprise flat band); `src/data/templates.ts`; `TemplatesModal.tsx`; `builder.templates` / `builder.template_applied` i18n keys in all 4 locales
 - [x] Shareable formula URL (#17) — base64-encodes `FormulaConfig` (factors + currency) to `window.location.hash` via `history.replaceState` on every change; hydrates from `#formula=<base64>` on load; "Copy link" button in `FormulaBuilder.tsx` with `navigator.clipboard.writeText`; `builder.copy_link` / `builder.link_copied` i18n keys in all 4 locales
 - [x] Pay equity analysis view (#18) — `EquityView.tsx` with salary distribution bar (min/median/max), equity ratio (amber ≥2×, red ≥3×), per-factor spread bars, profiles ranked by salary with delta from median; empty state when <2 profiles; `equity.*` i18n keys in all 4 locales (EN/ES/BE/RU)
+- [x] Scrum Facilitator integration (#19) — writes `salary-formula:teamHourlyRate` localStorage key on every profile save/delete; shape: `{totalAnnual, currency, profileCount, hourlyRate (totalAnnual/52/40), updatedAt}`; info callout in ComparisonView when profiles exist; `comparison.team_rate_shared` i18n key in all 4 locales
 
 ## Backlog
 
@@ -34,7 +35,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#16] Feature: formula templates library for faster onboarding — implemented
 - [x] [#17] Feature: shareable formula URL for collaborative review — implemented
 - [x] [#18] Feature: pay equity analysis view (EquityView, salary distribution + ratio) — implemented
-- [ ] [#19] Integration: Scrum Facilitator — meeting cost calculator (salary-formula:teamHourlyRate key)
+- [x] [#19] Integration: Scrum Facilitator — meeting cost calculator (salary-formula:teamHourlyRate key) — implemented
 - [ ] [#20] Integration: Change Planner — log formula changes as change records
 
 ## localStorage keys
@@ -45,12 +46,18 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 | `salary-formula-profiles` | `App.tsx` `saveProfiles` | `Profile[]` |
 | `salary_scenarios_v1` | `App.tsx` `saveScenarios` | `Scenario[]` |
 | `sprint_metrics_salary_bridge_v1` | `ComparisonView.tsx` share button | `{profiles: [{name, annualSalary, currency}], exportedAt}` |
+| `salary-formula:teamHourlyRate` | `App.tsx` `handleSaveProfile` / `handleDeleteProfile` | `{totalAnnual: number, currency: string, profileCount: number, hourlyRate: number, updatedAt: ISO string}` |
 
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-03 — feat: Scrum Facilitator integration (#19)
+- Done: `writeTeamHourlyRate()` in `App.tsx` writes `salary-formula:teamHourlyRate` localStorage key on every `handleSaveProfile` / `handleDeleteProfile`; shape `{totalAnnual, currency, profileCount, hourlyRate (totalAnnual/52/40), updatedAt}`; removes key when no profiles remain; info callout added to `ComparisonView.tsx` (blue info banner with SVG icon); `comparison.team_rate_shared` i18n key in all 4 locales (EN/ES/BE/RU); localStorage key documented in BRIEF.md
+- Issue #19 status → In Review
+- Next task: implement #20 (Change Planner integration — log formula changes as change records; write `salary-formula:pendingChangeRecord` localStorage key on scenario save to pre-fill Change Planner new-change form)
 
 ### 2026-05-30 — feat: pay equity analysis view (#18)
 - Done: `EquityView.tsx` with equity ratio badge (green/amber/red thresholds), salary distribution bar showing min/median/max with Tailwind CSS, per-factor spread bars for each non-base factor, profiles ranked by salary with +N%/−N% delta from median badges, sort toggle, empty state for <2 profiles; `Screen` type extended with `'equity'`; `nav.equity` item added in `App.tsx`; `equity.*` i18n keys in all 4 locales (EN/ES/BE/RU)
