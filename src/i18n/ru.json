@@ -91,7 +91,10 @@
     "baseline_badge": "базовый",
     "delete": "Удалить сценарий",
     "factor_col": "Фактор",
-    "total_row": "Итоговая зарплата"
+    "total_row": "Итоговая зарплата",
+    "log_change": "Записать это изменение в Change Planner",
+    "change_logged": "Изменение записано. Откройте Change Planner, чтобы завершить запись.",
+    "open_change_planner": "Открыть Change Planner"
   },
   "learn": {
     "title": "О формуле зарплаты",

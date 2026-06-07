@@ -91,7 +91,10 @@
     "baseline_badge": "базавы",
     "delete": "Выдаліць сцэнарый",
     "factor_col": "Фактар",
-    "total_row": "Агульная зарплата"
+    "total_row": "Агульная зарплата",
+    "log_change": "Зарэгістраваць гэтую змену ў Change Planner",
+    "change_logged": "Змена зарэгістравана. Адкрыйце Change Planner, каб завяршыць запіс.",
+    "open_change_planner": "Адкрыць Change Planner"
   },
   "learn": {
     "title": "Пра формулу заработку",

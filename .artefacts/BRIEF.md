@@ -36,7 +36,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#17] Feature: shareable formula URL for collaborative review — implemented
 - [x] [#18] Feature: pay equity analysis view (EquityView, salary distribution + ratio) — implemented
 - [x] [#19] Integration: Scrum Facilitator — meeting cost calculator (salary-formula:teamHourlyRate key) — implemented
-- [ ] [#20] Integration: Change Planner — log formula changes as change records
+- [x] [#20] Integration: Change Planner — log formula changes as change records (salary-formula side: writes `salary-formula:pendingChangeRecord` on opt-in scenario save)
 
 ## localStorage keys
 
@@ -47,12 +47,18 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 | `salary_scenarios_v1` | `App.tsx` `saveScenarios` | `Scenario[]` |
 | `sprint_metrics_salary_bridge_v1` | `ComparisonView.tsx` share button | `{profiles: [{name, annualSalary, currency}], exportedAt}` |
 | `salary-formula:teamHourlyRate` | `App.tsx` `handleSaveProfile` / `handleDeleteProfile` | `{totalAnnual: number, currency: string, profileCount: number, hourlyRate: number, updatedAt: ISO string}` |
+| `salary-formula:pendingChangeRecord` | `FormulaBuilder.tsx` opt-in checkbox on scenario save | `{title, type: 'formula_revision', scenarioName, factorDeltas: Record<string,string>, currency, createdAt}` |
 
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-07 — feat: Change Planner integration (#20)
+- Done: `writePendingChangeRecord()` in `FormulaBuilder.tsx` writes `salary-formula:pendingChangeRecord` localStorage key when user ticks "Log this change in Change Planner" checkbox on scenario save; shape `{title, type:'formula_revision', scenarioName, factorDeltas (non-base factor deviations from 1.0 as signed strings), currency, createdAt}`; green toast appears for 5s with link to `https://agile-toolkit.github.io/change-planner/`; `scenario.log_change` / `scenario.change_logged` / `scenario.open_change_planner` i18n keys in all 4 locales (EN/ES/BE/RU); `salary-formula:pendingChangeRecord` documented in localStorage keys table
+- Issue #20 status → In Review (salary-formula side complete; Change Planner side — read key + pre-fill form — needed in change-planner repo)
+- Next task: implement Change Planner side of #20 in change-planner repo (on mount: read `salary-formula:pendingChangeRecord`, show banner, pre-fill new-initiative form, clear key after user confirms)
 
 ### 2026-06-03 — feat: Scrum Facilitator integration (#19)
 - Done: `writeTeamHourlyRate()` in `App.tsx` writes `salary-formula:teamHourlyRate` localStorage key on every `handleSaveProfile` / `handleDeleteProfile`; shape `{totalAnnual, currency, profileCount, hourlyRate (totalAnnual/52/40), updatedAt}`; removes key when no profiles remain; info callout added to `ComparisonView.tsx` (blue info banner with SVG icon); `comparison.team_rate_shared` i18n key in all 4 locales (EN/ES/BE/RU); localStorage key documented in BRIEF.md
