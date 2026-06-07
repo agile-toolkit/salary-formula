@@ -4,6 +4,30 @@ import type { Factor, Scenario } from '../types'
 import { calculateSalary, formatCurrency } from '../utils/salary'
 import TemplatesModal from './TemplatesModal'
 
+const PENDING_CHANGE_KEY = 'salary-formula:pendingChangeRecord'
+const CHANGE_PLANNER_URL = 'https://agile-toolkit.github.io/change-planner/'
+
+function writePendingChangeRecord(name: string, factors: Factor[], currency: string) {
+  const factorDeltas: Record<string, string> = {}
+  factors
+    .filter(f => !f.isBase)
+    .forEach(f => {
+      const delta = f.value - 1
+      factorDeltas[f.id] = (delta >= 0 ? '+' : '') + delta.toFixed(2)
+    })
+  localStorage.setItem(
+    PENDING_CHANGE_KEY,
+    JSON.stringify({
+      title: `Salary formula updated: ${name}`,
+      type: 'formula_revision',
+      scenarioName: name,
+      factorDeltas,
+      currency,
+      createdAt: new Date().toISOString(),
+    })
+  )
+}
+
 interface Props {
   factors: Factor[]
   currency: string
@@ -15,6 +39,8 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
   const { t } = useTranslation()
   const [scenarioName, setScenarioName] = useState('')
   const [saved, setSaved] = useState(false)
+  const [logChange, setLogChange] = useState(false)
+  const [changeLogged, setChangeLogged] = useState(false)
   const [templateApplied, setTemplateApplied] = useState(false)
   const [showTemplates, setShowTemplates] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -51,9 +77,16 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
       factors: factorMap,
       currency,
     })
+    if (logChange) {
+      writePendingChangeRecord(name, factors, currency)
+      setChangeLogged(true)
+      setTimeout(() => setChangeLogged(false), 5000)
+    } else {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    }
     setScenarioName('')
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    setLogChange(false)
   }
 
   return (
@@ -185,7 +218,29 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
             {saved ? t('scenario.saved') : t('scenario.save_btn')}
           </button>
         </div>
+        <label className="flex items-center gap-2 mt-3 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            className="w-4 h-4 rounded accent-brand-600"
+            checked={logChange}
+            onChange={e => setLogChange(e.target.checked)}
+          />
+          <span className="text-sm text-gray-600">{t('scenario.log_change')}</span>
+        </label>
         <p className="text-xs text-gray-400 mt-2">{t('scenario.save_hint')}</p>
+        {changeLogged && (
+          <div className="mt-3 flex items-center justify-between gap-3 rounded-lg bg-green-50 border border-green-200 px-3 py-2 text-sm text-green-800">
+            <span>{t('scenario.change_logged')}</span>
+            <a
+              href={CHANGE_PLANNER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline whitespace-nowrap hover:text-green-900"
+            >
+              {t('scenario.open_change_planner')}
+            </a>
+          </div>
+        )}
       </div>
     </div>
   )

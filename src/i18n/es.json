@@ -91,7 +91,10 @@
     "baseline_badge": "línea base",
     "delete": "Eliminar escenario",
     "factor_col": "Factor",
-    "total_row": "Salario total"
+    "total_row": "Salario total",
+    "log_change": "Registrar este cambio en Change Planner",
+    "change_logged": "Cambio registrado. Abre Change Planner para completar el registro.",
+    "open_change_planner": "Abrir Change Planner"
   },
   "learn": {
     "title": "Acerca de la Fórmula Salarial",

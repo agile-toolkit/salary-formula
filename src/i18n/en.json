@@ -109,7 +109,10 @@
     "baseline_badge": "baseline",
     "delete": "Delete scenario",
     "factor_col": "Factor",
-    "total_row": "Total salary"
+    "total_row": "Total salary",
+    "log_change": "Log this change in Change Planner",
+    "change_logged": "Change logged. Open Change Planner to complete the record.",
+    "open_change_planner": "Open Change Planner"
   },
   "learn": {
     "title": "About the Salary Formula",
