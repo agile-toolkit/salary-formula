@@ -74,6 +74,8 @@
     "add": "Добавить профиль",
     "empty": "Добавьте хотя бы один сохранённый профиль для сравнения.",
     "delete": "Удалить",
+    "export_image": "Сохранить как изображение",
+    "export_csv": "Экспорт CSV",
     "share_sprint_metrics": "Поделиться с Sprint Metrics",
     "share_done": "Отправлено!",
     "team_rate_shared": "Часовая ставка команды передана в Scrum Facilitator."

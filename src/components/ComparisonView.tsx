@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import html2canvas from 'html2canvas'
 import type { Profile, Factor } from '../types'
 import { calcSalary, formatSalary } from '../data/presets'
 
@@ -16,6 +17,8 @@ interface Props {
 export default function ComparisonView({ profiles, factors, currency, onDelete, onLoad }: Props) {
   const { t } = useTranslation()
   const [shared, setShared] = useState(false)
+  const [exporting, setExporting] = useState(false)
+  const cardsRef = useRef<HTMLDivElement>(null)
 
   if (profiles.length === 0) {
     return (
@@ -49,16 +52,63 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
     setTimeout(() => setShared(false), 2000)
   }
 
+  async function handleExportImage() {
+    if (!cardsRef.current || exporting) return
+    setExporting(true)
+    try {
+      const canvas = await html2canvas(cardsRef.current, { scale: 2, useCORS: true })
+      const link = document.createElement('a')
+      link.download = 'salary-comparison.png'
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  function handleExportCsv() {
+    const headers = ['name', ...factors.map(f => f.id), 'total_salary']
+    const rows = profiles.map(p => {
+      const merged = factors.map(f => ({ ...f, value: p.factors[f.id] ?? f.value }))
+      const total = calcSalary(merged)
+      const factorVals = factors.map(f => String(p.factors[f.id] ?? f.value))
+      return [p.name, ...factorVals, String(total)]
+    })
+    const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.download = 'salary-comparison.csv'
+    link.href = url
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 gap-2 flex-wrap">
         <h1 className="text-2xl font-bold text-gray-900">{t('comparison.title')}</h1>
-        <button
-          onClick={handleShareWithSprintMetrics}
-          className="btn-ghost text-sm text-indigo-600 border border-indigo-200 rounded-lg px-3 py-1.5 hover:bg-indigo-50 transition-colors"
-        >
-          {shared ? t('comparison.share_done') : t('comparison.share_sprint_metrics')}
-        </button>
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            onClick={handleExportImage}
+            disabled={exporting}
+            className="btn-ghost text-sm text-gray-600 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors disabled:opacity-50"
+          >
+            {exporting ? '…' : t('comparison.export_image')}
+          </button>
+          <button
+            onClick={handleExportCsv}
+            className="btn-ghost text-sm text-gray-600 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors"
+          >
+            {t('comparison.export_csv')}
+          </button>
+          <button
+            onClick={handleShareWithSprintMetrics}
+            className="btn-ghost text-sm text-indigo-600 border border-indigo-200 rounded-lg px-3 py-1.5 hover:bg-indigo-50 transition-colors"
+          >
+            {shared ? t('comparison.share_done') : t('comparison.share_sprint_metrics')}
+          </button>
+        </div>
       </div>
 
       <div className="mb-4 flex items-center gap-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2 text-sm text-blue-700">
@@ -68,7 +118,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
         {t('comparison.team_rate_shared')}
       </div>
 
-      <div className="space-y-4">
+      <div ref={cardsRef} className="space-y-4">
         {profiles.map(profile => {
           const merged = factors.map(f => ({ ...f, value: profile.factors[f.id] ?? f.value }))
           const salary = calcSalary(merged)

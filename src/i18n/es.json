@@ -74,6 +74,8 @@
     "add": "Agregar Perfil",
     "empty": "Agrega al menos un perfil guardado para comparar.",
     "delete": "Eliminar",
+    "export_image": "Guardar como imagen",
+    "export_csv": "Exportar CSV",
     "share_sprint_metrics": "Compartir con Sprint Metrics",
     "share_done": "¡Compartido!",
     "team_rate_shared": "La tarifa por hora del equipo ha sido compartida con Scrum Facilitator."

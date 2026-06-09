@@ -24,7 +24,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 <!-- Issues awaiting human review; agent appends here during research runs -->
 - [x] [#2] Research: ES + BE locale support — implemented
 - [x] [#3] Integration: link salary profiles to Work Profiles app — implemented
-- [ ] [#4] Feature: export comparison as image or CSV
+- [x] [#4] Feature: export comparison as image or CSV
 - [ ] [#5] Technical: keyboard navigation and accessibility audit for factor sliders
 - [x] [#6] Feature: what-if scenario comparison — implemented
 - [x] [#7] Integration: Sprint Metrics — team payroll budget dashboard — implemented
@@ -54,6 +54,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-09 — feat: export comparison as image or CSV (#4)
+- Done: installed `html2canvas`; added "Save as Image" button in `ComparisonView.tsx` — captures `cardsRef` div at 2× scale via html2canvas and downloads `salary-comparison.png`; added "Export CSV" button — serialises all profiles (name + all factor values + total salary) to a CSV blob and downloads `salary-comparison.csv`; both buttons only render when profiles.length > 0; added `comparison.export_image` / `comparison.export_csv` i18n keys to all 4 locales (EN/ES/BE/RU)
+- Issue #4 status → In Review
+- Remaining: #5 (accessibility), #12 (factor breakdown chart), #13 (Team Identity import), #14 (formula review reminder)
+- Next task: check issues for human feedback; implement next approved item among #5 (keyboard navigation/accessibility audit for factor sliders — aria attributes, keyboard-only focus rings, skip-to-content), #12 (factor contribution breakdown chart — pure-CSS progress bars in SalaryCalculator.tsx), #13 (Team Identity import — read team-identity:charter localStorage), #14 (formula review date reminder — banner after 180 days)
 
 ### 2026-06-07 — feat: Change Planner integration (#20)
 - Done: `writePendingChangeRecord()` in `FormulaBuilder.tsx` writes `salary-formula:pendingChangeRecord` localStorage key when user ticks "Log this change in Change Planner" checkbox on scenario save; shape `{title, type:'formula_revision', scenarioName, factorDeltas (non-base factor deviations from 1.0 as signed strings), currency, createdAt}`; green toast appears for 5s with link to `https://agile-toolkit.github.io/change-planner/`; `scenario.log_change` / `scenario.change_logged` / `scenario.open_change_planner` i18n keys in all 4 locales (EN/ES/BE/RU); `salary-formula:pendingChangeRecord` documented in localStorage keys table
