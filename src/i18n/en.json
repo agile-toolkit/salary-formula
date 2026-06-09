@@ -92,6 +92,8 @@
     "add": "Add Profile",
     "empty": "Add at least one saved profile to compare.",
     "delete": "Remove",
+    "export_image": "Save as Image",
+    "export_csv": "Export CSV",
     "share_sprint_metrics": "Share with Sprint Metrics",
     "share_done": "Shared!",
     "team_rate_shared": "Your team hourly rate has been shared with Scrum Facilitator."
