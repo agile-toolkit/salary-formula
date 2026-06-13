@@ -119,7 +119,7 @@ export default function SalaryCalculator({
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('calculator.title')}</h1>
+      <h1 id="calculator-heading" className="text-2xl font-bold text-gray-900 mb-6">{t('calculator.title')}</h1>
 
       {/* Result */}
       <div className="card bg-brand-600 border-0 mb-6 text-white">

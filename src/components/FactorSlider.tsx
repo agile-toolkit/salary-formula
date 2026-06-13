@@ -60,7 +60,9 @@ export default function FactorSlider({ factor, onChange }: Props) {
           step={factor.step}
           value={factor.value}
           onChange={e => onChange(factor.id, parseFloat(e.target.value))}
-          className="w-full h-2 appearance-none bg-gray-200 rounded-full cursor-pointer accent-brand-600"
+          aria-label={t(`factors.${factor.id}.label`)}
+          aria-valuetext={label ? `${formatValue(factor.value)} — ${label}` : formatValue(factor.value)}
+          className="w-full h-2 appearance-none bg-gray-200 rounded-full cursor-pointer accent-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
           style={{
             background: `linear-gradient(to right, #2563eb ${pct}%, #e5e7eb ${pct}%)`,
           }}

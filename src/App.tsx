@@ -163,6 +163,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col" data-accent="cobalt">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-medium"
+      >
+        {t('app.skip_to_content')}
+      </a>
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -218,7 +224,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
+      <main id="main-content" className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
         {screen === 'home' && <HomeScreen onStart={() => setScreen('calculator')} />}
         {screen === 'calculator' && (
           <SalaryCalculator
