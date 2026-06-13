@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Fórmula Salarial"
+    "title": "Fórmula Salarial",
+    "skip_to_content": "Saltar al contenido principal"
   },
   "nav": {
     "calculator": "Calculadora",

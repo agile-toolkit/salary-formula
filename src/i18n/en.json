@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Salary Formula"
+    "title": "Salary Formula",
+    "skip_to_content": "Skip to main content"
   },
   "nav": {
     "calculator": "Calculator",

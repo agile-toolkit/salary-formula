@@ -18,6 +18,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Shareable formula URL (#17) — base64-encodes `FormulaConfig` (factors + currency) to `window.location.hash` via `history.replaceState` on every change; hydrates from `#formula=<base64>` on load; "Copy link" button in `FormulaBuilder.tsx` with `navigator.clipboard.writeText`; `builder.copy_link` / `builder.link_copied` i18n keys in all 4 locales
 - [x] Pay equity analysis view (#18) — `EquityView.tsx` with salary distribution bar (min/median/max), equity ratio (amber ≥2×, red ≥3×), per-factor spread bars, profiles ranked by salary with delta from median; empty state when <2 profiles; `equity.*` i18n keys in all 4 locales (EN/ES/BE/RU)
 - [x] Scrum Facilitator integration (#19) — writes `salary-formula:teamHourlyRate` localStorage key on every profile save/delete; shape: `{totalAnnual, currency, profileCount, hourlyRate (totalAnnual/52/40), updatedAt}`; info callout in ComparisonView when profiles exist; `comparison.team_rate_shared` i18n key in all 4 locales
+- [x] Keyboard accessibility for factor sliders (#5) — `aria-label` and `aria-valuetext` on all `<input type="range">` in `FactorSlider.tsx`; `focus-visible:ring-2 focus-visible:ring-brand-600` ring replaces default browser outline; skip-to-content link in `App.tsx` targeting `#main-content`; `app.skip_to_content` i18n key in all 4 locales
 
 ## Backlog
 
@@ -25,7 +26,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#2] Research: ES + BE locale support — implemented
 - [x] [#3] Integration: link salary profiles to Work Profiles app — implemented
 - [x] [#4] Feature: export comparison as image or CSV
-- [ ] [#5] Technical: keyboard navigation and accessibility audit for factor sliders
+- [x] [#5] Technical: keyboard navigation and accessibility audit for factor sliders — implemented
 - [x] [#6] Feature: what-if scenario comparison — implemented
 - [x] [#7] Integration: Sprint Metrics — team payroll budget dashboard — implemented
 - [ ] [#12] Feature: factor contribution breakdown chart in Calculator
@@ -54,6 +55,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-13 — feat: keyboard accessibility for factor sliders (#5)
+- Done: added `aria-label={t('factors.{id}.label')}` and `aria-valuetext` (formatted value + descriptive label for seniority/performance) to all `<input type="range">` in `FactorSlider.tsx`; added `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2` Tailwind classes for keyboard-only focus ring; added skip-to-content `<a href="#main-content">` in `App.tsx` (sr-only, becomes visible on focus); `id="main-content"` added to existing `<main>` in `App.tsx`; `app.skip_to_content` i18n key added to all 4 locales (EN/ES/BE/RU); also installed missing `html2canvas` dep to fix pre-existing build error
+- Issue #5 status → In Review
+- Remaining: #12 (factor breakdown chart), #13 (Team Identity import), #14 (formula review reminder), #16 (templates), #17 (shareable URL) — many already implemented per BRIEF
+- Next task: check issues for human feedback; implement #12 (factor contribution breakdown chart — pure-CSS progress bars per factor in SalaryCalculator.tsx showing each factor's % of total multiplier, factor label + %, updates reactively with sliders; `calculator.breakdown_title` i18n key in all 4 locales)
 
 ### 2026-06-09 — feat: export comparison as image or CSV (#4)
 - Done: installed `html2canvas`; added "Save as Image" button in `ComparisonView.tsx` — captures `cardsRef` div at 2× scale via html2canvas and downloads `salary-comparison.png`; added "Export CSV" button — serialises all profiles (name + all factor values + total salary) to a CSV blob and downloads `salary-comparison.csv`; both buttons only render when profiles.length > 0; added `comparison.export_image` / `comparison.export_csv` i18n keys to all 4 locales (EN/ES/BE/RU)
