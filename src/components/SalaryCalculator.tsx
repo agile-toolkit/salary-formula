@@ -56,10 +56,11 @@ export default function SalaryCalculator({
 
   const salary = calcSalary(factors)
   const base = factors.find(f => f.isBase)?.value ?? 0
-  const multiplierStr = factors
-    .filter(f => !f.isBase)
+  const nonBaseFactors = factors.filter(f => !f.isBase)
+  const multiplierStr = nonBaseFactors
     .map(f => f.value.toFixed(2) + '×')
     .join(' × ')
+  const multiplierTotal = nonBaseFactors.reduce((sum, f) => sum + f.value, 0)
 
   const handleChange = (id: string, value: number) => {
     if (id === 'skills' && wpLinked) setWpLinked(null)
@@ -132,6 +133,30 @@ export default function SalaryCalculator({
           {formatSalary(base, currency)} × {multiplierStr}
         </div>
       </div>
+
+      {/* Factor breakdown */}
+      {nonBaseFactors.length > 0 && (
+        <div className="card mb-4">
+          <h2 className="text-sm font-semibold text-gray-700 mb-3">{t('calculator.breakdown_title')}</h2>
+          {nonBaseFactors.map(f => {
+            const pct = multiplierTotal > 0 ? Math.round((f.value / multiplierTotal) * 100) : 0
+            return (
+              <div key={f.id} className="mb-2 last:mb-0">
+                <div className="flex justify-between text-xs text-gray-600 mb-1">
+                  <span>{t(`factors.${f.id}.label`)}</span>
+                  <span className="font-medium tabular-nums">{pct}%</span>
+                </div>
+                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-brand-500 rounded-full transition-all duration-300"
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
 
       {/* Currency selector */}
       <div className="card mb-4">

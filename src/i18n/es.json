@@ -68,7 +68,8 @@
     "wp_linked": "Vinculado a: {{name}}",
     "wp_unlink": "Desvincular",
     "wp_no_data": "No se encontraron Perfiles de Trabajo. Abre la aplicación Work Profiles primero.",
-    "wp_cancel": "Cancelar"
+    "wp_cancel": "Cancelar",
+    "breakdown_title": "Desglose de factores"
   },
   "comparison": {
     "title": "Comparación de Perfiles",
