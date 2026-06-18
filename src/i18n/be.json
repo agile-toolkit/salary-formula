@@ -68,7 +68,8 @@
     "wp_linked": "Звязана з: {{name}}",
     "wp_unlink": "Адвязаць",
     "wp_no_data": "Work Profiles не знойдзены. Спачатку адкрыйце праграму Work Profiles.",
-    "wp_cancel": "Адмяніць"
+    "wp_cancel": "Адмяніць",
+    "breakdown_title": "Разбіўка па фактарах"
   },
   "comparison": {
     "title": "Параўнанне профіляў",

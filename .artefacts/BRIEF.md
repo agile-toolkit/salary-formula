@@ -19,6 +19,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Pay equity analysis view (#18) — `EquityView.tsx` with salary distribution bar (min/median/max), equity ratio (amber ≥2×, red ≥3×), per-factor spread bars, profiles ranked by salary with delta from median; empty state when <2 profiles; `equity.*` i18n keys in all 4 locales (EN/ES/BE/RU)
 - [x] Scrum Facilitator integration (#19) — writes `salary-formula:teamHourlyRate` localStorage key on every profile save/delete; shape: `{totalAnnual, currency, profileCount, hourlyRate (totalAnnual/52/40), updatedAt}`; info callout in ComparisonView when profiles exist; `comparison.team_rate_shared` i18n key in all 4 locales
 - [x] Keyboard accessibility for factor sliders (#5) — `aria-label` and `aria-valuetext` on all `<input type="range">` in `FactorSlider.tsx`; `focus-visible:ring-2 focus-visible:ring-brand-600` ring replaces default browser outline; skip-to-content link in `App.tsx` targeting `#main-content`; `app.skip_to_content` i18n key in all 4 locales
+- [x] Factor contribution breakdown chart (#12) — compact breakdown section in `SalaryCalculator.tsx` between result card and currency selector; per-factor horizontal progress bars (pure CSS, Tailwind); each bar shows factor label + percentage of total multiplier sum; updates reactively as sliders move; `calculator.breakdown_title` i18n key in all 4 locales (EN/ES/BE/RU)
 
 ## Backlog
 
@@ -29,7 +30,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#5] Technical: keyboard navigation and accessibility audit for factor sliders — implemented
 - [x] [#6] Feature: what-if scenario comparison — implemented
 - [x] [#7] Integration: Sprint Metrics — team payroll budget dashboard — implemented
-- [ ] [#12] Feature: factor contribution breakdown chart in Calculator
+- [x] [#12] Feature: factor contribution breakdown chart in Calculator — implemented
 - [ ] [#13] Integration: Team Identity — import team members as salary profiles
 - [ ] [#14] Feature: formula review date reminder
 - [x] [#15] Integration: Dashboard localStorage key (salary-formula:lastSession) — implemented
@@ -55,6 +56,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-18 — feat: factor contribution breakdown chart (#12)
+- Done: added `nonBaseFactors` + `multiplierTotal` derived values in `SalaryCalculator.tsx`; added "Factor breakdown" section between result card and currency selector — one horizontal progress bar per non-base factor; bar width = factor value ÷ sum of all non-base values × 100%; label (from `factors.{id}.label`) + percentage shown on each row; pure Tailwind CSS (`bg-brand-500 h-2 rounded-full`), no chart library; updates reactively as sliders move; added `calculator.breakdown_title` i18n key to all 4 locales (EN: "Factor breakdown", ES: "Desglose de factores", BE: "Разбіўка па фактарах", RU: "Разбивка по факторам"); also fixed pre-existing `@types/html2canvas` missing-types TS error
+- Issue #12 status → In Review
+- Remaining: #13 (Team Identity import), #14 (formula review reminder), #21 (header unification — auto-approve eligible ≥7 days), #22 (light/dark theme — auto-approve eligible ≥7 days)
+- Next task: check issues for human feedback; implement #13 (Team Identity import — read `team-identity:charter` localStorage key, show "Import team members" button in ComparisonView or SalaryCalculator, map charter members as profiles with name pre-filled; `comparison.import_team_identity` i18n key in 4 locales)
 
 ### 2026-06-13 — feat: keyboard accessibility for factor sliders (#5)
 - Done: added `aria-label={t('factors.{id}.label')}` and `aria-valuetext` (formatted value + descriptive label for seniority/performance) to all `<input type="range">` in `FactorSlider.tsx`; added `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2` Tailwind classes for keyboard-only focus ring; added skip-to-content `<a href="#main-content">` in `App.tsx` (sr-only, becomes visible on focus); `id="main-content"` added to existing `<main>` in `App.tsx`; `app.skip_to_content` i18n key added to all 4 locales (EN/ES/BE/RU); also installed missing `html2canvas` dep to fix pre-existing build error

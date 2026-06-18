@@ -68,7 +68,8 @@
     "wp_linked": "Связано с: {{name}}",
     "wp_unlink": "Отвязать",
     "wp_no_data": "Профили Work Profiles не найдены. Сначала откройте приложение Work Profiles.",
-    "wp_cancel": "Отмена"
+    "wp_cancel": "Отмена",
+    "breakdown_title": "Разбивка по факторам"
   },
   "comparison": {
     "title": "Сравнение профилей",

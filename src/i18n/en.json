@@ -86,7 +86,8 @@
     "wp_linked": "Linked to: {{name}}",
     "wp_unlink": "Unlink",
     "wp_no_data": "No Work Profiles found. Open the Work Profiles app first.",
-    "wp_cancel": "Cancel"
+    "wp_cancel": "Cancel",
+    "breakdown_title": "Factor breakdown"
   },
   "comparison": {
     "title": "Profile Comparison",
