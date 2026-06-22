@@ -69,7 +69,9 @@
     "wp_unlink": "Desvincular",
     "wp_no_data": "No se encontraron Perfiles de Trabajo. Abre la aplicación Work Profiles primero.",
     "wp_cancel": "Cancelar",
-    "breakdown_title": "Desglose de factores"
+    "breakdown_title": "Desglose de factores",
+    "ti_import": "Importar desde Team Identity",
+    "ti_no_data": "No se encontró ningún charter de Team Identity. Abre la aplicación Team Identity primero."
   },
   "comparison": {
     "title": "Comparación de Perfiles",

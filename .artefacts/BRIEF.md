@@ -20,6 +20,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Scrum Facilitator integration (#19) — writes `salary-formula:teamHourlyRate` localStorage key on every profile save/delete; shape: `{totalAnnual, currency, profileCount, hourlyRate (totalAnnual/52/40), updatedAt}`; info callout in ComparisonView when profiles exist; `comparison.team_rate_shared` i18n key in all 4 locales
 - [x] Keyboard accessibility for factor sliders (#5) — `aria-label` and `aria-valuetext` on all `<input type="range">` in `FactorSlider.tsx`; `focus-visible:ring-2 focus-visible:ring-brand-600` ring replaces default browser outline; skip-to-content link in `App.tsx` targeting `#main-content`; `app.skip_to_content` i18n key in all 4 locales
 - [x] Factor contribution breakdown chart (#12) — compact breakdown section in `SalaryCalculator.tsx` between result card and currency selector; per-factor horizontal progress bars (pure CSS, Tailwind); each bar shows factor label + percentage of total multiplier sum; updates reactively as sliders move; `calculator.breakdown_title` i18n key in all 4 locales (EN/ES/BE/RU)
+- [x] Team Identity import (#13) — "Import from Team Identity" button below save-profile form in `SalaryCalculator.tsx`; reads `team-identity:charter` localStorage key; shows member picker when >1 member; pre-fills profile name input; `calculator.ti_import` / `calculator.ti_no_data` i18n keys in all 4 locales (EN/ES/BE/RU)
 
 ## Backlog
 
@@ -31,7 +32,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#6] Feature: what-if scenario comparison — implemented
 - [x] [#7] Integration: Sprint Metrics — team payroll budget dashboard — implemented
 - [x] [#12] Feature: factor contribution breakdown chart in Calculator — implemented
-- [ ] [#13] Integration: Team Identity — import team members as salary profiles
+- [x] [#13] Integration: Team Identity — import team members as salary profiles
 - [ ] [#14] Feature: formula review date reminder
 - [x] [#15] Integration: Dashboard localStorage key (salary-formula:lastSession) — implemented
 - [x] [#16] Feature: formula templates library for faster onboarding — implemented
@@ -56,6 +57,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-22 — feat: Team Identity import (#13)
+- Done: added `readTiMembers()` in `SalaryCalculator.tsx` (reads `team-identity:charter` localStorage, returns `members[]`); added "Import from Team Identity" button below save-profile name input; auto-selects if 1 member, shows name-chip picker if >1, shows no-data hint if 0; `calculator.ti_import` / `calculator.ti_no_data` i18n keys in all 4 locales (EN/ES/BE/RU); installed `html2canvas` + `@types/html2canvas` (pre-existing missing dep in this env)
+- Issue #13 status → In Review
+- Remaining: #14 (formula review date reminder — banner after 180 days; mark-reviewed button in FormulaBuilder; `salary-formula:lastReviewed` localStorage key); #21 and #22 stale needs-review (≥7 days) — auto-approve eligible
+- Next task: implement #14 (formula review date reminder — add `salary-formula:lastReviewed` localStorage key; "Mark as reviewed" button in FormulaBuilder.tsx; yellow banner in SalaryCalculator.tsx if lastReviewed is absent or >180 days old; dismiss button; `calculator.review_due`, `calculator.review_dismiss`, `builder.mark_reviewed`, `builder.review_done` i18n keys in all 4 locales)
 
 ### 2026-06-18 — feat: factor contribution breakdown chart (#12)
 - Done: added `nonBaseFactors` + `multiplierTotal` derived values in `SalaryCalculator.tsx`; added "Factor breakdown" section between result card and currency selector — one horizontal progress bar per non-base factor; bar width = factor value ÷ sum of all non-base values × 100%; label (from `factors.{id}.label`) + percentage shown on each row; pure Tailwind CSS (`bg-brand-500 h-2 rounded-full`), no chart library; updates reactively as sliders move; added `calculator.breakdown_title` i18n key to all 4 locales (EN: "Factor breakdown", ES: "Desglose de factores", BE: "Разбіўка па фактарах", RU: "Разбивка по факторам"); also fixed pre-existing `@types/html2canvas` missing-types TS error
