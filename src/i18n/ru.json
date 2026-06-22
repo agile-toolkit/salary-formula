@@ -69,7 +69,9 @@
     "wp_unlink": "Отвязать",
     "wp_no_data": "Профили Work Profiles не найдены. Сначала откройте приложение Work Profiles.",
     "wp_cancel": "Отмена",
-    "breakdown_title": "Разбивка по факторам"
+    "breakdown_title": "Разбивка по факторам",
+    "ti_import": "Импортировать из Team Identity",
+    "ti_no_data": "Устав команды Team Identity не найден. Сначала откройте приложение Team Identity."
   },
   "comparison": {
     "title": "Сравнение профилей",

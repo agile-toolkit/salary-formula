@@ -33,6 +33,15 @@ function readWpProfiles(): WpProfile[] {
   }
 }
 
+function readTiMembers(): string[] {
+  try {
+    const data = JSON.parse(localStorage.getItem('team-identity:charter') ?? 'null')
+    return Array.isArray(data?.members) ? data.members.filter(Boolean) : []
+  } catch {
+    return []
+  }
+}
+
 function proficiencyToSkillsMultiplier(avgProficiency: number, min: number, max: number): number {
   const clamped = Math.max(1, Math.min(5, avgProficiency))
   const raw = min + ((clamped - 1) / 4) * (max - min)
@@ -53,6 +62,9 @@ export default function SalaryCalculator({
   const [wpPickerProfiles, setWpPickerProfiles] = useState<WpProfile[]>([])
   const [showWpPicker, setShowWpPicker] = useState(false)
   const [wpNoData, setWpNoData] = useState(false)
+  const [tiMembers, setTiMembers] = useState<string[]>([])
+  const [showTiPicker, setShowTiPicker] = useState(false)
+  const [tiNoData, setTiNoData] = useState(false)
 
   const salary = calcSalary(factors)
   const base = factors.find(f => f.isBase)?.value ?? 0
@@ -74,6 +86,22 @@ export default function SalaryCalculator({
     setWpLinked(null)
     setShowWpPicker(false)
     setWpNoData(false)
+    setShowTiPicker(false)
+    setTiNoData(false)
+  }
+
+  const handleImportTi = () => {
+    const members = readTiMembers()
+    setTiNoData(false)
+    setShowTiPicker(false)
+    if (members.length === 0) {
+      setTiNoData(true)
+    } else if (members.length === 1) {
+      setProfileName(members[0])
+    } else {
+      setTiMembers(members)
+      setShowTiPicker(true)
+    }
   }
 
   const handleSave = () => {
@@ -255,6 +283,38 @@ export default function SalaryCalculator({
           >
             {saved ? t('calculator.saved') : t('calculator.save')}
           </button>
+        </div>
+        <div className="mt-2">
+          <button
+            onClick={handleImportTi}
+            className="text-xs text-brand-600 hover:text-brand-700 underline"
+          >
+            {t('calculator.ti_import')}
+          </button>
+          {tiNoData && (
+            <span className="ml-2 text-xs text-gray-400">
+              {t('calculator.ti_no_data')}
+            </span>
+          )}
+          {showTiPicker && (
+            <div className="mt-2 flex flex-wrap gap-2">
+              {tiMembers.map(name => (
+                <button
+                  key={name}
+                  onClick={() => { setProfileName(name); setShowTiPicker(false) }}
+                  className="text-xs px-2 py-1 border border-brand-300 text-brand-700 rounded hover:bg-brand-50 transition-colors"
+                >
+                  {name}
+                </button>
+              ))}
+              <button
+                onClick={() => setShowTiPicker(false)}
+                className="text-xs px-2 py-1 text-gray-400 hover:text-gray-600"
+              >
+                {t('calculator.wp_cancel')}
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

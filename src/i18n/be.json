@@ -69,7 +69,9 @@
     "wp_unlink": "Адвязаць",
     "wp_no_data": "Work Profiles не знойдзены. Спачатку адкрыйце праграму Work Profiles.",
     "wp_cancel": "Адмяніць",
-    "breakdown_title": "Разбіўка па фактарах"
+    "breakdown_title": "Разбіўка па фактарах",
+    "ti_import": "Імпартаваць з Team Identity",
+    "ti_no_data": "Хартыя Team Identity не знойдзена. Спачатку адкрыйце праграму Team Identity."
   },
   "comparison": {
     "title": "Параўнанне профіляў",

@@ -87,7 +87,9 @@
     "wp_unlink": "Unlink",
     "wp_no_data": "No Work Profiles found. Open the Work Profiles app first.",
     "wp_cancel": "Cancel",
-    "breakdown_title": "Factor breakdown"
+    "breakdown_title": "Factor breakdown",
+    "ti_import": "Import from Team Identity",
+    "ti_no_data": "No Team Identity charter found. Open the Team Identity app first."
   },
   "comparison": {
     "title": "Profile Comparison",
