@@ -6,6 +6,7 @@ import TemplatesModal from './TemplatesModal'
 
 const PENDING_CHANGE_KEY = 'salary-formula:pendingChangeRecord'
 const CHANGE_PLANNER_URL = 'https://agile-toolkit.github.io/change-planner/'
+const LAST_REVIEWED_KEY = 'salary-formula:lastReviewed'
 
 function writePendingChangeRecord(name: string, factors: Factor[], currency: string) {
   const factorDeltas: Record<string, string> = {}
@@ -44,12 +45,19 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
   const [templateApplied, setTemplateApplied] = useState(false)
   const [showTemplates, setShowTemplates] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [reviewed, setReviewed] = useState(false)
 
   function handleCopyLink() {
     navigator.clipboard.writeText(window.location.href).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     })
+  }
+
+  function handleMarkReviewed() {
+    localStorage.setItem(LAST_REVIEWED_KEY, new Date().toISOString())
+    setReviewed(true)
+    setTimeout(() => setReviewed(false), 2000)
   }
   const preview = calculateSalary(factors)
 
@@ -105,6 +113,12 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
           <p className="text-gray-500 text-sm">{t('builder.subtitle')}</p>
         </div>
         <div className="flex gap-2 shrink-0">
+          <button
+            onClick={handleMarkReviewed}
+            className="btn-secondary"
+          >
+            {reviewed ? t('builder.review_done') : t('builder.mark_reviewed')}
+          </button>
           <button
             onClick={handleCopyLink}
             className="btn-secondary"

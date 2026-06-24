@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Factor, Profile } from '../types'
 import { calcSalary, formatSalary, DEFAULT_FACTORS, CURRENCIES } from '../data/presets'
@@ -65,6 +65,14 @@ export default function SalaryCalculator({
   const [tiMembers, setTiMembers] = useState<string[]>([])
   const [showTiPicker, setShowTiPicker] = useState(false)
   const [tiNoData, setTiNoData] = useState(false)
+  const [reviewDismissed, setReviewDismissed] = useState(false)
+
+  const reviewOverdue = useMemo(() => {
+    const raw = localStorage.getItem('salary-formula:lastReviewed')
+    if (!raw) return true
+    const last = new Date(raw).getTime()
+    return Date.now() - last > 180 * 24 * 60 * 60 * 1000
+  }, [])
 
   const salary = calcSalary(factors)
   const base = factors.find(f => f.isBase)?.value ?? 0
@@ -149,6 +157,19 @@ export default function SalaryCalculator({
   return (
     <div className="max-w-2xl mx-auto">
       <h1 id="calculator-heading" className="text-2xl font-bold text-gray-900 mb-6">{t('calculator.title')}</h1>
+
+      {/* Review overdue banner */}
+      {reviewOverdue && !reviewDismissed && (
+        <div className="flex items-start justify-between gap-3 rounded-lg bg-yellow-50 border border-yellow-200 px-4 py-3 mb-6">
+          <p className="text-sm text-yellow-800">{t('calculator.review_due')}</p>
+          <button
+            onClick={() => setReviewDismissed(true)}
+            className="text-yellow-600 hover:text-yellow-800 text-xs font-medium whitespace-nowrap shrink-0"
+          >
+            {t('calculator.review_dismiss')}
+          </button>
+        </div>
+      )}
 
       {/* Result */}
       <div className="card bg-brand-600 border-0 mb-6 text-white">
