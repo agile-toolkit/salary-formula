@@ -35,6 +35,8 @@
     "step": "Paso",
     "current_value": "Actual",
     "disclaimer": "Cambiar los rangos no altera los perfiles guardados — solo el comportamiento de los nuevos ajustes en la calculadora.",
+    "mark_reviewed": "Marcar como revisado",
+    "review_done": "¡Revisión registrada!",
     "copy_link": "Copiar enlace",
     "link_copied": "¡Enlace copiado!",
     "templates": "Empezar desde plantilla",
@@ -71,7 +73,9 @@
     "wp_cancel": "Cancelar",
     "breakdown_title": "Desglose de factores",
     "ti_import": "Importar desde Team Identity",
-    "ti_no_data": "No se encontró ningún charter de Team Identity. Abre la aplicación Team Identity primero."
+    "ti_no_data": "No se encontró ningún charter de Team Identity. Abre la aplicación Team Identity primero.",
+    "review_due": "Tu fórmula salarial lleva más de 6 meses sin revisarse. Considera programar una revisión del equipo.",
+    "review_dismiss": "Descartar"
   },
   "comparison": {
     "title": "Comparación de Perfiles",

@@ -21,6 +21,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Keyboard accessibility for factor sliders (#5) — `aria-label` and `aria-valuetext` on all `<input type="range">` in `FactorSlider.tsx`; `focus-visible:ring-2 focus-visible:ring-brand-600` ring replaces default browser outline; skip-to-content link in `App.tsx` targeting `#main-content`; `app.skip_to_content` i18n key in all 4 locales
 - [x] Factor contribution breakdown chart (#12) — compact breakdown section in `SalaryCalculator.tsx` between result card and currency selector; per-factor horizontal progress bars (pure CSS, Tailwind); each bar shows factor label + percentage of total multiplier sum; updates reactively as sliders move; `calculator.breakdown_title` i18n key in all 4 locales (EN/ES/BE/RU)
 - [x] Team Identity import (#13) — "Import from Team Identity" button below save-profile form in `SalaryCalculator.tsx`; reads `team-identity:charter` localStorage key; shows member picker when >1 member; pre-fills profile name input; `calculator.ti_import` / `calculator.ti_no_data` i18n keys in all 4 locales (EN/ES/BE/RU)
+- [x] Formula review date reminder (#14) — "Mark as reviewed" button in `FormulaBuilder.tsx` writes `salary-formula:lastReviewed` ISO timestamp; yellow banner in `SalaryCalculator.tsx` if key absent or >180 days old; dismiss button (session-only, no review date update); `calculator.review_due` / `calculator.review_dismiss` / `builder.mark_reviewed` / `builder.review_done` i18n keys in all 4 locales (EN/ES/BE/RU)
 
 ## Backlog
 
@@ -33,7 +34,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#7] Integration: Sprint Metrics — team payroll budget dashboard — implemented
 - [x] [#12] Feature: factor contribution breakdown chart in Calculator — implemented
 - [x] [#13] Integration: Team Identity — import team members as salary profiles
-- [ ] [#14] Feature: formula review date reminder
+- [x] [#14] Feature: formula review date reminder — implemented
 - [x] [#15] Integration: Dashboard localStorage key (salary-formula:lastSession) — implemented
 - [x] [#16] Feature: formula templates library for faster onboarding — implemented
 - [x] [#17] Feature: shareable formula URL for collaborative review — implemented
@@ -51,12 +52,19 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 | `sprint_metrics_salary_bridge_v1` | `ComparisonView.tsx` share button | `{profiles: [{name, annualSalary, currency}], exportedAt}` |
 | `salary-formula:teamHourlyRate` | `App.tsx` `handleSaveProfile` / `handleDeleteProfile` | `{totalAnnual: number, currency: string, profileCount: number, hourlyRate: number, updatedAt: ISO string}` |
 | `salary-formula:pendingChangeRecord` | `FormulaBuilder.tsx` opt-in checkbox on scenario save | `{title, type: 'formula_revision', scenarioName, factorDeltas: Record<string,string>, currency, createdAt}` |
+| `salary-formula:lastReviewed` | `FormulaBuilder.tsx` "Mark as reviewed" button | ISO timestamp string |
 
 ## Tech notes
 
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-24 — feat: formula review date reminder (#14)
+- Done: added `LAST_REVIEWED_KEY = 'salary-formula:lastReviewed'` constant and `handleMarkReviewed()` in `FormulaBuilder.tsx`; "Mark as reviewed" button added to header action row with 2s "Review recorded!" flash; `reviewOverdue` computed via `useMemo` in `SalaryCalculator.tsx` (true if key absent or >180 days old); yellow banner shown above result card when overdue and not dismissed; dismiss is session-only (component state); `calculator.review_due`, `calculator.review_dismiss`, `builder.mark_reviewed`, `builder.review_done` i18n keys added to all 4 locales (EN/ES/BE/RU); `salary-formula:lastReviewed` documented in localStorage keys table
+- Issue #14 status → In Review
+- Remaining: #21 (header unification — stale needs-review, auto-approve eligible, 35 days); #22 (light/dark theme — stale needs-review, auto-approve eligible, 35 days)
+- Next task: auto-approve #21 and #22 (add auto-approval comments), then implement #21 (AppHeader + LanguagePicker unification — copy `design-system/components/AppHeader.tsx` and `design-system/components/LanguagePicker.tsx` to `src/components/`, replace inline header in App.tsx)
 
 ### 2026-06-22 — feat: Team Identity import (#13)
 - Done: added `readTiMembers()` in `SalaryCalculator.tsx` (reads `team-identity:charter` localStorage, returns `members[]`); added "Import from Team Identity" button below save-profile name input; auto-selects if 1 member, shows name-chip picker if >1, shows no-data hint if 0; `calculator.ti_import` / `calculator.ti_no_data` i18n keys in all 4 locales (EN/ES/BE/RU); installed `html2canvas` + `@types/html2canvas` (pre-existing missing dep in this env)

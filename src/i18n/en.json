@@ -35,6 +35,8 @@
     "step": "Step",
     "current_value": "Current",
     "disclaimer": "Changing ranges does not alter saved profiles — only how new adjustments behave in the calculator.",
+    "mark_reviewed": "Mark as reviewed",
+    "review_done": "Review recorded!",
     "copy_link": "Copy link",
     "link_copied": "Link copied!",
     "templates": "Start from template",
@@ -89,7 +91,9 @@
     "wp_cancel": "Cancel",
     "breakdown_title": "Factor breakdown",
     "ti_import": "Import from Team Identity",
-    "ti_no_data": "No Team Identity charter found. Open the Team Identity app first."
+    "ti_no_data": "No Team Identity charter found. Open the Team Identity app first.",
+    "review_due": "Your salary formula hasn't been reviewed in over 6 months. Consider scheduling a team review.",
+    "review_dismiss": "Dismiss"
   },
   "comparison": {
     "title": "Profile Comparison",
