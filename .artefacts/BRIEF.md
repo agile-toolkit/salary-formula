@@ -22,6 +22,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Factor contribution breakdown chart (#12) — compact breakdown section in `SalaryCalculator.tsx` between result card and currency selector; per-factor horizontal progress bars (pure CSS, Tailwind); each bar shows factor label + percentage of total multiplier sum; updates reactively as sliders move; `calculator.breakdown_title` i18n key in all 4 locales (EN/ES/BE/RU)
 - [x] Team Identity import (#13) — "Import from Team Identity" button below save-profile form in `SalaryCalculator.tsx`; reads `team-identity:charter` localStorage key; shows member picker when >1 member; pre-fills profile name input; `calculator.ti_import` / `calculator.ti_no_data` i18n keys in all 4 locales (EN/ES/BE/RU)
 - [x] Formula review date reminder (#14) — "Mark as reviewed" button in `FormulaBuilder.tsx` writes `salary-formula:lastReviewed` ISO timestamp; yellow banner in `SalaryCalculator.tsx` if key absent or >180 days old; dismiss button (session-only, no review date update); `calculator.review_due` / `calculator.review_dismiss` / `builder.mark_reviewed` / `builder.review_done` i18n keys in all 4 locales (EN/ES/BE/RU)
+- [x] Header unification (#21) — `AppHeader.tsx` + `LanguagePicker.tsx` copied from design-system into `src/components/`; inline cycle-button header replaced; navItems with active state; language picker shows current code with dropdown; nav hidden on home screen
 
 ## Backlog
 
@@ -59,6 +60,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-27 — feat: header unification (#21)
+- Done: copied `AppHeader.tsx` and `LanguagePicker.tsx` from design-system into `src/components/`; replaced inline header in `App.tsx` with `<AppHeader title onTitleClick navItems>`; navItems built with active state and hide on home screen; removed cycle-button language switcher; also installed missing `html2canvas` dep to fix pre-existing build error
+- Issue #21 status → In Review
+- Remaining: #22 (light/dark theme — auto-approved, ≥38 days stale, eligible)
+- Next task: implement #22 (light/dark theme — `darkMode: 'class'` in tailwind.config.js; anti-flash inline script in index.html; copy ThemeToggle.tsx from design-system; add `<ThemeToggle />` inside AppHeader children slot; add `dark:` variants across all src/ Tailwind color classes per token map in design-system/tokens.css)
 
 ### 2026-06-24 — feat: formula review date reminder (#14)
 - Done: added `LAST_REVIEWED_KEY = 'salary-formula:lastReviewed'` constant and `handleMarkReviewed()` in `FormulaBuilder.tsx`; "Mark as reviewed" button added to header action row with 2s "Review recorded!" flash; `reviewOverdue` computed via `useMemo` in `SalaryCalculator.tsx` (true if key absent or >180 days old); yellow banner shown above result card when overdue and not dismissed; dismiss is session-only (component state); `calculator.review_due`, `calculator.review_dismiss`, `builder.mark_reviewed`, `builder.review_done` i18n keys added to all 4 locales (EN/ES/BE/RU); `salary-formula:lastReviewed` documented in localStorage keys table
