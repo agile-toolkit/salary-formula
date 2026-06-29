@@ -23,6 +23,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] Team Identity import (#13) — "Import from Team Identity" button below save-profile form in `SalaryCalculator.tsx`; reads `team-identity:charter` localStorage key; shows member picker when >1 member; pre-fills profile name input; `calculator.ti_import` / `calculator.ti_no_data` i18n keys in all 4 locales (EN/ES/BE/RU)
 - [x] Formula review date reminder (#14) — "Mark as reviewed" button in `FormulaBuilder.tsx` writes `salary-formula:lastReviewed` ISO timestamp; yellow banner in `SalaryCalculator.tsx` if key absent or >180 days old; dismiss button (session-only, no review date update); `calculator.review_due` / `calculator.review_dismiss` / `builder.mark_reviewed` / `builder.review_done` i18n keys in all 4 locales (EN/ES/BE/RU)
 - [x] Header unification (#21) — `AppHeader.tsx` + `LanguagePicker.tsx` copied from design-system into `src/components/`; inline cycle-button header replaced; navItems with active state; language picker shows current code with dropdown; nav hidden on home screen
+- [x] Light/dark theme (#22) — `darkMode: ['selector', '[data-theme="dark"]']` in tailwind.config.js; anti-flash inline script in index.html; `ThemeToggle.tsx` wired in AppHeader children slot via `App.tsx`; `dark:` variants added to all 13 component files (index.css, AppHeader, LanguagePicker, HomeScreen, FactorSlider, SalaryCalculator, FormulaBuilder, ComparisonView, ScenarioView, LearnView, EquityView, TemplatesModal, App)
 
 ## Backlog
 
@@ -60,6 +61,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-06-29 — feat: light/dark theme (#22)
+- Done: `dark:` variants applied across all 13 files in `src/`; ThemeToggle wired into AppHeader children slot in App.tsx; tailwind.config.js `['selector', '[data-theme="dark"]']` and anti-flash index.html script were already set up; fixed pre-existing syntax error in ScenarioView.tsx (missing `}` in JSX expression); installed `html2canvas` dependency to fix pre-existing missing-module build error; build passes cleanly (tsc + vite build, 488 kB bundle)
+- Issue #22 status → In Review
+- Remaining: no approved issues outstanding; check for new human feedback
+- Next task: check issues for human feedback
 
 ### 2026-06-27 — feat: header unification (#21)
 - Done: copied `AppHeader.tsx` and `LanguagePicker.tsx` from design-system into `src/components/`; replaced inline header in `App.tsx` with `<AppHeader title onTitleClick navItems>`; navItems built with active state and hide on home screen; removed cycle-button language switcher; also installed missing `html2canvas` dep to fix pre-existing build error

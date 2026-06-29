@@ -35,14 +35,14 @@ export default function FactorSlider({ factor, onChange }: Props) {
   const pct = ((factor.value - factor.min) / (factor.max - factor.min)) * 100
 
   return (
-    <div className="py-4 border-b border-gray-100 last:border-0">
+    <div className="py-4 border-b border-gray-100 dark:border-gray-800 last:border-0">
       <div className="flex items-center justify-between mb-2">
         <div>
-          <span className="font-medium text-gray-800 text-sm">
+          <span className="font-medium text-gray-800 dark:text-gray-200 text-sm">
             {t(`factors.${factor.id}.label`)}
           </span>
           {label && (
-            <span className="ml-2 text-xs px-2 py-0.5 bg-brand-100 text-brand-700 rounded-full">
+            <span className="ml-2 text-xs px-2 py-0.5 bg-brand-100 dark:bg-brand-700/20 text-brand-700 dark:text-brand-400 rounded-full">
               {label}
             </span>
           )}
@@ -69,12 +69,12 @@ export default function FactorSlider({ factor, onChange }: Props) {
         />
       </div>
 
-      <div className="flex justify-between text-xs text-gray-400">
+      <div className="flex justify-between text-xs text-gray-400 dark:text-gray-600">
         <span>{formatValue(factor.min)}</span>
         <span>{formatValue(factor.max)}</span>
       </div>
 
-      <p className="mt-1.5 text-xs text-gray-500">{t(`factors.${factor.id}.desc`)}</p>
+      <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">{t(`factors.${factor.id}.desc`)}</p>
     </div>
   )
 }
