@@ -109,8 +109,8 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
 
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('builder.title')}</h1>
-          <p className="text-gray-500 text-sm">{t('builder.subtitle')}</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-1">{t('builder.title')}</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{t('builder.subtitle')}</p>
         </div>
         <div className="flex gap-2 shrink-0">
           <button
@@ -136,14 +136,14 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
 
       <div className="card flex flex-wrap items-baseline justify-between gap-3">
         <div>
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+          <p className="text-xs font-medium text-gray-400 dark:text-gray-600 uppercase tracking-wide">
             {t('builder.preview')}
           </p>
           <p className="text-2xl font-bold text-brand-600 tabular-nums">
             {formatCurrency(preview, currency)}
           </p>
         </div>
-        <p className="text-sm text-gray-500">{t('builder.preview_hint')}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{t('builder.preview_hint')}</p>
       </div>
 
       <div className="space-y-4">
@@ -151,15 +151,15 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
           <div key={factor.id} className="card">
             <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
               <div>
-                <h2 className="font-semibold text-gray-900">
+                <h2 className="font-semibold text-gray-900 dark:text-gray-50">
                   {t(`factors.${factor.name}.label`)}
                 </h2>
-                <p className="text-sm text-gray-500 mt-0.5">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                   {t(factor.descriptionKey)}
                 </p>
               </div>
               {factor.isBase && (
-                <span className="text-xs font-medium bg-brand-100 text-brand-800 px-2 py-0.5 rounded-full">
+                <span className="text-xs font-medium bg-brand-100 dark:bg-brand-700/20 text-brand-800 dark:text-brand-300 px-2 py-0.5 rounded-full">
                   {t('builder.base_badge')}
                 </span>
               )}
@@ -211,10 +211,10 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
         ))}
       </div>
 
-      <p className="text-xs text-gray-400">{t('builder.disclaimer')}</p>
+      <p className="text-xs text-gray-400 dark:text-gray-600">{t('builder.disclaimer')}</p>
 
       <div className="card">
-        <h2 className="font-semibold text-gray-900 mb-3">{t('scenario.save')}</h2>
+        <h2 className="font-semibold text-gray-900 dark:text-gray-50 mb-3">{t('scenario.save')}</h2>
         <div className="flex gap-2">
           <input
             type="text"
@@ -239,11 +239,11 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
             checked={logChange}
             onChange={e => setLogChange(e.target.checked)}
           />
-          <span className="text-sm text-gray-600">{t('scenario.log_change')}</span>
+          <span className="text-sm text-gray-600 dark:text-gray-400">{t('scenario.log_change')}</span>
         </label>
-        <p className="text-xs text-gray-400 mt-2">{t('scenario.save_hint')}</p>
+        <p className="text-xs text-gray-400 dark:text-gray-600 mt-2">{t('scenario.save_hint')}</p>
         {changeLogged && (
-          <div className="mt-3 flex items-center justify-between gap-3 rounded-lg bg-green-50 border border-green-200 px-3 py-2 text-sm text-green-800">
+          <div className="mt-3 flex items-center justify-between gap-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-3 py-2 text-sm text-green-800 dark:text-green-300">
             <span>{t('scenario.change_logged')}</span>
             <a
               href={CHANGE_PLANNER_URL}

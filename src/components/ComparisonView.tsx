@@ -23,8 +23,8 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
   if (profiles.length === 0) {
     return (
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('comparison.title')}</h1>
-        <div className="card text-center py-12 text-gray-500">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-6">{t('comparison.title')}</h1>
+        <div className="card text-center py-12 text-gray-500 dark:text-gray-400">
           <div className="text-4xl mb-4">📊</div>
           <p>{t('comparison.empty')}</p>
         </div>
@@ -87,31 +87,31 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
   return (
     <div className="max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-6 gap-2 flex-wrap">
-        <h1 className="text-2xl font-bold text-gray-900">{t('comparison.title')}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">{t('comparison.title')}</h1>
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={handleExportImage}
             disabled={exporting}
-            className="btn-ghost text-sm text-gray-600 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors disabled:opacity-50"
+            className="btn-ghost text-sm text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
             {exporting ? '…' : t('comparison.export_image')}
           </button>
           <button
             onClick={handleExportCsv}
-            className="btn-ghost text-sm text-gray-600 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors"
+            className="btn-ghost text-sm text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             {t('comparison.export_csv')}
           </button>
           <button
             onClick={handleShareWithSprintMetrics}
-            className="btn-ghost text-sm text-indigo-600 border border-indigo-200 rounded-lg px-3 py-1.5 hover:bg-indigo-50 transition-colors"
+            className="btn-ghost text-sm text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800 rounded-lg px-3 py-1.5 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors"
           >
             {shared ? t('comparison.share_done') : t('comparison.share_sprint_metrics')}
           </button>
         </div>
       </div>
 
-      <div className="mb-4 flex items-center gap-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2 text-sm text-blue-700">
+      <div className="mb-4 flex items-center gap-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 px-3 py-2 text-sm text-blue-700 dark:text-blue-300">
         <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z" />
         </svg>
@@ -128,7 +128,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
             <div key={profile.id} className="card">
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-semibold text-gray-900">{profile.name}</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-50">{profile.name}</h3>
                   <span className="text-2xl font-bold text-brand-600 tabular-nums">
                     {formatSalary(salary, currency)}
                   </span>
@@ -150,7 +150,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
               </div>
 
               {/* Bar */}
-              <div className="h-2 bg-gray-100 rounded-full mb-3">
+              <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full mb-3">
                 <div
                   className="h-2 bg-brand-500 rounded-full transition-all"
                   style={{ width: `${barPct}%` }}
@@ -161,8 +161,8 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
               <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                 {factors.map(f => (
                   <div key={f.id} className="flex justify-between text-xs">
-                    <span className="text-gray-500">{t(`factors.${f.id}.label`)}</span>
-                    <span className="text-gray-700 font-medium tabular-nums">
+                    <span className="text-gray-500 dark:text-gray-400">{t(`factors.${f.id}.label`)}</span>
+                    <span className="text-gray-700 dark:text-gray-300 font-medium tabular-nums">
                       {f.isBase
                         ? formatSalary(profile.factors[f.id] ?? f.value, currency)
                         : (profile.factors[f.id] ?? f.value).toFixed(2) + '×'}

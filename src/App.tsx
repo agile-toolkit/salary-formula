@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { Screen, Factor, FormulaConfig, Profile, Scenario } from './types'
 import { DEFAULT_FACTORS } from './data/presets'
 import AppHeader from './components/AppHeader'
+import ThemeToggle from './components/ThemeToggle'
 import HomeScreen from './components/HomeScreen'
 import SalaryCalculator from './components/SalaryCalculator'
 import FormulaBuilder from './components/FormulaBuilder'
@@ -176,7 +177,7 @@ export default function App() {
         title={t('app.title')}
         onTitleClick={() => setScreen('home')}
         navItems={navItems}
-      />
+      ><ThemeToggle /></AppHeader>
 
       <main id="main-content" className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
         {screen === 'home' && <HomeScreen onStart={() => setScreen('calculator')} />}
