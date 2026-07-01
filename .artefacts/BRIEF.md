@@ -28,6 +28,9 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 ## Backlog
 
 <!-- Issues awaiting human review; agent appends here during research runs -->
+- [ ] [#38] Technical: code-split html2canvas to shrink main bundle (488 kB → smaller; dynamic import in ComparisonView.tsx)
+- [ ] [#39] Technical: no automated test coverage for formula/equity calculations (add Vitest + unit tests for pure calc logic)
+- [ ] [#40] Bug/UX: Equity and Comparison views mislabel profiles saved under a different currency (EquityView uses shared `currency` state, not each profile's own `currency` field)
 - [x] [#2] Research: ES + BE locale support — implemented
 - [x] [#3] Integration: link salary profiles to Work Profiles app — implemented
 - [x] [#4] Feature: export comparison as image or CSV
@@ -61,6 +64,13 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-07-01 — research: bundle size, test coverage, mixed-currency equity view
+- Done: checked all 10 open issues (#3, #5, #7, #12, #13, #14, #15, #16, #17, #19) — all labeled `approved`, all already implemented per Agent Log history and confirmed against current `src/`; no new actionable feedback, all are simply awaiting human close (Done). No `changes-requested` / `research-more` / `incomplete` labels found.
+- New research: confirmed via `npm run build` the main bundle is 488 kB (137 kB gzip) because `html2canvas` (#4's export-image feature) is statically imported in `ComparisonView.tsx` instead of dynamically loaded on click → filed #38. Confirmed zero test files and no test runner in `package.json` → filed #39. Confirmed `App.tsx` passes a single shared `currency` state into `EquityView`/`totalSalaryRange` rather than each profile's own stored `currency` field, so profiles saved under different currencies get silently mislabeled in the equity/comparison views → filed #40.
+- Infra note: GitHub Projects v2 (GraphQL) is blocked at the network layer in this environment (`gh project` commands and direct GraphQL POST both return "GraphQL proxying is not enabled") — could not set Project board status to Backlog for #38/#39/#40. Labeled `needs-review` via REST instead (works fine). Future runs: same limitation likely applies; rely on issue labels, not Project status, until this is resolved.
+- Remaining: #38/#39/#40 await human review; #3/#5/#7/#12/#13/#14/#15/#16/#17/#19 await human close (already implemented)
+- Next task: check issues for human feedback; if #38, #39, or #40 approved, implement first approved one; else continue research cycle
 
 ### 2026-06-29 — feat: light/dark theme (#22)
 - Done: `dark:` variants applied across all 13 files in `src/`; ThemeToggle wired into AppHeader children slot in App.tsx; tailwind.config.js `['selector', '[data-theme="dark"]']` and anti-flash index.html script were already set up; fixed pre-existing syntax error in ScenarioView.tsx (missing `}` in JSX expression); installed `html2canvas` dependency to fix pre-existing missing-module build error; build passes cleanly (tsc + vite build, 488 kB bundle)
