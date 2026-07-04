@@ -43,6 +43,12 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#18] Feature: pay equity analysis view (EquityView, salary distribution + ratio) — implemented
 - [x] [#19] Integration: Scrum Facilitator — meeting cost calculator (salary-formula:teamHourlyRate key) — implemented
 - [x] [#20] Integration: Change Planner — log formula changes as change records (salary-formula side: writes `salary-formula:pendingChangeRecord` on opt-in scenario save)
+- [ ] [#38] Technical: code-split html2canvas to shrink main bundle
+- [ ] [#39] Technical: no automated test coverage for formula/equity calculations
+- [ ] [#40] Bug/UX: Equity and Comparison views mislabel profiles saved under a different currency
+- [ ] [#41] Bug/UX: CSV export in ComparisonView does not escape embedded quote characters, corrupting the file
+- [ ] [#42] UX: salary figures formatted inconsistently across views ("$80K" vs "$80,000")
+- [ ] [#43] Technical: localStorage writes have no error handling, risking silent data/feature loss
 
 ## localStorage keys
 
@@ -61,6 +67,11 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - No backend; all client-side.
 
 ## Agent Log
+
+### 2026-07-04 — research: CSV escaping bug, inconsistent currency formatting, unguarded localStorage writes
+- Done: checked human feedback first — no action needed: all `approved` issues (#3, #5, #7, #12–#17, #19) are already implemented (confirmed against Features/Backlog above and prior Agent Log entries), just awaiting human "Done" close; #38/#39/#40 (needs-review, created 2026-07-01) have not yet reached the 7-day auto-approve threshold (2026-07-08); CI green (last run 2026-06-29, `Deploy to GitHub Pages` success). Ran a research pass over `src/` and `BRIEF.md` and created 3 new issues, all verified against actual source before filing: #41 (CSV export in `ComparisonView.tsx` doesn't escape embedded `"` per RFC 4180 — confirmed at the `handleExportCsv` quoting line), #42 (`formatSalary` in `data/presets.ts` vs. `formatCurrency` in `utils/salary.ts` — confirmed split via grep: Calculator/Comparison/Scenario views show abbreviated `$80K`, Equity/FormulaBuilder/TemplatesModal show full `$80,000`), #43 (7 of 8 `localStorage.setItem` call sites are unguarded — only `ThemeToggle.tsx` has a try/catch — confirmed via grep, risking silent save failures under quota errors or Safari private browsing).
+- No code changes this run (research-only).
+- Next task: check issues for human feedback; #38/#39/#40 reach 7-day auto-approve threshold 2026-07-08; #41/#42/#43 created this run, await review; implement first approved item if any; else research cycle.
 
 ### 2026-06-29 — feat: light/dark theme (#22)
 - Done: `dark:` variants applied across all 13 files in `src/`; ThemeToggle wired into AppHeader children slot in App.tsx; tailwind.config.js `['selector', '[data-theme="dark"]']` and anti-flash index.html script were already set up; fixed pre-existing syntax error in ScenarioView.tsx (missing `}` in JSX expression); installed `html2canvas` dependency to fix pre-existing missing-module build error; build passes cleanly (tsc + vite build, 488 kB bundle)
