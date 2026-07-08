@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import html2canvas from 'html2canvas'
 import type { Profile, Factor } from '../types'
 import { calcSalary, formatSalary } from '../data/presets'
 
@@ -56,6 +55,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
     if (!cardsRef.current || exporting) return
     setExporting(true)
     try {
+      const { default: html2canvas } = await import('html2canvas')
       const canvas = await html2canvas(cardsRef.current, { scale: 2, useCORS: true })
       const link = document.createElement('a')
       link.download = 'salary-comparison.png'
