@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Factor, Profile } from '../types'
 import { calcSalary, formatSalary, DEFAULT_FACTORS, CURRENCIES } from '../data/presets'
+import { proficiencyToSkillsMultiplier } from '../utils/workProfiles'
 import FactorSlider from './FactorSlider'
 
 interface Props {
@@ -40,12 +41,6 @@ function readTiMembers(): string[] {
   } catch {
     return []
   }
-}
-
-function proficiencyToSkillsMultiplier(avgProficiency: number, min: number, max: number): number {
-  const clamped = Math.max(1, Math.min(5, avgProficiency))
-  const raw = min + ((clamped - 1) / 4) * (max - min)
-  return Math.round(raw / 0.05) * 0.05
 }
 
 export default function SalaryCalculator({

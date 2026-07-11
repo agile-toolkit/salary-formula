@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { Profile, Factor } from '../types'
 import { calcSalary } from '../data/presets'
 import { formatCurrency } from '../utils/salary'
+import { median, equityRatio as computeEquityRatio, equityRatioLevel } from '../utils/equity'
 
 interface Props {
   profiles: Profile[]
@@ -13,14 +14,6 @@ interface Props {
 function computeSalary(profile: Profile, factors: Factor[]): number {
   const merged = factors.map(f => ({ ...f, value: profile.factors[f.id] ?? f.value }))
   return calcSalary(merged)
-}
-
-function median(values: number[]): number {
-  const sorted = [...values].sort((a, b) => a - b)
-  const mid = Math.floor(sorted.length / 2)
-  return sorted.length % 2 !== 0
-    ? sorted[mid]
-    : Math.round((sorted[mid - 1] + sorted[mid]) / 2)
 }
 
 export default function EquityView({ profiles, factors, currency }: Props) {
@@ -44,12 +37,13 @@ export default function EquityView({ profiles, factors, currency }: Props) {
   const minSalary = Math.min(...salaryValues)
   const maxSalary = Math.max(...salaryValues)
   const medianSalary = median(salaryValues)
-  const equityRatio = minSalary > 0 ? maxSalary / minSalary : 0
+  const equityRatio = computeEquityRatio(minSalary, maxSalary)
+  const ratioLevel = equityRatioLevel(equityRatio)
 
   const ratioColor =
-    equityRatio >= 3.0
+    ratioLevel === 'red'
       ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
-      : equityRatio >= 2.0
+      : ratioLevel === 'amber'
       ? 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800'
       : 'text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
 

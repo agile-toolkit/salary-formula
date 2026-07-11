@@ -11,18 +11,10 @@ import ComparisonView from './components/ComparisonView'
 import ScenarioView from './components/ScenarioView'
 import LearnView from './components/LearnView'
 import EquityView from './components/EquityView'
+import { encodeFormula, decodeFormulaHash } from './utils/formulaUrl'
 
 function loadFromHash(): { factors: Factor[]; currency: string } | null {
-  try {
-    const hash = window.location.hash
-    if (!hash.startsWith('#formula=')) return null
-    const encoded = hash.slice('#formula='.length)
-    const config = JSON.parse(decodeURIComponent(atob(encoded))) as FormulaConfig
-    if (!Array.isArray(config.factors) || !config.currency) return null
-    return { factors: config.factors, currency: config.currency }
-  } catch {
-    return null
-  }
+  return decodeFormulaHash(window.location.hash)
 }
 
 const STORAGE_KEY = 'salary-formula-profiles'
@@ -115,8 +107,7 @@ export default function App() {
 
   useEffect(() => {
     const config: FormulaConfig = { factors, currency }
-    const encoded = btoa(encodeURIComponent(JSON.stringify(config)))
-    history.replaceState(null, '', `#formula=${encoded}`)
+    history.replaceState(null, '', `#formula=${encodeFormula(config)}`)
   }, [factors, currency])
   const [profiles, setProfiles] = useState<Profile[]>(loadProfiles)
   const [scenarios, setScenarios] = useState<Scenario[]>(loadScenarios)
