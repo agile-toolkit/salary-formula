@@ -48,7 +48,7 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - [x] [#38] Technical: code-split html2canvas to shrink main bundle — implemented
 - [x] [#39] Technical: no automated test coverage for formula/equity calculations — implemented
 - [ ] [#40] Bug/UX: Equity and Comparison views mislabel profiles saved under a different currency
-- [ ] [#41] Bug/UX: CSV export in ComparisonView does not escape embedded quote characters, corrupting the file
+- [x] [#41] Bug/UX: CSV export in ComparisonView does not escape embedded quote characters, corrupting the file
 - [ ] [#42] UX: salary figures formatted inconsistently across views ("$80K" vs "$80,000")
 - [ ] [#43] Technical: localStorage writes have no error handling, risking silent data/feature loss
 
@@ -70,6 +70,11 @@ Transparent salary formula explorer: factors, scenarios, saved comparisons. Reac
 - Unit tests live alongside the code they cover (`src/**/*.test.ts`), run via `vitest run` in `node` environment (no DOM/component testing library — pure-logic coverage only, per #39 scope). CI runs `npm test` before `npm run build`.
 
 ## Agent Log
+
+### 2026-07-16 — fix: CSV export quote-escaping (#41)
+- Done: auto-approved #41, #40, #42, #43 (all past 7-day needs-review threshold); implemented #41 — new `src/utils/csv.ts` with `escapeCsvCell`/`toCsvRow` helpers (RFC 4180: double embedded `"` chars); `ComparisonView.tsx` `handleExportCsv` now uses `toCsvRow` instead of inline template; 7 new tests in `src/utils/csv.test.ts` (39 total, all passing); patch bump 0.1.0→0.1.1
+- Remaining: #40 (mixed-currency warning in EquityView), #42 (formatSalary vs formatCurrency unification), #43 (localStorage error handling) still open
+- Next task: check issues for human feedback; implement #43 (localStorage safeSetItem — create `src/utils/storage.ts`, wrap all 7 unguarded setItem call sites in App.tsx/FormulaBuilder.tsx/ComparisonView.tsx, surface yellow-banner error on failed profile/scenario save; no new deps); then #42 (replace formatSalary with formatCurrency in SalaryCalculator/ComparisonView/ScenarioView, delete formatSalary from presets.ts); then #40 (mixed-currency banner in EquityView)
 
 ### 2026-07-11 — feat: Vitest unit test coverage (#39)
 - Done: checked human feedback first — all 10 `approved`-labeled issues (#3,5,7,12,13,14,15,16,17,19) confirmed already implemented against Features above, just awaiting human "Done" close; CI green (last run 2026-07-08, commit 676e8b4, `Deploy to GitHub Pages` success). #39 (Vitest coverage) and #40 (mixed-currency warning) were both already past the 7-day needs-review auto-approve threshold from the prior run (created 2026-07-01) — implemented #39 this run per the queued plan (new dev dependency, vitest has well over 1M weekly downloads, auto-approve eligible); #41/#42/#43 (created 2026-07-04) reach the 7-day threshold today (2026-07-11) — not yet auto-approved, queue for next run.
