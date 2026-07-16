@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Profile, Factor } from '../types'
 import { calcSalary, formatSalary } from '../data/presets'
+import { toCsvRow } from '../utils/csv'
 
 const SPRINT_METRICS_KEY = 'sprint_metrics_salary_bridge_v1'
 
@@ -74,7 +75,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
       const factorVals = factors.map(f => String(p.factors[f.id] ?? f.value))
       return [p.name, ...factorVals, String(total)]
     })
-    const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n')
+    const csv = [headers, ...rows].map(toCsvRow).join('\n')
     const blob = new Blob([csv], { type: 'text/csv' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
