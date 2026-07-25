@@ -4,7 +4,7 @@ A transparent salary calculation tool based on Management 3.0's Salary Formula a
 
 Part of the [Agile Tools](https://github.com/bthos) suite built on Management 3.0 and ICAgile source materials.
 
-See `.artefacts/GOAL.md` for why this app exists and `.artefacts/ROADMAP.md` for what's next.
+See `GOAL.md` for why this app exists and `ROADMAP.md` for what's next.
 
 ## Stack
 React 18 · TypeScript · Vite · Tailwind CSS · react-i18next (EN/ES/BE/RU)
