@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Fórmula Salarial"
+    "title": "Fórmula Salarial",
+    "skip_to_content": "Saltar al contenido principal"
   },
   "nav": {
     "calculator": "Calculadora",
@@ -34,6 +35,8 @@
     "step": "Paso",
     "current_value": "Actual",
     "disclaimer": "Cambiar los rangos no altera los perfiles guardados — solo el comportamiento de los nuevos ajustes en la calculadora.",
+    "mark_reviewed": "Marcar como revisado",
+    "review_done": "¡Revisión registrada!",
     "copy_link": "Copiar enlace",
     "link_copied": "¡Enlace copiado!",
     "templates": "Empezar desde plantilla",
@@ -67,15 +70,23 @@
     "wp_linked": "Vinculado a: {{name}}",
     "wp_unlink": "Desvincular",
     "wp_no_data": "No se encontraron Perfiles de Trabajo. Abre la aplicación Work Profiles primero.",
-    "wp_cancel": "Cancelar"
+    "wp_cancel": "Cancelar",
+    "breakdown_title": "Desglose de factores",
+    "ti_import": "Importar desde Team Identity",
+    "ti_no_data": "No se encontró ningún charter de Team Identity. Abre la aplicación Team Identity primero.",
+    "review_due": "Tu fórmula salarial lleva más de 6 meses sin revisarse. Considera programar una revisión del equipo.",
+    "review_dismiss": "Descartar"
   },
   "comparison": {
     "title": "Comparación de Perfiles",
     "add": "Agregar Perfil",
     "empty": "Agrega al menos un perfil guardado para comparar.",
     "delete": "Eliminar",
+    "export_image": "Guardar como imagen",
+    "export_csv": "Exportar CSV",
     "share_sprint_metrics": "Compartir con Sprint Metrics",
-    "share_done": "¡Compartido!"
+    "share_done": "¡Compartido!",
+    "team_rate_shared": "La tarifa por hora del equipo ha sido compartida con Scrum Facilitator."
   },
   "scenario": {
     "title": "Comparación de Escenarios",
@@ -90,7 +101,10 @@
     "baseline_badge": "línea base",
     "delete": "Eliminar escenario",
     "factor_col": "Factor",
-    "total_row": "Salario total"
+    "total_row": "Salario total",
+    "log_change": "Registrar este cambio en Change Planner",
+    "change_logged": "Cambio registrado. Abre Change Planner para completar el registro.",
+    "open_change_planner": "Abrir Change Planner"
   },
   "learn": {
     "title": "Acerca de la Fórmula Salarial",

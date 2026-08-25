@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Factor, Profile } from '../types'
 import { calcSalary, formatSalary, DEFAULT_FACTORS, CURRENCIES } from '../data/presets'
+import { proficiencyToSkillsMultiplier } from '../utils/workProfiles'
 import FactorSlider from './FactorSlider'
 
 interface Props {
@@ -33,10 +34,13 @@ function readWpProfiles(): WpProfile[] {
   }
 }
 
-function proficiencyToSkillsMultiplier(avgProficiency: number, min: number, max: number): number {
-  const clamped = Math.max(1, Math.min(5, avgProficiency))
-  const raw = min + ((clamped - 1) / 4) * (max - min)
-  return Math.round(raw / 0.05) * 0.05
+function readTiMembers(): string[] {
+  try {
+    const data = JSON.parse(localStorage.getItem('team-identity:charter') ?? 'null')
+    return Array.isArray(data?.members) ? data.members.filter(Boolean) : []
+  } catch {
+    return []
+  }
 }
 
 export default function SalaryCalculator({
@@ -53,13 +57,25 @@ export default function SalaryCalculator({
   const [wpPickerProfiles, setWpPickerProfiles] = useState<WpProfile[]>([])
   const [showWpPicker, setShowWpPicker] = useState(false)
   const [wpNoData, setWpNoData] = useState(false)
+  const [tiMembers, setTiMembers] = useState<string[]>([])
+  const [showTiPicker, setShowTiPicker] = useState(false)
+  const [tiNoData, setTiNoData] = useState(false)
+  const [reviewDismissed, setReviewDismissed] = useState(false)
+
+  const reviewOverdue = useMemo(() => {
+    const raw = localStorage.getItem('salary-formula:lastReviewed')
+    if (!raw) return true
+    const last = new Date(raw).getTime()
+    return Date.now() - last > 180 * 24 * 60 * 60 * 1000
+  }, [])
 
   const salary = calcSalary(factors)
   const base = factors.find(f => f.isBase)?.value ?? 0
-  const multiplierStr = factors
-    .filter(f => !f.isBase)
+  const nonBaseFactors = factors.filter(f => !f.isBase)
+  const multiplierStr = nonBaseFactors
     .map(f => f.value.toFixed(2) + '×')
     .join(' × ')
+  const multiplierTotal = nonBaseFactors.reduce((sum, f) => sum + f.value, 0)
 
   const handleChange = (id: string, value: number) => {
     if (id === 'skills' && wpLinked) setWpLinked(null)
@@ -73,6 +89,22 @@ export default function SalaryCalculator({
     setWpLinked(null)
     setShowWpPicker(false)
     setWpNoData(false)
+    setShowTiPicker(false)
+    setTiNoData(false)
+  }
+
+  const handleImportTi = () => {
+    const members = readTiMembers()
+    setTiNoData(false)
+    setShowTiPicker(false)
+    if (members.length === 0) {
+      setTiNoData(true)
+    } else if (members.length === 1) {
+      setProfileName(members[0])
+    } else {
+      setTiMembers(members)
+      setShowTiPicker(true)
+    }
   }
 
   const handleSave = () => {
@@ -119,7 +151,20 @@ export default function SalaryCalculator({
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('calculator.title')}</h1>
+      <h1 id="calculator-heading" className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-6">{t('calculator.title')}</h1>
+
+      {/* Review overdue banner */}
+      {reviewOverdue && !reviewDismissed && (
+        <div className="flex items-start justify-between gap-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 px-4 py-3 mb-6">
+          <p className="text-sm text-yellow-800 dark:text-yellow-300">{t('calculator.review_due')}</p>
+          <button
+            onClick={() => setReviewDismissed(true)}
+            className="text-yellow-600 dark:text-yellow-400 hover:text-yellow-800 dark:hover:text-yellow-200 text-xs font-medium whitespace-nowrap shrink-0"
+          >
+            {t('calculator.review_dismiss')}
+          </button>
+        </div>
+      )}
 
       {/* Result */}
       <div className="card bg-brand-600 border-0 mb-6 text-white">
@@ -133,6 +178,30 @@ export default function SalaryCalculator({
         </div>
       </div>
 
+      {/* Factor breakdown */}
+      {nonBaseFactors.length > 0 && (
+        <div className="card mb-4">
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">{t('calculator.breakdown_title')}</h2>
+          {nonBaseFactors.map(f => {
+            const pct = multiplierTotal > 0 ? Math.round((f.value / multiplierTotal) * 100) : 0
+            return (
+              <div key={f.id} className="mb-2 last:mb-0">
+                <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400 mb-1">
+                  <span>{t(`factors.${f.id}.label`)}</span>
+                  <span className="font-medium tabular-nums">{pct}%</span>
+                </div>
+                <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-brand-500 rounded-full transition-all duration-300"
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+
       {/* Currency selector */}
       <div className="card mb-4">
         <label className="label">{t('calculator.currency_label')}</label>
@@ -144,7 +213,7 @@ export default function SalaryCalculator({
               className={`px-4 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                 currency === c
                   ? 'bg-brand-600 text-white border-brand-600'
-                  : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                  : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
             >
               {c}
@@ -162,12 +231,12 @@ export default function SalaryCalculator({
               <div className="pb-3 -mt-1">
                 {wpLinked ? (
                   <div className="flex items-center gap-2">
-                    <span className="text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded-full font-medium">
+                    <span className="text-xs px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full font-medium">
                       {t('calculator.wp_linked', { name: wpLinked.name })}
                     </span>
                     <button
                       onClick={() => setWpLinked(null)}
-                      className="text-xs text-gray-400 hover:text-gray-600 underline"
+                      className="text-xs text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 underline"
                     >
                       {t('calculator.wp_unlink')}
                     </button>
@@ -181,7 +250,7 @@ export default function SalaryCalculator({
                       {t('calculator.wp_import')}
                     </button>
                     {wpNoData && (
-                      <span className="ml-2 text-xs text-gray-400">
+                      <span className="ml-2 text-xs text-gray-400 dark:text-gray-600">
                         {t('calculator.wp_no_data')}
                       </span>
                     )}
@@ -193,14 +262,14 @@ export default function SalaryCalculator({
                       <button
                         key={p.id}
                         onClick={() => linkWpProfile(p)}
-                        className="text-xs px-2 py-1 border border-brand-300 text-brand-700 rounded hover:bg-brand-50 transition-colors"
+                        className="text-xs px-2 py-1 border border-brand-300 dark:border-brand-700 text-brand-700 dark:text-brand-400 rounded hover:bg-brand-50 dark:hover:bg-brand-700/20 transition-colors"
                       >
                         {p.name}
                       </button>
                     ))}
                     <button
                       onClick={() => setShowWpPicker(false)}
-                      className="text-xs px-2 py-1 text-gray-400 hover:text-gray-600"
+                      className="text-xs px-2 py-1 text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400"
                     >
                       {t('calculator.wp_cancel')}
                     </button>
@@ -230,6 +299,38 @@ export default function SalaryCalculator({
           >
             {saved ? t('calculator.saved') : t('calculator.save')}
           </button>
+        </div>
+        <div className="mt-2">
+          <button
+            onClick={handleImportTi}
+            className="text-xs text-brand-600 hover:text-brand-700 underline"
+          >
+            {t('calculator.ti_import')}
+          </button>
+          {tiNoData && (
+            <span className="ml-2 text-xs text-gray-400 dark:text-gray-600">
+              {t('calculator.ti_no_data')}
+            </span>
+          )}
+          {showTiPicker && (
+            <div className="mt-2 flex flex-wrap gap-2">
+              {tiMembers.map(name => (
+                <button
+                  key={name}
+                  onClick={() => { setProfileName(name); setShowTiPicker(false) }}
+                  className="text-xs px-2 py-1 border border-brand-300 dark:border-brand-700 text-brand-700 dark:text-brand-400 rounded hover:bg-brand-50 dark:hover:bg-brand-700/20 transition-colors"
+                >
+                  {name}
+                </button>
+              ))}
+              <button
+                onClick={() => setShowTiPicker(false)}
+                className="text-xs px-2 py-1 text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400"
+              >
+                {t('calculator.wp_cancel')}
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

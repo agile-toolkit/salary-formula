@@ -42,8 +42,8 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
   if (scenarios.length === 0) {
     return (
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('scenario.title')}</h1>
-        <div className="card text-center py-12 text-gray-500">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-6">{t('scenario.title')}</h1>
+        <div className="card text-center py-12 text-gray-500 dark:text-gray-400">
           <div className="text-4xl mb-4">🔀</div>
           <p>{t('scenario.empty')}</p>
           <p className="text-sm mt-2 text-gray-400">{t('scenario.empty_hint')}</p>
@@ -59,20 +59,20 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
   return (
     <div className="max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('scenario.title')}</h1>
-      <p className="text-sm text-gray-500 mb-6">{t('scenario.diff_label')}</p>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">{t('scenario.diff_label')}</p>
 
       <div className="overflow-x-auto">
         <table className="w-full text-sm border-separate border-spacing-0">
           <thead>
             <tr>
-              <th className="text-left font-medium text-gray-500 pb-3 pr-4 min-w-[140px]">
+              <th className="text-left font-medium text-gray-500 dark:text-gray-400 pb-3 pr-4 min-w-[140px]">
                 {t('scenario.factor_col')}
               </th>
               {scenarios.map((sc, i) => (
                 <th key={sc.id} className="text-left pb-3 px-2 min-w-[160px]">
                   <div className="flex items-start justify-between gap-1">
                     <div>
-                      <span className="font-semibold text-gray-900 block">{sc.name}</span>
+                      <span className="font-semibold text-gray-900 dark:text-gray-50 block">{sc.name}</span>
                       {i === 0 && (
                         <span className="text-xs text-brand-600 font-normal">
                           {t('scenario.baseline_badge')}
@@ -81,7 +81,7 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
                     </div>
                     <button
                       onClick={() => onDelete(sc.id)}
-                      className="text-gray-400 hover:text-red-500 transition-colors text-xs mt-0.5 shrink-0"
+                      className="text-gray-400 dark:text-gray-600 hover:text-red-500 transition-colors text-xs mt-0.5 shrink-0"
                       title={t('scenario.delete')}
                     >
                       ✕
@@ -95,13 +95,13 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
             {factors.map(f => {
               const baseVal = baseline.factors[f.id]?.value ?? f.value
               return (
-                <tr key={f.id} className="border-t border-gray-100">
-                  <td className="py-2 pr-4 text-gray-500">{t(`factors.${f.id}.label`)}</td>
+                <tr key={f.id} className="border-t border-gray-100 dark:border-gray-800">
+                  <td className="py-2 pr-4 text-gray-500 dark:text-gray-400">{t(`factors.${f.id}.label`)}</td>
                   {scenarios.map((sc, i) => {
                     const val = sc.factors[f.id]?.value ?? f.value
                     const delta = i === 0 ? 0 : val - baseVal
                     return (
-                      <td key={sc.id} className="py-2 px-2 text-gray-800 font-medium tabular-nums">
+                      <td key={sc.id} className="py-2 px-2 text-gray-800 dark:text-gray-200 font-medium tabular-nums">
                         {f.isBase ? formatSalary(val, sc.currency) : val.toFixed(2) + '×'}
                         {i > 0 && <DeltaBadge delta={delta} isBase={f.isBase} />}
                       </td>
@@ -110,8 +110,8 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
                 </tr>
               )
             })}
-            <tr className="border-t-2 border-gray-200">
-              <td className="py-3 pr-4 font-semibold text-gray-700">{t('scenario.total_row')}</td>
+            <tr className="border-t-2 border-gray-200 dark:border-gray-700">
+              <td className="py-3 pr-4 font-semibold text-gray-700 dark:text-gray-300">{t('scenario.total_row')}</td>
               {scenarios.map((sc, i) => {
                 const scFactors = toFactors(factors, sc)
                 const salary = calcSalary(scFactors)

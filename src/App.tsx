@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Screen, Factor, FormulaConfig, Profile, Scenario } from './types'
 import { DEFAULT_FACTORS } from './data/presets'
+import AppHeader from './components/AppHeader'
+import ThemeToggle from './components/ThemeToggle'
 import HomeScreen from './components/HomeScreen'
 import SalaryCalculator from './components/SalaryCalculator'
 import FormulaBuilder from './components/FormulaBuilder'
@@ -9,23 +11,16 @@ import ComparisonView from './components/ComparisonView'
 import ScenarioView from './components/ScenarioView'
 import LearnView from './components/LearnView'
 import EquityView from './components/EquityView'
+import { encodeFormula, decodeFormulaHash } from './utils/formulaUrl'
 
 function loadFromHash(): { factors: Factor[]; currency: string } | null {
-  try {
-    const hash = window.location.hash
-    if (!hash.startsWith('#formula=')) return null
-    const encoded = hash.slice('#formula='.length)
-    const config = JSON.parse(decodeURIComponent(atob(encoded))) as FormulaConfig
-    if (!Array.isArray(config.factors) || !config.currency) return null
-    return { factors: config.factors, currency: config.currency }
-  } catch {
-    return null
-  }
+  return decodeFormulaHash(window.location.hash)
 }
 
 const STORAGE_KEY = 'salary-formula-profiles'
 const SCENARIOS_KEY = 'salary_scenarios_v1'
 const LAST_SESSION_KEY = 'salary-formula:lastSession'
+const TEAM_HOURLY_RATE_KEY = 'salary-formula:teamHourlyRate'
 
 function loadProfiles(): Profile[] {
   try {
@@ -49,6 +44,30 @@ function loadScenarios(): Scenario[] {
 
 function saveScenarios(scenarios: Scenario[]) {
   localStorage.setItem(SCENARIOS_KEY, JSON.stringify(scenarios))
+}
+
+function writeTeamHourlyRate(profiles: Profile[], currency: string, factors: Factor[]) {
+  if (profiles.length === 0) {
+    localStorage.removeItem(TEAM_HOURLY_RATE_KEY)
+    return
+  }
+  const totalAnnual = profiles.reduce((sum, p) => {
+    const base = p.factors['base'] ?? factors.find(f => f.isBase)?.value ?? 0
+    const multiplier = factors
+      .filter(f => !f.isBase)
+      .reduce((acc, f) => acc * (p.factors[f.id] ?? f.value), 1)
+    return sum + Math.round(base * multiplier)
+  }, 0)
+  localStorage.setItem(
+    TEAM_HOURLY_RATE_KEY,
+    JSON.stringify({
+      totalAnnual,
+      currency,
+      profileCount: profiles.length,
+      hourlyRate: Math.round(totalAnnual / 52 / 40),
+      updatedAt: new Date().toISOString(),
+    })
+  )
 }
 
 function writeLastSession(
@@ -80,7 +99,7 @@ function writeLastSession(
 }
 
 export default function App() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [screen, setScreen] = useState<Screen>('home')
   const fromHash = loadFromHash()
   const [factors, setFactors] = useState<Factor[]>(fromHash?.factors ?? DEFAULT_FACTORS)
@@ -88,8 +107,7 @@ export default function App() {
 
   useEffect(() => {
     const config: FormulaConfig = { factors, currency }
-    const encoded = btoa(encodeURIComponent(JSON.stringify(config)))
-    history.replaceState(null, '', `#formula=${encoded}`)
+    history.replaceState(null, '', `#formula=${encodeFormula(config)}`)
   }, [factors, currency])
   const [profiles, setProfiles] = useState<Profile[]>(loadProfiles)
   const [scenarios, setScenarios] = useState<Scenario[]>(loadScenarios)
@@ -99,12 +117,14 @@ export default function App() {
     setProfiles(updated)
     saveProfiles(updated)
     writeLastSession(updated, scenarios, currency, factors)
+    writeTeamHourlyRate(updated, currency, factors)
   }
 
   const handleDeleteProfile = (id: string) => {
     const updated = profiles.filter(p => p.id !== id)
     setProfiles(updated)
     saveProfiles(updated)
+    writeTeamHourlyRate(updated, currency, factors)
   }
 
   const handleLoadProfile = (profile: Profile) => {
@@ -125,73 +145,32 @@ export default function App() {
     saveScenarios(updated)
   }
 
-  const navItems: { key: Screen; label: string }[] = [
-    { key: 'calculator', label: t('nav.calculator') },
-    { key: 'builder', label: t('nav.builder') },
-    { key: 'comparison', label: t('nav.comparison') },
-    { key: 'scenarios', label: t('nav.scenarios') },
-    { key: 'equity', label: t('nav.equity') },
-    { key: 'learn', label: t('nav.learn') },
-  ]
+  const navItems = screen !== 'home'
+    ? [
+        { key: 'calculator', label: t('nav.calculator'), active: screen === 'calculator', onClick: () => setScreen('calculator') },
+        { key: 'builder', label: t('nav.builder'), active: screen === 'builder', onClick: () => setScreen('builder') },
+        { key: 'comparison', label: t('nav.comparison'), active: screen === 'comparison', onClick: () => setScreen('comparison') },
+        { key: 'scenarios', label: t('nav.scenarios'), active: screen === 'scenarios', onClick: () => setScreen('scenarios') },
+        { key: 'equity', label: t('nav.equity'), active: screen === 'equity', onClick: () => setScreen('equity') },
+        { key: 'learn', label: t('nav.learn'), active: screen === 'learn', onClick: () => setScreen('learn') },
+      ]
+    : []
 
   return (
     <div className="min-h-screen flex flex-col" data-accent="cobalt">
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <a
-              href="https://agile-toolkit.github.io/"
-              title="Agile Toolkit"
-              className="text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
-                <rect x="1" y="1" width="6" height="6" rx="1"/>
-                <rect x="9" y="1" width="6" height="6" rx="1"/>
-                <rect x="1" y="9" width="6" height="6" rx="1"/>
-                <rect x="9" y="9" width="6" height="6" rx="1"/>
-              </svg>
-            </a>
-            <button
-              onClick={() => setScreen('home')}
-              className="font-semibold text-brand-600 hover:text-brand-700 transition-colors"
-            >
-              {t('app.title')}
-            </button>
-          </div>
-          <div className="flex items-center gap-1">
-            {screen !== 'home' &&
-              navItems.map(item => (
-                <button
-                  key={item.key}
-                  onClick={() => setScreen(item.key)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                    screen === item.key
-                      ? 'bg-brand-100 text-brand-700'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            <button
-              onClick={() => {
-                const langs = ['en', 'es', 'be', 'ru']
-                const current = langs.find(l => i18n.language.startsWith(l)) ?? 'en'
-                i18n.changeLanguage(langs[(langs.indexOf(current) + 1) % langs.length])
-              }}
-              className="ml-2 text-sm text-gray-500 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100 transition-colors"
-            >
-              {(() => {
-                const langs = ['en', 'es', 'be', 'ru']
-                const current = langs.find(l => i18n.language.startsWith(l)) ?? 'en'
-                return langs[(langs.indexOf(current) + 1) % langs.length].toUpperCase()
-              })()}
-            </button>
-          </div>
-        </div>
-      </header>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-medium"
+      >
+        {t('app.skip_to_content')}
+      </a>
+      <AppHeader
+        title={t('app.title')}
+        onTitleClick={() => setScreen('home')}
+        navItems={navItems}
+      ><ThemeToggle /></AppHeader>
 
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
+      <main id="main-content" className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
         {screen === 'home' && <HomeScreen onStart={() => setScreen('calculator')} />}
         {screen === 'calculator' && (
           <SalaryCalculator

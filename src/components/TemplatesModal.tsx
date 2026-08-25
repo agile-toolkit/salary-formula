@@ -22,12 +22,12 @@ export default function TemplatesModal({ currency, onApply, onClose }: Props) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
       onClick={e => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-gray-900">{t('builder.templates')}</h2>
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-gray-100 dark:border-gray-800">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-50">{t('builder.templates')}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors text-xl leading-none"
+            className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors text-xl leading-none"
             aria-label="Close"
           >
             ×
@@ -39,24 +39,24 @@ export default function TemplatesModal({ currency, onApply, onClose }: Props) {
             const preview = calculateSalary(tpl.factors)
             const multiplierFactors = tpl.factors.filter(f => !f.isBase)
             return (
-              <div key={tpl.id} className="card border border-gray-200 hover:border-brand-400 transition-colors">
+              <div key={tpl.id} className="card border border-gray-200 dark:border-gray-700 hover:border-brand-400 dark:hover:border-brand-500 transition-colors">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-900">{t(tpl.nameKey)}</h3>
-                    <p className="text-sm text-gray-500 mt-0.5">{t(tpl.descriptionKey)}</p>
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-50">{t(tpl.nameKey)}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{t(tpl.descriptionKey)}</p>
 
                     <div className="mt-3 flex flex-wrap gap-2">
                       {multiplierFactors.map(f => (
                         <span
                           key={f.id}
-                          className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full"
+                          className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-2 py-0.5 rounded-full"
                         >
                           {t(`factors.${f.name}.label`)}: {f.min}×–{f.max}×
                         </span>
                       ))}
                     </div>
 
-                    <p className="mt-2 text-xs text-gray-400">
+                    <p className="mt-2 text-xs text-gray-400 dark:text-gray-600">
                       {t('builder.template_preview')}: {formatCurrency(preview, currency)}
                     </p>
                   </div>
@@ -73,7 +73,7 @@ export default function TemplatesModal({ currency, onApply, onClose }: Props) {
           })}
         </div>
 
-        <div className="px-6 pb-5 text-xs text-gray-400">
+        <div className="px-6 pb-5 text-xs text-gray-400 dark:text-gray-600">
           {t('builder.template_hint')}
         </div>
       </div>

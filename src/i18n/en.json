@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Salary Formula"
+    "title": "Salary Formula",
+    "skip_to_content": "Skip to main content"
   },
   "nav": {
     "calculator": "Calculator",
@@ -34,6 +35,8 @@
     "step": "Step",
     "current_value": "Current",
     "disclaimer": "Changing ranges does not alter saved profiles — only how new adjustments behave in the calculator.",
+    "mark_reviewed": "Mark as reviewed",
+    "review_done": "Review recorded!",
     "copy_link": "Copy link",
     "link_copied": "Link copied!",
     "templates": "Start from template",
@@ -85,15 +88,23 @@
     "wp_linked": "Linked to: {{name}}",
     "wp_unlink": "Unlink",
     "wp_no_data": "No Work Profiles found. Open the Work Profiles app first.",
-    "wp_cancel": "Cancel"
+    "wp_cancel": "Cancel",
+    "breakdown_title": "Factor breakdown",
+    "ti_import": "Import from Team Identity",
+    "ti_no_data": "No Team Identity charter found. Open the Team Identity app first.",
+    "review_due": "Your salary formula hasn't been reviewed in over 6 months. Consider scheduling a team review.",
+    "review_dismiss": "Dismiss"
   },
   "comparison": {
     "title": "Profile Comparison",
     "add": "Add Profile",
     "empty": "Add at least one saved profile to compare.",
     "delete": "Remove",
+    "export_image": "Save as Image",
+    "export_csv": "Export CSV",
     "share_sprint_metrics": "Share with Sprint Metrics",
-    "share_done": "Shared!"
+    "share_done": "Shared!",
+    "team_rate_shared": "Your team hourly rate has been shared with Scrum Facilitator."
   },
   "scenario": {
     "title": "Scenario Comparison",
@@ -108,7 +119,10 @@
     "baseline_badge": "baseline",
     "delete": "Delete scenario",
     "factor_col": "Factor",
-    "total_row": "Total salary"
+    "total_row": "Total salary",
+    "log_change": "Log this change in Change Planner",
+    "change_logged": "Change logged. Open Change Planner to complete the record.",
+    "open_change_planner": "Open Change Planner"
   },
   "learn": {
     "title": "About the Salary Formula",

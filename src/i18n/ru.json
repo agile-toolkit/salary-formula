@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Формула зарплаты"
+    "title": "Формула зарплаты",
+    "skip_to_content": "Перейти к основному содержимому"
   },
   "nav": {
     "calculator": "Калькулятор",
@@ -34,6 +35,8 @@
     "step": "Шаг",
     "current_value": "Текущее",
     "disclaimer": "Изменение диапазонов не меняет сохранённые профили — только поведение новых настроек в калькуляторе.",
+    "mark_reviewed": "Отметить как проверено",
+    "review_done": "Проверка зафиксирована!",
     "copy_link": "Скопировать ссылку",
     "link_copied": "Ссылка скопирована!",
     "templates": "Начать с шаблона",
@@ -67,15 +70,23 @@
     "wp_linked": "Связано с: {{name}}",
     "wp_unlink": "Отвязать",
     "wp_no_data": "Профили Work Profiles не найдены. Сначала откройте приложение Work Profiles.",
-    "wp_cancel": "Отмена"
+    "wp_cancel": "Отмена",
+    "breakdown_title": "Разбивка по факторам",
+    "ti_import": "Импортировать из Team Identity",
+    "ti_no_data": "Устав команды Team Identity не найден. Сначала откройте приложение Team Identity.",
+    "review_due": "Формула зарплаты не пересматривалась более 6 месяцев. Рекомендуем запланировать командный пересмотр.",
+    "review_dismiss": "Закрыть"
   },
   "comparison": {
     "title": "Сравнение профилей",
     "add": "Добавить профиль",
     "empty": "Добавьте хотя бы один сохранённый профиль для сравнения.",
     "delete": "Удалить",
+    "export_image": "Сохранить как изображение",
+    "export_csv": "Экспорт CSV",
     "share_sprint_metrics": "Поделиться с Sprint Metrics",
-    "share_done": "Отправлено!"
+    "share_done": "Отправлено!",
+    "team_rate_shared": "Часовая ставка команды передана в Scrum Facilitator."
   },
   "scenario": {
     "title": "Сравнение сценариев",
@@ -90,7 +101,10 @@
     "baseline_badge": "базовый",
     "delete": "Удалить сценарий",
     "factor_col": "Фактор",
-    "total_row": "Итоговая зарплата"
+    "total_row": "Итоговая зарплата",
+    "log_change": "Записать это изменение в Change Planner",
+    "change_logged": "Изменение записано. Откройте Change Planner, чтобы завершить запись.",
+    "open_change_planner": "Открыть Change Planner"
   },
   "learn": {
     "title": "О формуле зарплаты",
