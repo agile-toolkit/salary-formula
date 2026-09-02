@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { safeSetItem } from '../utils/storage'
 
 const STORAGE_KEY = 'theme'
 
@@ -12,7 +13,7 @@ function getInitialTheme(): 'light' | 'dark' {
 
 function applyTheme(theme: 'light' | 'dark') {
   document.documentElement.setAttribute('data-theme', theme)
-  try { localStorage.setItem(STORAGE_KEY, theme) } catch { /* ignore */ }
+  safeSetItem(STORAGE_KEY, theme)
 }
 
 export default function ThemeToggle() {

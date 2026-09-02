@@ -27,7 +27,7 @@ All keys live on the shared Agile Toolkit origin, so sibling apps can read them 
 
 | Key | Shape | Purpose |
 |-----|-------|---------|
-| `salary-formula-profiles` | `Profile[]` | Saved salary profiles (source of truth for Comparison/Equity views) |
+| `salary-formula-profiles` | `Profile[]` — `{ id, name, factors, currency? }` | Saved salary profiles (source of truth for Comparison/Equity views). `currency` is captured at save time (optional, for backward compatibility with profiles saved before this field existed — `ComparisonView`/`EquityView` fall back to the current global currency selector when absent) so Comparison/Equity display each profile in the currency it was actually saved under, instead of relabeling every profile with whatever the selector currently shows. |
 | `salary_scenarios_v1` | `Scenario[]` | Saved what-if scenarios shown in Scenario view |
 | `salary-formula:lastSession` | `{lastScenario: string\|null, profileCount: number, totalSalaryRange: {min, max, currency}\|null, updatedAt: ISO string}` | Dashboard card summary; written on every profile/scenario save |
 | `salary-formula:teamHourlyRate` | `{totalAnnual: number, currency: string, profileCount: number, hourlyRate: number, updatedAt: ISO string}` | Read by Scrum Facilitator to price ceremony time; written on every profile save/delete, removed when no profiles remain |
@@ -37,7 +37,8 @@ All keys live on the shared Agile Toolkit origin, so sibling apps can read them 
 
 ## Tech notes
 
-- No backend; all state is client-side React state persisted to localStorage (see table above). Reads that can fail JSON-parsing are wrapped in try/catch; not all writes are yet (see [#43](https://github.com/agile-toolkit/salary-formula/issues/43)).
+- No backend; all state is client-side React state persisted to localStorage (see table above). All reads and writes are guarded: reads that can fail JSON-parsing are wrapped in try/catch, and every `localStorage.setItem` call goes through `safeSetItem()` (`src/utils/storage.ts`), which swallows `QuotaExceededError`/private-browsing exceptions and returns whether the write actually succeeded. Save handlers only flip their "Saved!" confirmation UI when the underlying write succeeded — on failure they show an inline error banner instead of silently discarding the data.
+- Currency formatting: `formatCurrency()` (`src/utils/salary.ts`, `Intl.NumberFormat`-based, full precision e.g. `$80,000`) is the single canonical formatter, used everywhere a salary figure is displayed. An earlier abbreviated formatter (`formatSalary`, e.g. `$80K`) has been removed — it produced a different precision than `formatCurrency` for the same value depending on which screen you were on.
 - i18n via `react-i18next`, with locale files in `src/i18n/{en,es,be,ru}.json`; the language picker in `AppHeader` cycles EN → ES → BE → RU.
 - Theming: `darkMode: ['selector', '[data-theme="dark"]']` in `tailwind.config.js`, toggled by `ThemeToggle.tsx` (own `theme` localStorage key, not part of the cross-app data bridge), with an anti-flash inline script in `index.html` that applies the stored theme before first paint.
 - Formula sharing: `FormulaConfig` (factors + currency) is base64-encoded into `window.location.hash` via `history.replaceState` on every change (`src/utils/formulaUrl.ts`), and hydrated back on load — no backend needed for a shareable link.

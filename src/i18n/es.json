@@ -22,7 +22,8 @@
     "ratio_high": "El índice de equidad supera 3×. Considera revisar los valores de los factores para reducir las disparidades salariales.",
     "at_median": "en la mediana",
     "sort_asc": "Ordenar: alto → bajo",
-    "sort_desc": "Ordenar: bajo → alto"
+    "sort_desc": "Ordenar: bajo → alto",
+    "mixed_currency_warning": "Estos perfiles se guardaron con monedas diferentes — el ratio y la distribución anteriores comparan números sin conversión entre monedas."
   },
   "builder": {
     "title": "Parámetros de la fórmula",
@@ -43,7 +44,8 @@
     "template_applied": "¡Plantilla aplicada!",
     "template_use": "Usar",
     "template_preview": "Salario de ejemplo",
-    "template_hint": "Las plantillas configuran un punto de partida. Todos los valores se pueden editar libremente después de aplicar."
+    "template_hint": "Las plantillas configuran un punto de partida. Todos los valores se pueden editar libremente después de aplicar.",
+    "save_error": "No se pudo guardar — el almacenamiento del navegador podría estar lleno. Libera espacio e inténtalo de nuevo."
   },
   "home": {
     "headline": "Fórmula Salarial Transparente",
@@ -75,7 +77,8 @@
     "ti_import": "Importar desde Team Identity",
     "ti_no_data": "No se encontró ningún charter de Team Identity. Abre la aplicación Team Identity primero.",
     "review_due": "Tu fórmula salarial lleva más de 6 meses sin revisarse. Considera programar una revisión del equipo.",
-    "review_dismiss": "Descartar"
+    "review_dismiss": "Descartar",
+    "save_error": "No se pudo guardar este perfil — el almacenamiento del navegador podría estar lleno. Libera espacio e inténtalo de nuevo."
   },
   "comparison": {
     "title": "Comparación de Perfiles",
@@ -86,7 +89,9 @@
     "export_csv": "Exportar CSV",
     "share_sprint_metrics": "Compartir con Sprint Metrics",
     "share_done": "¡Compartido!",
-    "team_rate_shared": "La tarifa por hora del equipo ha sido compartida con Scrum Facilitator."
+    "team_rate_shared": "La tarifa por hora del equipo ha sido compartida con Scrum Facilitator.",
+    "share_error": "No se pudo compartir con Sprint Metrics — el almacenamiento del navegador podría estar lleno.",
+    "mixed_currency_warning": "Estos perfiles se guardaron con monedas diferentes — los importes se muestran en la moneda de cada perfil, pero los totales y comparaciones entre ellos no se convierten."
   },
   "scenario": {
     "title": "Comparación de Escenarios",

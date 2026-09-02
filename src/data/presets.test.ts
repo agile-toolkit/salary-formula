@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { calcSalary, formatSalary, DEFAULT_FACTORS } from './presets'
+import { calcSalary, DEFAULT_FACTORS } from './presets'
 import type { Factor } from '../types'
 
 describe('calcSalary', () => {
@@ -29,23 +29,5 @@ describe('calcSalary', () => {
 
   it('matches the default factor stack baseline (all multipliers at 1.0)', () => {
     expect(calcSalary(DEFAULT_FACTORS)).toBe(80000)
-  })
-})
-
-describe('formatSalary', () => {
-  it('abbreviates millions with 2 decimal places', () => {
-    expect(formatSalary(1250000, 'USD')).toBe('$1.25M')
-  })
-
-  it('abbreviates thousands with no decimal places', () => {
-    expect(formatSalary(80000, 'USD')).toBe('$80K')
-  })
-
-  it('shows the raw amount below 1000', () => {
-    expect(formatSalary(500, 'USD')).toBe('$500')
-  })
-
-  it('falls back to the currency code for unknown currencies', () => {
-    expect(formatSalary(80000, 'XYZ')).toBe('XYZ80K')
   })
 })

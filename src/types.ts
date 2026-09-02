@@ -20,6 +20,10 @@ export interface Profile {
   id: string
   name: string
   factors: Record<string, number>
+  /** Currency the profile was saved under. Optional for backward
+   *  compatibility with profiles saved before this field existed —
+   *  callers should fall back to the current global currency selector. */
+  currency?: string
 }
 
 export interface ScenarioFactor {

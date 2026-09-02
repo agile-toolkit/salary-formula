@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { factorBreakdown } from './salary'
+import { factorBreakdown, formatCurrency } from './salary'
 import type { Factor } from '../types'
 
 function factor(id: string, value: number, isBase = false): Factor {
@@ -25,5 +25,25 @@ describe('factorBreakdown', () => {
     const factors = [factor('base', 80000, true), factor('a', 0), factor('b', 0)]
     const breakdown = factorBreakdown(factors)
     expect(breakdown.every(b => b.pct === 0)).toBe(true)
+  })
+})
+
+describe('formatCurrency', () => {
+  it('formats USD with grouping separators and no decimals', () => {
+    expect(formatCurrency(80000, 'USD')).toBe('$80,000')
+  })
+
+  it('uses the currency-appropriate locale (RUB -> ru-RU grouping/symbol)', () => {
+    const result = formatCurrency(80000, 'RUB')
+    expect(result).toContain('₽')
+    expect(result).toMatch(/80.000/) // ru-RU uses a non-breaking space as the group separator
+  })
+
+  it('never abbreviates large amounts (unlike the removed formatSalary)', () => {
+    expect(formatCurrency(1250000, 'USD')).toBe('$1,250,000')
+  })
+
+  it('falls back gracefully instead of throwing for an unrecognised currency code', () => {
+    expect(() => formatCurrency(80000, 'XYZ')).not.toThrow()
   })
 })

@@ -32,13 +32,19 @@ export default function EquityView({ profiles, factors, currency }: Props) {
     )
   }
 
-  const salaries = profiles.map(p => ({ id: p.id, name: p.name, salary: computeSalary(p, factors) }))
+  const salaries = profiles.map(p => ({
+    id: p.id,
+    name: p.name,
+    salary: computeSalary(p, factors),
+    currency: p.currency ?? currency,
+  }))
   const salaryValues = salaries.map(s => s.salary)
   const minSalary = Math.min(...salaryValues)
   const maxSalary = Math.max(...salaryValues)
   const medianSalary = median(salaryValues)
   const equityRatio = computeEquityRatio(minSalary, maxSalary)
   const ratioLevel = equityRatioLevel(equityRatio)
+  const mixedCurrencies = new Set(salaries.map(s => s.currency)).size > 1
 
   const ratioColor =
     ratioLevel === 'red'
@@ -56,6 +62,12 @@ export default function EquityView({ profiles, factors, currency }: Props) {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">{t('equity.title')}</h1>
+
+      {mixedCurrencies && (
+        <p className="text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-3 py-2">
+          {t('equity.mixed_currency_warning')}
+        </p>
+      )}
 
       {/* Equity ratio */}
       <div className="card p-5">
@@ -156,7 +168,7 @@ export default function EquityView({ profiles, factors, currency }: Props) {
           </button>
         </div>
         <div className="space-y-2">
-          {sorted.map(({ id, name, salary }) => {
+          {sorted.map(({ id, name, salary, currency: rowCurrency }) => {
             const delta = medianSalary > 0
               ? Math.round(((salary - medianSalary) / medianSalary) * 100)
               : 0
@@ -168,7 +180,7 @@ export default function EquityView({ profiles, factors, currency }: Props) {
                 <span className="font-medium text-gray-800 dark:text-gray-200 truncate max-w-[50%]">{name}</span>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-700 dark:text-gray-300 font-semibold text-sm">
-                    {formatCurrency(salary, currency)}
+                    {formatCurrency(salary, rowCurrency)}
                   </span>
                   {delta !== 0 && (
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${deltaColor}`}>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Screen, Factor, FormulaConfig, Profile, Scenario } from './types'
 import { DEFAULT_FACTORS } from './data/presets'
+import { safeSetItem } from './utils/storage'
 import AppHeader from './components/AppHeader'
 import ThemeToggle from './components/ThemeToggle'
 import HomeScreen from './components/HomeScreen'
@@ -30,8 +31,8 @@ function loadProfiles(): Profile[] {
   }
 }
 
-function saveProfiles(profiles: Profile[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles))
+function saveProfiles(profiles: Profile[]): boolean {
+  return safeSetItem(STORAGE_KEY, JSON.stringify(profiles))
 }
 
 function loadScenarios(): Scenario[] {
@@ -42,8 +43,8 @@ function loadScenarios(): Scenario[] {
   }
 }
 
-function saveScenarios(scenarios: Scenario[]) {
-  localStorage.setItem(SCENARIOS_KEY, JSON.stringify(scenarios))
+function saveScenarios(scenarios: Scenario[]): boolean {
+  return safeSetItem(SCENARIOS_KEY, JSON.stringify(scenarios))
 }
 
 function writeTeamHourlyRate(profiles: Profile[], currency: string, factors: Factor[]) {
@@ -58,7 +59,7 @@ function writeTeamHourlyRate(profiles: Profile[], currency: string, factors: Fac
       .reduce((acc, f) => acc * (p.factors[f.id] ?? f.value), 1)
     return sum + Math.round(base * multiplier)
   }, 0)
-  localStorage.setItem(
+  safeSetItem(
     TEAM_HOURLY_RATE_KEY,
     JSON.stringify({
       totalAnnual,
@@ -84,7 +85,7 @@ function writeLastSession(
     return Math.round(base * multiplier)
   })
   const lastScenario = scenarios.length > 0 ? scenarios[scenarios.length - 1].name : null
-  localStorage.setItem(
+  safeSetItem(
     LAST_SESSION_KEY,
     JSON.stringify({
       lastScenario,
@@ -112,12 +113,13 @@ export default function App() {
   const [profiles, setProfiles] = useState<Profile[]>(loadProfiles)
   const [scenarios, setScenarios] = useState<Scenario[]>(loadScenarios)
 
-  const handleSaveProfile = (profile: Profile) => {
+  const handleSaveProfile = (profile: Profile): boolean => {
     const updated = [...profiles, profile]
     setProfiles(updated)
-    saveProfiles(updated)
+    const ok = saveProfiles(updated)
     writeLastSession(updated, scenarios, currency, factors)
     writeTeamHourlyRate(updated, currency, factors)
+    return ok
   }
 
   const handleDeleteProfile = (id: string) => {
@@ -132,11 +134,12 @@ export default function App() {
     setScreen('calculator')
   }
 
-  const handleSaveScenario = (scenario: Scenario) => {
+  const handleSaveScenario = (scenario: Scenario): boolean => {
     const updated = [...scenarios, scenario]
     setScenarios(updated)
-    saveScenarios(updated)
+    const ok = saveScenarios(updated)
     writeLastSession(profiles, updated, currency, factors)
+    return ok
   }
 
   const handleDeleteScenario = (id: string) => {

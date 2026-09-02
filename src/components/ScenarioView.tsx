@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import type { Scenario, Factor } from '../types'
-import { calcSalary, formatSalary } from '../data/presets'
+import { calcSalary } from '../data/presets'
+import { formatCurrency } from '../utils/salary'
 
 interface Props {
   scenarios: Scenario[]
@@ -102,7 +103,7 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
                     const delta = i === 0 ? 0 : val - baseVal
                     return (
                       <td key={sc.id} className="py-2 px-2 text-gray-800 dark:text-gray-200 font-medium tabular-nums">
-                        {f.isBase ? formatSalary(val, sc.currency) : val.toFixed(2) + '×'}
+                        {f.isBase ? formatCurrency(val, sc.currency) : val.toFixed(2) + '×'}
                         {i > 0 && <DeltaBadge delta={delta} isBase={f.isBase} />}
                       </td>
                     )
@@ -118,7 +119,7 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
                 const delta = i === 0 ? 0 : salary - baselineSalary
                 return (
                   <td key={sc.id} className="py-3 px-2 font-bold text-brand-600 tabular-nums">
-                    {formatSalary(salary, sc.currency)}
+                    {formatCurrency(salary, sc.currency)}
                     {i > 0 && <DeltaBadge delta={delta} isBase={true} />}
                   </td>
                 )

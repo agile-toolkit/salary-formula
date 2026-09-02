@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Factor, Profile } from '../types'
-import { calcSalary, formatSalary, DEFAULT_FACTORS, CURRENCIES } from '../data/presets'
+import { calcSalary, DEFAULT_FACTORS, CURRENCIES } from '../data/presets'
+import { formatCurrency } from '../utils/salary'
 import { proficiencyToSkillsMultiplier } from '../utils/workProfiles'
 import FactorSlider from './FactorSlider'
 
@@ -10,7 +11,7 @@ interface Props {
   currency: string
   onFactorsChange: (factors: Factor[]) => void
   onCurrencyChange: (c: string) => void
-  onSaveProfile: (profile: Profile) => void
+  onSaveProfile: (profile: Profile) => boolean
 }
 
 interface WpSkill {
@@ -53,6 +54,7 @@ export default function SalaryCalculator({
   const { t } = useTranslation()
   const [profileName, setProfileName] = useState('')
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState(false)
   const [wpLinked, setWpLinked] = useState<{ id: string; name: string } | null>(null)
   const [wpPickerProfiles, setWpPickerProfiles] = useState<WpProfile[]>([])
   const [showWpPicker, setShowWpPicker] = useState(false)
@@ -111,14 +113,20 @@ export default function SalaryCalculator({
     if (!profileName.trim()) return
     const factorMap: Record<string, number> = {}
     factors.forEach(f => (factorMap[f.id] = f.value))
-    onSaveProfile({
+    const ok = onSaveProfile({
       id: crypto.randomUUID(),
       name: profileName.trim(),
       factors: factorMap,
+      currency,
     })
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
-    setProfileName('')
+    if (ok) {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+      setProfileName('')
+    } else {
+      setSaveError(true)
+      setTimeout(() => setSaveError(false), 4000)
+    }
   }
 
   const linkWpProfile = (profile: WpProfile) => {
@@ -153,6 +161,13 @@ export default function SalaryCalculator({
     <div className="max-w-2xl mx-auto">
       <h1 id="calculator-heading" className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-6">{t('calculator.title')}</h1>
 
+      {/* Save error banner */}
+      {saveError && (
+        <div className="rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 px-4 py-3 mb-6">
+          <p className="text-sm text-yellow-800 dark:text-yellow-300">{t('calculator.save_error')}</p>
+        </div>
+      )}
+
       {/* Review overdue banner */}
       {reviewOverdue && !reviewDismissed && (
         <div className="flex items-start justify-between gap-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 px-4 py-3 mb-6">
@@ -170,11 +185,11 @@ export default function SalaryCalculator({
       <div className="card bg-brand-600 border-0 mb-6 text-white">
         <div className="text-sm opacity-80 mb-1">{t('calculator.result_label')}</div>
         <div className="text-5xl font-bold tabular-nums mb-2">
-          {formatSalary(salary, currency)}
+          {formatCurrency(salary, currency)}
         </div>
         <div className="text-xs opacity-70">
           <span className="font-medium">{t('calculator.formula_label')}:</span>{' '}
-          {formatSalary(base, currency)} × {multiplierStr}
+          {formatCurrency(base, currency)} × {multiplierStr}
         </div>
       </div>
 

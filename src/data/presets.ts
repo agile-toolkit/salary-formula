@@ -87,17 +87,3 @@ export function calcSalary(factors: Factor[]): number {
 
 export const CURRENCIES = ['USD', 'EUR', 'RUB', 'GBP'] as const
 export type Currency = typeof CURRENCIES[number]
-
-export const CURRENCY_SYMBOLS: Record<string, string> = {
-  USD: '$',
-  EUR: '€',
-  RUB: '₽',
-  GBP: '£',
-}
-
-export function formatSalary(amount: number, currency: string): string {
-  const symbol = CURRENCY_SYMBOLS[currency] ?? currency
-  if (amount >= 1000000) return `${symbol}${(amount / 1000000).toFixed(2)}M`
-  if (amount >= 1000) return `${symbol}${(amount / 1000).toFixed(0)}K`
-  return `${symbol}${amount}`
-}

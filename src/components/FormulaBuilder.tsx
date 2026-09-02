@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Factor, Scenario } from '../types'
 import { calculateSalary, formatCurrency } from '../utils/salary'
+import { safeSetItem } from '../utils/storage'
 import TemplatesModal from './TemplatesModal'
 
 const PENDING_CHANGE_KEY = 'salary-formula:pendingChangeRecord'
 const CHANGE_PLANNER_URL = 'https://agile-toolkit.github.io/change-planner/'
 const LAST_REVIEWED_KEY = 'salary-formula:lastReviewed'
 
-function writePendingChangeRecord(name: string, factors: Factor[], currency: string) {
+function writePendingChangeRecord(name: string, factors: Factor[], currency: string): boolean {
   const factorDeltas: Record<string, string> = {}
   factors
     .filter(f => !f.isBase)
@@ -16,7 +17,7 @@ function writePendingChangeRecord(name: string, factors: Factor[], currency: str
       const delta = f.value - 1
       factorDeltas[f.id] = (delta >= 0 ? '+' : '') + delta.toFixed(2)
     })
-  localStorage.setItem(
+  return safeSetItem(
     PENDING_CHANGE_KEY,
     JSON.stringify({
       title: `Salary formula updated: ${name}`,
@@ -33,7 +34,7 @@ interface Props {
   factors: Factor[]
   currency: string
   onFactorsChange: (factors: Factor[]) => void
-  onSaveScenario: (scenario: Scenario) => void
+  onSaveScenario: (scenario: Scenario) => boolean
 }
 
 export default function FormulaBuilder({ factors, currency, onFactorsChange, onSaveScenario }: Props) {
@@ -46,6 +47,7 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
   const [showTemplates, setShowTemplates] = useState(false)
   const [copied, setCopied] = useState(false)
   const [reviewed, setReviewed] = useState(false)
+  const [saveError, setSaveError] = useState(false)
 
   function handleCopyLink() {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -55,9 +57,13 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
   }
 
   function handleMarkReviewed() {
-    localStorage.setItem(LAST_REVIEWED_KEY, new Date().toISOString())
-    setReviewed(true)
-    setTimeout(() => setReviewed(false), 2000)
+    if (safeSetItem(LAST_REVIEWED_KEY, new Date().toISOString())) {
+      setReviewed(true)
+      setTimeout(() => setReviewed(false), 2000)
+    } else {
+      setSaveError(true)
+      setTimeout(() => setSaveError(false), 4000)
+    }
   }
   const preview = calculateSalary(factors)
 
@@ -78,13 +84,18 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
     factors.forEach(f => {
       factorMap[f.id] = { value: f.value, min: f.min, max: f.max, step: f.step }
     })
-    onSaveScenario({
+    const ok = onSaveScenario({
       id: crypto.randomUUID(),
       name,
       savedAt: new Date().toISOString(),
       factors: factorMap,
       currency,
     })
+    if (!ok) {
+      setSaveError(true)
+      setTimeout(() => setSaveError(false), 4000)
+      return
+    }
     if (logChange) {
       writePendingChangeRecord(name, factors, currency)
       setChangeLogged(true)
@@ -105,6 +116,12 @@ export default function FormulaBuilder({ factors, currency, onFactorsChange, onS
           onApply={handleApplyTemplate}
           onClose={() => setShowTemplates(false)}
         />
+      )}
+
+      {saveError && (
+        <div className="rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 px-4 py-3">
+          <p className="text-sm text-yellow-800 dark:text-yellow-300">{t('builder.save_error')}</p>
+        </div>
       )}
 
       <div className="flex flex-wrap items-start justify-between gap-3">

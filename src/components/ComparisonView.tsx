@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Profile, Factor } from '../types'
-import { calcSalary, formatSalary } from '../data/presets'
+import { calcSalary } from '../data/presets'
+import { formatCurrency } from '../utils/salary'
 import { toCsvRow } from '../utils/csv'
+import { safeSetItem } from '../utils/storage'
 
 const SPRINT_METRICS_KEY = 'sprint_metrics_salary_bridge_v1'
 
@@ -17,6 +19,7 @@ interface Props {
 export default function ComparisonView({ profiles, factors, currency, onDelete, onLoad }: Props) {
   const { t } = useTranslation()
   const [shared, setShared] = useState(false)
+  const [shareError, setShareError] = useState(false)
   const [exporting, setExporting] = useState(false)
   const cardsRef = useRef<HTMLDivElement>(null)
 
@@ -39,6 +42,9 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
     })
   )
 
+  const currenciesInUse = new Set(profiles.map(p => p.currency ?? currency))
+  const mixedCurrencies = currenciesInUse.size > 1
+
   function handleShareWithSprintMetrics() {
     const data = {
       profiles: profiles.map(p => {
@@ -47,9 +53,13 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
       }),
       exportedAt: new Date().toISOString(),
     }
-    localStorage.setItem(SPRINT_METRICS_KEY, JSON.stringify(data))
-    setShared(true)
-    setTimeout(() => setShared(false), 2000)
+    if (safeSetItem(SPRINT_METRICS_KEY, JSON.stringify(data))) {
+      setShared(true)
+      setTimeout(() => setShared(false), 2000)
+    } else {
+      setShareError(true)
+      setTimeout(() => setShareError(false), 4000)
+    }
   }
 
   async function handleExportImage() {
@@ -119,11 +129,24 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
         {t('comparison.team_rate_shared')}
       </div>
 
+      {shareError && (
+        <div className="mb-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 px-3 py-2 text-sm text-yellow-800 dark:text-yellow-300">
+          {t('comparison.share_error')}
+        </div>
+      )}
+
+      {mixedCurrencies && (
+        <div className="mb-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 px-3 py-2 text-sm text-amber-700 dark:text-amber-400">
+          {t('comparison.mixed_currency_warning')}
+        </div>
+      )}
+
       <div ref={cardsRef} className="space-y-4">
         {profiles.map(profile => {
           const merged = factors.map(f => ({ ...f, value: profile.factors[f.id] ?? f.value }))
           const salary = calcSalary(merged)
           const barPct = maxSalary > 0 ? (salary / maxSalary) * 100 : 0
+          const profileCurrency = profile.currency ?? currency
 
           return (
             <div key={profile.id} className="card">
@@ -131,7 +154,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-gray-50">{profile.name}</h3>
                   <span className="text-2xl font-bold text-brand-600 tabular-nums">
-                    {formatSalary(salary, currency)}
+                    {formatCurrency(salary, profileCurrency)}
                   </span>
                 </div>
                 <div className="flex gap-2">
@@ -165,7 +188,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
                     <span className="text-gray-500 dark:text-gray-400">{t(`factors.${f.id}.label`)}</span>
                     <span className="text-gray-700 dark:text-gray-300 font-medium tabular-nums">
                       {f.isBase
-                        ? formatSalary(profile.factors[f.id] ?? f.value, currency)
+                        ? formatCurrency(profile.factors[f.id] ?? f.value, profileCurrency)
                         : (profile.factors[f.id] ?? f.value).toFixed(2) + '×'}
                     </span>
                   </div>
