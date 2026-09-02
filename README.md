@@ -1,8 +1,8 @@
 # Salary Formula
 
-A transparent salary calculation tool based on Management 3.0's Salary Formula approach — formula-driven compensation with full visibility into every factor. Build a formula from five factors (base, seniority, skills, location, performance), save and compare named profiles, model what-if scenarios, and check pay equity — all client-side, no backend or login.
+A transparent salary calculation tool — formula-driven compensation with full visibility into every factor. Build a formula from five factors (base, seniority, skills, location, performance), save and compare named profiles, model what-if scenarios, and check pay equity — all client-side, no backend or login.
 
-Part of the [Agile Tools](https://github.com/bthos) suite built on Management 3.0 and ICAgile source materials.
+Part of the [Agile Tools](https://github.com/bthos) suite built on ICAgile source materials.
 
 See `GOAL.md` for why this app exists and `ROADMAP.md` for what's next.
 

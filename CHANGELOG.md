@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+## 0.2.1 — Remove Management 3.0 references; fix invisible brand colors (2026-09-02)
+
+- **content**: removed "Management 3.0" text from the equity-ratio
+  warning, the "Why Transparent Salaries" body, the Learn page intro,
+  `index.html`'s meta description, `README.md`, and a code comment in
+  `src/data/defaultFormula.ts` — reworded to describe the approach
+  generically. All 4 locales updated.
+- **fix**: `brand-200`/`brand-300`/`brand-800`/`brand-900` were
+  referenced in 2 components but never defined in `tailwind.config.js` —
+  invisible borders/backgrounds/text in both light and dark mode. Same
+  class of bug found and fixed across several repos this session.
+  Completed the `brand` scale with Tailwind's own `blue` values.
+
 ## 0.2.0 — E1: Data trust & robustness cleanup (2026-09-02)
 
 - **fix**: every `localStorage.setItem` call site (8 total, including
