@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 0.2.2 — Turn dead-end import hints into clickable links (2026-09-02)
+
+- **fix**: when no Work Profiles or Team Identity data was found to
+  import, `SalaryCalculator.tsx` showed plain, non-interactive text
+  telling the user to "Open the Work Profiles/Team Identity app first" —
+  a dead end, unlike the clickable cross-app links used elsewhere in the
+  suite. Turned both into actual links opening the sibling app.
+- Found via a suite-wide UX audit.
+
 ## 0.2.1 — Remove Management 3.0 references; fix invisible brand colors (2026-09-02)
 
 - **content**: removed "Management 3.0" text from the equity-ratio

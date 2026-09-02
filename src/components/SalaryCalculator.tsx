@@ -6,6 +6,9 @@ import { formatCurrency } from '../utils/salary'
 import { proficiencyToSkillsMultiplier } from '../utils/workProfiles'
 import FactorSlider from './FactorSlider'
 
+const WORK_PROFILES_URL = 'https://agile-toolkit.github.io/work-profiles/'
+const TEAM_IDENTITY_URL = 'https://agile-toolkit.github.io/team-identity/'
+
 interface Props {
   factors: Factor[]
   currency: string
@@ -265,9 +268,14 @@ export default function SalaryCalculator({
                       {t('calculator.wp_import')}
                     </button>
                     {wpNoData && (
-                      <span className="ml-2 text-xs text-gray-400 dark:text-gray-600">
+                      <a
+                        href={WORK_PROFILES_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2 text-xs text-brand-600 hover:text-brand-700 underline"
+                      >
                         {t('calculator.wp_no_data')}
-                      </span>
+                      </a>
                     )}
                   </div>
                 )}
@@ -323,9 +331,14 @@ export default function SalaryCalculator({
             {t('calculator.ti_import')}
           </button>
           {tiNoData && (
-            <span className="ml-2 text-xs text-gray-400 dark:text-gray-600">
+            <a
+              href={TEAM_IDENTITY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 text-xs text-brand-600 hover:text-brand-700 underline"
+            >
               {t('calculator.ti_no_data')}
-            </span>
+            </a>
           )}
           {showTiPicker && (
             <div className="mt-2 flex flex-wrap gap-2">
