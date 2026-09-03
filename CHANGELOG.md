@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 0.2.5 — Facilitator Mode (2026-09-03)
+
+- **feat**: added Facilitator (projector) Mode — a presentation toggle for
+  in-room walkthroughs, bigger UI via one CSS rule (everything sized in
+  `rem` scales automatically) plus hiding the nav pills and language
+  picker while active. Toggled from a new header button next to the theme
+  toggle, session-scoped via `sessionStorage`. Adopted from the shared
+  design-system pattern (`useFacilitatorMode.ts` + `FacilitatorToggle.tsx`),
+  originally built for Team Identity.
+
 ## 0.2.4 — Fix Team Identity import reading the wrong localStorage key (2026-09-03)
 
 - **fix (broken integration, key mismatch)**: "Import from Team

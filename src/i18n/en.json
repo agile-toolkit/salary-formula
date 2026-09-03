@@ -172,5 +172,9 @@
       "desc": "Reflects team and individual performance over the review period. Typically assessed quarterly or annually. Range: 0.85× to 1.25×.",
       "unit": "×"
     }
+  },
+  "facilitator": {
+    "toggle_on": "Facilitator Mode",
+    "toggle_off": "Exit Facilitator Mode"
   }
 }

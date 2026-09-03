@@ -172,5 +172,9 @@
       "name": "Banda plana corporativa",
       "desc": "Rango de multiplicador estrecho (0,9–1,1×) para todos los factores. Estructura predecible y compatible con normativas."
     }
+  },
+  "facilitator": {
+    "toggle_on": "Modo Facilitador",
+    "toggle_off": "Salir del Modo Facilitador"
   }
 }

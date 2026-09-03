@@ -34,6 +34,7 @@ All keys live on the shared Agile Toolkit origin, so sibling apps can read them 
 | `sprint_metrics_salary_bridge_v1` | `{profiles: [{name, annualSalary, currency}], exportedAt}` | Read by Sprint Metrics for team cost/sprint math; written on demand via "Share with Sprint Metrics" |
 | `salary-formula:pendingChangeRecord` | `{title, type: 'formula_revision', scenarioName, factorDeltas: Record<string,string>, currency, createdAt}` | Read by Change Planner to pre-fill a new change record; written opt-in when saving a scenario |
 | `salary-formula:lastReviewed` | ISO timestamp string | Drives the "formula review overdue" banner (>180 days or absent) |
+| `salary-formula:facilitatorMode` (`sessionStorage`) | `'1' \| '0'` | Facilitator (projector) mode toggle — per-tab, not persisted across sessions. See `src/components/useFacilitatorMode.ts`. |
 
 ## Tech notes
 

@@ -5,6 +5,8 @@ import { DEFAULT_FACTORS } from './data/presets'
 import { safeSetItem } from './utils/storage'
 import AppHeader from './components/AppHeader'
 import ThemeToggle from './components/ThemeToggle'
+import FacilitatorToggle from './components/FacilitatorToggle'
+import { useFacilitatorMode } from './components/useFacilitatorMode'
 import HomeScreen from './components/HomeScreen'
 import SalaryCalculator from './components/SalaryCalculator'
 import FormulaBuilder from './components/FormulaBuilder'
@@ -101,6 +103,7 @@ function writeLastSession(
 
 export default function App() {
   const { t } = useTranslation()
+  const [facilitatorMode, toggleFacilitatorMode] = useFacilitatorMode('salary-formula:facilitatorMode')
   const [screen, setScreen] = useState<Screen>('home')
   const fromHash = loadFromHash()
   const [factors, setFactors] = useState<Factor[]>(fromHash?.factors ?? DEFAULT_FACTORS)
@@ -148,7 +151,7 @@ export default function App() {
     saveScenarios(updated)
   }
 
-  const navItems = screen !== 'home'
+  const navItems = screen !== 'home' && !facilitatorMode
     ? [
         { key: 'calculator', label: t('nav.calculator'), active: screen === 'calculator', onClick: () => setScreen('calculator') },
         { key: 'builder', label: t('nav.builder'), active: screen === 'builder', onClick: () => setScreen('builder') },
@@ -171,7 +174,16 @@ export default function App() {
         title={t('app.title')}
         onTitleClick={() => setScreen('home')}
         navItems={navItems}
-      ><ThemeToggle /></AppHeader>
+        hideLanguagePicker={facilitatorMode}
+      >
+        <ThemeToggle />
+        <FacilitatorToggle
+          active={facilitatorMode}
+          onToggle={toggleFacilitatorMode}
+          labelOn={t('facilitator.toggle_on')}
+          labelOff={t('facilitator.toggle_off')}
+        />
+      </AppHeader>
 
       <main id="main-content" className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
         {screen === 'home' && <HomeScreen onStart={() => setScreen('calculator')} />}

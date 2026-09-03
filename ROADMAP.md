@@ -13,6 +13,8 @@ None queued — E1 (below) was the only scoped epic and has shipped. Next
 `research` run should look for new candidates.
 
 ## Recently shipped
+**Facilitator Mode** (2026-09-03) — see `## Shipped`. A user asked for the presentation/projector mode already built for Team Identity to be adopted suite-wide; this is repo 5 of an 11-repo rollout, adopting the pattern now shared in `design-system/`.
+
 **Fix Team Identity import reading the wrong localStorage key** (2026-09-03) — see `## Shipped`. A suite-wide cross-app link audit found "Import from Team Identity" read a key (`team-identity:charter`) Team Identity has never written — it writes `team-identity-charter` instead. The picker always showed its "no data" fallback, no matter what.
 
 **Normalize LanguagePicker dark shades** (2026-09-02) — see `## Shipped`. `LanguagePicker.tsx` had dark-mode classes on slightly different shades than the design-system's canonical copy. Normalized to match exactly.
@@ -43,6 +45,7 @@ the UI.
   investigating #12) — minor DRY cleanup, not a functional bug.
 
 ## Shipped
+- ~~Facilitator Mode — bigger UI + hidden nav/language picker for in-room presentation, adopted from the shared design-system pattern~~
 - ~~Fix "Import from Team Identity" reading a key (`team-identity:charter`) nothing ever wrote~~
 - ~~Formula builder & calculator with 5-factor multiplier model~~
 - ~~Comparison view — save/compare/delete profiles, CSV/image export~~
