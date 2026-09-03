@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import type { Scenario, Factor } from '../types'
 import { calcSalary } from '../data/presets'
 import { formatCurrency } from '../utils/salary'
+import { CloseIcon } from './icons'
 
 interface Props {
   scenarios: Scenario[]
@@ -85,7 +86,7 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
                       className="text-gray-400 dark:text-gray-600 hover:text-red-500 transition-colors text-xs mt-0.5 shrink-0"
                       title={t('scenario.delete')}
                     >
-                      ✕
+                      <CloseIcon className="w-3 h-3" />
                     </button>
                   </div>
                 </th>

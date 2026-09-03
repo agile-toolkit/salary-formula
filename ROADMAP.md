@@ -13,6 +13,8 @@ None queued — E1 (below) was the only scoped epic and has shipped. Next
 `research` run should look for new candidates.
 
 ## Recently shipped
+**Replace decorative ✕ emoji with an SVG icon** (2026-09-03) — see `## Shipped`. Part of a suite-wide emoji→SVG sweep the user asked for.
+
 **Facilitator Mode** (2026-09-03) — see `## Shipped`. A user asked for the presentation/projector mode already built for Team Identity to be adopted suite-wide; this is repo 5 of an 11-repo rollout, adopting the pattern now shared in `design-system/`.
 
 **Fix Team Identity import reading the wrong localStorage key** (2026-09-03) — see `## Shipped`. A suite-wide cross-app link audit found "Import from Team Identity" read a key (`team-identity:charter`) Team Identity has never written — it writes `team-identity-charter` instead. The picker always showed its "no data" fallback, no matter what.
@@ -45,6 +47,7 @@ the UI.
   investigating #12) — minor DRY cleanup, not a functional bug.
 
 ## Shipped
+- ~~Replace the scenario-delete ✕ text glyph with a shared SVG icon~~
 - ~~Facilitator Mode — bigger UI + hidden nav/language picker for in-room presentation, adopted from the shared design-system pattern~~
 - ~~Fix "Import from Team Identity" reading a key (`team-identity:charter`) nothing ever wrote~~
 - ~~Formula builder & calculator with 5-factor multiplier model~~

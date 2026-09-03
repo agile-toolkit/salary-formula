@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 0.2.6 — Replace decorative ✕ emoji with an SVG icon (2026-09-03)
+
+- **feat**: replaced the scenario-delete `✕` text glyph with `CloseIcon`
+  from the new shared `icons.tsx` (`currentColor`, no visual color
+  change). Part of a suite-wide emoji→SVG sweep the user asked for —
+  smallest footprint in the suite, only one occurrence.
+
 ## 0.2.5 — Facilitator Mode (2026-09-03)
 
 - **feat**: added Facilitator (projector) Mode — a presentation toggle for
