@@ -13,6 +13,8 @@ None queued — E1 (below) was the only scoped epic and has shipped. Next
 `research` run should look for new candidates.
 
 ## Recently shipped
+**Facilitator Mode persists across suite apps** (2026-09-03) — see `## Shipped`. `useFacilitatorMode`'s storage key changed to the shared `agile-toolkit:facilitatorMode` so the mode survives switching to another suite app in the same tab, per direct user request.
+
 **Fix TemplatesModal close button using the × variant** (2026-09-03) — see `## Shipped`. Follow-up to the emoji→SVG sweep — this button used `×` (multiplication sign) rather than `✕`, missed by the original grep.
 
 **Replace decorative ✕ emoji with an SVG icon** (2026-09-03) — see `## Shipped`. Part of a suite-wide emoji→SVG sweep the user asked for.
@@ -49,6 +51,7 @@ the UI.
   investigating #12) — minor DRY cleanup, not a functional bug.
 
 ## Shipped
+- ~~Unify Facilitator Mode's storage key to the shared `agile-toolkit:facilitatorMode` so it persists across suite apps~~
 - ~~Fix TemplatesModal's close button using the × variant instead of ✕~~
 - ~~Replace the scenario-delete ✕ text glyph with a shared SVG icon~~
 - ~~Facilitator Mode — bigger UI + hidden nav/language picker for in-room presentation, adopted from the shared design-system pattern~~

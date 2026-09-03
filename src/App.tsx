@@ -103,7 +103,7 @@ function writeLastSession(
 
 export default function App() {
   const { t } = useTranslation()
-  const [facilitatorMode, toggleFacilitatorMode] = useFacilitatorMode('salary-formula:facilitatorMode')
+  const [facilitatorMode, toggleFacilitatorMode] = useFacilitatorMode('agile-toolkit:facilitatorMode')
   const [screen, setScreen] = useState<Screen>('home')
   const fromHash = loadFromHash()
   const [factors, setFactors] = useState<Factor[]>(fromHash?.factors ?? DEFAULT_FACTORS)
