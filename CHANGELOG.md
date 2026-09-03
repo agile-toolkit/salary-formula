@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 0.2.7 — Fix TemplatesModal close button using the × variant (2026-09-03)
+
+- **fix (follow-up)**: `TemplatesModal.tsx`'s close button used `×`
+  (multiplication sign, U+00D7) rather than `✕`, a variant the original
+  emoji→SVG sweep's grep missed. Replaced with the same `CloseIcon`.
+  The many other `×` occurrences in this app (ComparisonView, EquityView,
+  FactorSlider, LearnView, SalaryCalculator, ScenarioView) are genuine
+  multiplication notation for formula factors (e.g. "1.25×") — left as
+  plain text, not decorative icons.
+
 ## 0.2.6 — Replace decorative ✕ emoji with an SVG icon (2026-09-03)
 
 - **feat**: replaced the scenario-delete `✕` text glyph with `CloseIcon`

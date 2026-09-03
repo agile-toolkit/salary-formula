@@ -13,6 +13,8 @@ None queued — E1 (below) was the only scoped epic and has shipped. Next
 `research` run should look for new candidates.
 
 ## Recently shipped
+**Fix TemplatesModal close button using the × variant** (2026-09-03) — see `## Shipped`. Follow-up to the emoji→SVG sweep — this button used `×` (multiplication sign) rather than `✕`, missed by the original grep.
+
 **Replace decorative ✕ emoji with an SVG icon** (2026-09-03) — see `## Shipped`. Part of a suite-wide emoji→SVG sweep the user asked for.
 
 **Facilitator Mode** (2026-09-03) — see `## Shipped`. A user asked for the presentation/projector mode already built for Team Identity to be adopted suite-wide; this is repo 5 of an 11-repo rollout, adopting the pattern now shared in `design-system/`.
@@ -47,6 +49,7 @@ the UI.
   investigating #12) — minor DRY cleanup, not a functional bug.
 
 ## Shipped
+- ~~Fix TemplatesModal's close button using the × variant instead of ✕~~
 - ~~Replace the scenario-delete ✕ text glyph with a shared SVG icon~~
 - ~~Facilitator Mode — bigger UI + hidden nav/language picker for in-room presentation, adopted from the shared design-system pattern~~
 - ~~Fix "Import from Team Identity" reading a key (`team-identity:charter`) nothing ever wrote~~

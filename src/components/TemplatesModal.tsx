@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import type { Factor } from '../types'
 import { FORMULA_TEMPLATES } from '../data/templates'
 import { calculateSalary, formatCurrency } from '../utils/salary'
+import { CloseIcon } from './icons'
 
 interface Props {
   currency: string
@@ -27,10 +28,10 @@ export default function TemplatesModal({ currency, onApply, onClose }: Props) {
           <h2 className="text-lg font-bold text-gray-900 dark:text-gray-50">{t('builder.templates')}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors text-xl leading-none"
+            className="text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors leading-none"
             aria-label="Close"
           >
-            ×
+            <CloseIcon className="w-5 h-5" />
           </button>
         </div>
 
