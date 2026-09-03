@@ -13,6 +13,8 @@ None queued — E1 (below) was the only scoped epic and has shipped. Next
 `research` run should look for new candidates.
 
 ## Recently shipped
+**Normalize LanguagePicker dark shades** (2026-09-02) — see `## Shipped`. `LanguagePicker.tsx` had dark-mode classes on slightly different shades than the design-system's canonical copy. Normalized to match exactly.
+
 **Turn dead-end import hints into clickable links** (2026-09-02) — see `## Shipped`. A suite-wide UX audit flagged the "no data found" hints for Work Profiles/Team Identity import as plain non-interactive text, unlike the clickable cross-app links used elsewhere. Turned both into links.
 
 **E1: Data trust & robustness cleanup** (2026-09-02) — see `## Shipped`.
@@ -69,3 +71,7 @@ the UI.
 **Turn dead-end import hints into clickable links** (2026-09-02):
 - ~~The "no data found" hints for Work Profiles/Team Identity import are
   now clickable links to the sibling app instead of plain text~~
+
+**Normalize LanguagePicker dark shades** (2026-09-02):
+- ~~Synced `LanguagePicker.tsx`'s dark-mode shades exactly with the
+  design-system's canonical copy~~
