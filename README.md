@@ -43,7 +43,7 @@ All keys live on the shared Agile Toolkit origin, so sibling apps can read them 
 - Theming: `darkMode: ['selector', '[data-theme="dark"]']` in `tailwind.config.js`, toggled by `ThemeToggle.tsx` (own `theme` localStorage key, not part of the cross-app data bridge), with an anti-flash inline script in `index.html` that applies the stored theme before first paint.
 - Formula sharing: `FormulaConfig` (factors + currency) is base64-encoded into `window.location.hash` via `history.replaceState` on every change (`src/utils/formulaUrl.ts`), and hydrated back on load — no backend needed for a shareable link.
 - `html2canvas` (used for "Save as Image" in Comparison view) is dynamically `import()`-ed on first use rather than bundled statically, to keep the main chunk small.
-- Cross-app reads: Work Profiles (`wp-profiles-export`) and Team Identity (`team-identity:charter`) localStorage keys are read (read-only) to pre-fill Skills Score and profile names respectively — see the localStorage table above for what this app writes in the other direction.
+- Cross-app reads: Work Profiles (`wp-profiles-export`) and Team Identity (`team-identity-charter`) localStorage keys are read (read-only) to pre-fill Skills Score and profile names respectively — see `src/utils/crossAppReads.ts` and the localStorage table above for what this app writes in the other direction.
 - Unit tests live alongside the code they cover (`src/**/*.test.ts`), run via `vitest run` in a `node` environment (no DOM/component testing — pure-logic coverage only). CI runs `npm test` before `npm run build`.
 
 ## Source materials

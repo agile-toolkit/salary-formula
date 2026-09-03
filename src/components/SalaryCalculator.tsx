@@ -4,6 +4,7 @@ import type { Factor, Profile } from '../types'
 import { calcSalary, DEFAULT_FACTORS, CURRENCIES } from '../data/presets'
 import { formatCurrency } from '../utils/salary'
 import { proficiencyToSkillsMultiplier } from '../utils/workProfiles'
+import { readWpProfiles, readTiMembers, type WpProfile } from '../utils/crossAppReads'
 import FactorSlider from './FactorSlider'
 
 const WORK_PROFILES_URL = 'https://agile-toolkit.github.io/work-profiles/'
@@ -15,36 +16,6 @@ interface Props {
   onFactorsChange: (factors: Factor[]) => void
   onCurrencyChange: (c: string) => void
   onSaveProfile: (profile: Profile) => boolean
-}
-
-interface WpSkill {
-  id: string
-  name: string
-  proficiency: number
-}
-
-interface WpProfile {
-  id: string
-  name: string
-  skills: WpSkill[]
-}
-
-function readWpProfiles(): WpProfile[] {
-  try {
-    const data = JSON.parse(localStorage.getItem('wp-profiles-export') ?? 'null')
-    return Array.isArray(data?.profiles) ? data.profiles : []
-  } catch {
-    return []
-  }
-}
-
-function readTiMembers(): string[] {
-  try {
-    const data = JSON.parse(localStorage.getItem('team-identity:charter') ?? 'null')
-    return Array.isArray(data?.members) ? data.members.filter(Boolean) : []
-  } catch {
-    return []
-  }
 }
 
 export default function SalaryCalculator({

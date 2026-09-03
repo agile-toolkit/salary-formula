@@ -13,6 +13,8 @@ None queued — E1 (below) was the only scoped epic and has shipped. Next
 `research` run should look for new candidates.
 
 ## Recently shipped
+**Fix Team Identity import reading the wrong localStorage key** (2026-09-03) — see `## Shipped`. A suite-wide cross-app link audit found "Import from Team Identity" read a key (`team-identity:charter`) Team Identity has never written — it writes `team-identity-charter` instead. The picker always showed its "no data" fallback, no matter what.
+
 **Normalize LanguagePicker dark shades** (2026-09-02) — see `## Shipped`. `LanguagePicker.tsx` had dark-mode classes on slightly different shades than the design-system's canonical copy. Normalized to match exactly.
 
 **Turn dead-end import hints into clickable links** (2026-09-02) — see `## Shipped`. A suite-wide UX audit flagged the "no data found" hints for Work Profiles/Team Identity import as plain non-interactive text, unlike the clickable cross-app links used elsewhere. Turned both into links.
@@ -41,6 +43,7 @@ the UI.
   investigating #12) — minor DRY cleanup, not a functional bug.
 
 ## Shipped
+- ~~Fix "Import from Team Identity" reading a key (`team-identity:charter`) nothing ever wrote~~
 - ~~Formula builder & calculator with 5-factor multiplier model~~
 - ~~Comparison view — save/compare/delete profiles, CSV/image export~~
 - ~~What-if scenario comparison with delta badges vs. baseline~~

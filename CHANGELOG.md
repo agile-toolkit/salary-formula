@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## 0.2.4 — Fix Team Identity import reading the wrong localStorage key (2026-09-03)
+
+- **fix (broken integration, key mismatch)**: "Import from Team
+  Identity" (`SalaryCalculator.tsx`) read `team-identity:charter`
+  (colon-separated) — Team Identity has only ever written
+  `team-identity-charter` (hyphenated, `App.tsx`'s `STORAGE_KEY`). The
+  picker always found zero members and silently fell back to its "no
+  data" state, regardless of whether a charter existed. Found by a
+  suite-wide cross-app link audit. Extracted `readWpProfiles`/
+  `readTiMembers` into `src/utils/crossAppReads.ts` (tested) while
+  fixing the key name.
+
 ## 0.2.3 — Normalize LanguagePicker dark shades (2026-09-02)
 
 - **fix (consistency)**: `LanguagePicker.tsx` already had dark-mode
