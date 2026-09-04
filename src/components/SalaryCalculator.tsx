@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Factor, Profile } from '../types'
 import { calcSalary, DEFAULT_FACTORS, CURRENCIES } from '../data/presets'
-import { formatCurrency } from '../utils/salary'
+import { formatCurrency, factorBreakdown } from '../utils/salary'
 import { proficiencyToSkillsMultiplier } from '../utils/workProfiles'
 import { readWpProfiles, readTiMembers, type WpProfile } from '../utils/crossAppReads'
 import FactorSlider from './FactorSlider'
@@ -51,7 +51,7 @@ export default function SalaryCalculator({
   const multiplierStr = nonBaseFactors
     .map(f => f.value.toFixed(2) + '×')
     .join(' × ')
-  const multiplierTotal = nonBaseFactors.reduce((sum, f) => sum + f.value, 0)
+  const breakdown = factorBreakdown(factors)
 
   const handleChange = (id: string, value: number) => {
     if (id === 'skills' && wpLinked) setWpLinked(null)
@@ -171,12 +171,12 @@ export default function SalaryCalculator({
       {nonBaseFactors.length > 0 && (
         <div className="card mb-4">
           <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">{t('calculator.breakdown_title')}</h2>
-          {nonBaseFactors.map(f => {
-            const pct = multiplierTotal > 0 ? Math.round((f.value / multiplierTotal) * 100) : 0
+          {breakdown.map(entry => {
+            const pct = Math.round(entry.pct)
             return (
-              <div key={f.id} className="mb-2 last:mb-0">
+              <div key={entry.id} className="mb-2 last:mb-0">
                 <div className="flex justify-between text-xs text-gray-600 dark:text-gray-400 mb-1">
-                  <span>{t(`factors.${f.id}.label`)}</span>
+                  <span>{t(`factors.${entry.id}.label`)}</span>
                   <span className="font-medium tabular-nums">{pct}%</span>
                 </div>
                 <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">

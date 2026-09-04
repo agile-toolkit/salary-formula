@@ -42,17 +42,10 @@ utility function's existence rather than whether it was actually wired into
 the UI.
 
 ## Polish backlog
-- Team Identity import in `SalaryCalculator.tsx` (`readTiMembers()`) reads
-  `team-identity:charter`, but Team Identity's actual key is
-  `team-identity-charter` (no colon, hyphen not colon) — confirmed against
-  `team-identity/src/App.tsx`'s `STORAGE_KEY`. The import silently always
-  finds zero members. Found while implementing E1; not fixed here since it's
-  unrelated to E1's three issues.
-- `factorBreakdown()` in `src/utils/salary.ts` duplicates logic already
-  inline in `SalaryCalculator.tsx`'s "Factor breakdown" card (found while
-  investigating #12) — minor DRY cleanup, not a functional bug.
+No small un-filed items queued. Both prior entries resolved this pass (2026-09-04): the Team Identity import key line was stale — `readTiMembers()` already reads the correct `team-identity-charter` key (shipped earlier, `## Shipped` below; the polish line just never got removed). The `factorBreakdown()` duplication was real — `SalaryCalculator.tsx`'s "Factor breakdown" card reimplemented the same percentage math inline instead of calling the shared, tested function; now calls `factorBreakdown()` directly.
 
 ## Shipped
+- ~~Dedupe factor-breakdown percentage math: `SalaryCalculator.tsx`'s inline calc now calls the shared, tested `factorBreakdown()`~~
 - ~~Add glass/backdrop-blur effect to the header, matching the Dashboard's own nav~~
 - ~~Unify Facilitator Mode's storage key to the shared `agile-toolkit:facilitatorMode` so it persists across suite apps~~
 - ~~Fix TemplatesModal's close button using the × variant instead of ✕~~
