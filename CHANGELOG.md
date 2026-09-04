@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 0.3.3 — Polish pass (2026-09-04)
+
+- **refactor**: `SalaryCalculator.tsx`'s "Factor breakdown" card now calls
+  the shared, tested `factorBreakdown()` from `src/utils/salary.ts` instead
+  of reimplementing the same percentage math inline.
+- **docs**: removed a stale `ROADMAP.md` polish-backlog line claiming the
+  Team Identity import still read the wrong localStorage key — it was
+  already fixed and listed under `## Shipped`, the polish line just never
+  got cleaned up.
+
 ## 0.3.2 — Add glass effect to the header (2026-09-04)
 
 - **fix**: `AppHeader.tsx`'s background changed from opaque
