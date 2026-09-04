@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import type { Scenario, Factor } from '../types'
 import { calcSalary } from '../data/presets'
 import { formatCurrency } from '../utils/salary'
-import { CloseIcon } from './icons'
+import { CloseIcon, ShuffleIcon } from './icons'
 
 interface Props {
   scenarios: Scenario[]
@@ -46,7 +46,7 @@ export default function ScenarioView({ scenarios, factors, onDelete }: Props) {
       <div className="max-w-3xl mx-auto">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-6">{t('scenario.title')}</h1>
         <div className="card text-center py-12 text-gray-500 dark:text-gray-400">
-          <div className="text-4xl mb-4">🔀</div>
+          <div className="mb-4 flex justify-center"><ShuffleIcon className="w-10 h-10 text-slate-300 dark:text-gray-600" /></div>
           <p>{t('scenario.empty')}</p>
           <p className="text-sm mt-2 text-gray-400">{t('scenario.empty_hint')}</p>
         </div>

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { WarningIcon } from './icons'
 
 const FACTOR_IDS = ['base', 'seniority', 'skills', 'location', 'performance']
 
@@ -84,7 +85,7 @@ export default function LearnView() {
         <ul className="space-y-2">
           {pitfalls.map((p, i) => (
             <li key={i} className="flex gap-2 text-sm text-orange-800 dark:text-orange-300">
-              <span className="flex-shrink-0">⚠️</span>
+              <span className="flex-shrink-0"><WarningIcon className="w-3.5 h-3.5" /></span>
               {p}
             </li>
           ))}

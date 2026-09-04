@@ -5,6 +5,7 @@ import { calcSalary } from '../data/presets'
 import { formatCurrency } from '../utils/salary'
 import { toCsvRow } from '../utils/csv'
 import { safeSetItem } from '../utils/storage'
+import { ChartIcon } from './icons'
 
 const SPRINT_METRICS_KEY = 'sprint_metrics_salary_bridge_v1'
 
@@ -28,7 +29,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
       <div className="max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-6">{t('comparison.title')}</h1>
         <div className="card text-center py-12 text-gray-500 dark:text-gray-400">
-          <div className="text-4xl mb-4">📊</div>
+          <div className="mb-4 flex justify-center"><ChartIcon className="w-10 h-10 text-slate-300 dark:text-gray-600" /></div>
           <p>{t('comparison.empty')}</p>
         </div>
       </div>
