@@ -5,6 +5,15 @@
   Node `^22.22.2 || ^24.15.0 || >=26`, so the test step could never have passed
   on the pinned Node 20 — invisible until this release started running the
   tests in CI at all. Builds were unaffected (vite and tsc do not load jsdom).
+- **chore**: synced `src/components/icons.tsx` with the suite's shared set
+  (now 64 icons) and replaced the last four decorative emoji with SVG icons:
+  `ComparisonView`'s empty-state 📊 → `ChartIcon`, `ScenarioView`'s empty-state
+  🔀 → `ShuffleIcon`, `EquityView`'s empty-state ⚖️ → `ScalesIcon` (all three
+  sized `w-10 h-10`, muted `text-slate-300 dark:text-gray-600`, replacing the
+  old `text-4xl` glyph), and `LearnView`'s inline pitfall-list ⚠️ →
+  `WarningIcon` (`w-3.5 h-3.5`, keeps its own semantic amber color). The
+  `sort_asc`/`sort_desc` i18n strings' → arrows were left alone — they read as
+  part of the sentence ("Sort: low → high"), not as chrome.
 
 
 ## 0.3.0 — Error boundary and test-gated deploys (2026-09-03)

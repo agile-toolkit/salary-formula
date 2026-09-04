@@ -4,6 +4,7 @@ import type { Profile, Factor } from '../types'
 import { calcSalary } from '../data/presets'
 import { formatCurrency } from '../utils/salary'
 import { median, equityRatio as computeEquityRatio, equityRatioLevel } from '../utils/equity'
+import { ScalesIcon } from './icons'
 
 interface Props {
   profiles: Profile[]
@@ -25,7 +26,7 @@ export default function EquityView({ profiles, factors, currency }: Props) {
       <div className="max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-6">{t('equity.title')}</h1>
         <div className="card text-center py-12 text-gray-500 dark:text-gray-400">
-          <div className="text-4xl mb-4">⚖️</div>
+          <div className="mb-4 flex justify-center"><ScalesIcon className="w-10 h-10 text-slate-300 dark:text-gray-600" /></div>
           <p>{t('equity.no_profiles')}</p>
         </div>
       </div>
