@@ -13,6 +13,8 @@ None queued — E1 (below) was the only scoped epic and has shipped. Next
 `research` run should look for new candidates.
 
 ## Recently shipped
+**Fix residual mixed-currency mislabeling in cross-app bridge writes** (2026-09-05) — see `## Shipped`. Closes out [#40](https://github.com/agile-toolkit/salary-formula/issues/40): the on-screen fix shipped in v0.2.0, but the Sprint Metrics bridge export and the Dashboard's `lastSession` summary still labeled every profile with the current currency selector rather than each profile's own saved currency. Also re-verified and closed [#43](https://github.com/agile-toolkit/salary-formula/issues/43) and [#42](https://github.com/agile-toolkit/salary-formula/issues/42), both already fully shipped in v0.2.0.
+
 **Add glass effect to the header** (2026-09-04) — see `## Shipped`. `AppHeader.tsx`'s background changed to a translucent blur, matching the Dashboard's own nav — user-reported inconsistency.
 
 **Facilitator Mode persists across suite apps** (2026-09-03) — see `## Shipped`. `useFacilitatorMode`'s storage key changed to the shared `agile-toolkit:facilitatorMode` so the mode survives switching to another suite app in the same tab, per direct user request.
@@ -45,6 +47,10 @@ the UI.
 No small un-filed items queued. Both prior entries resolved this pass (2026-09-04): the Team Identity import key line was stale — `readTiMembers()` already reads the correct `team-identity-charter` key (shipped earlier, `## Shipped` below; the polish line just never got removed). The `factorBreakdown()` duplication was real — `SalaryCalculator.tsx`'s "Factor breakdown" card reimplemented the same percentage math inline instead of calling the shared, tested function; now calls `factorBreakdown()` directly.
 
 ## Shipped
+- ~~Fix residual mixed-currency mislabeling in the Sprint Metrics bridge
+  export and the Dashboard `lastSession` summary — both still used the
+  currency selector instead of each profile's own saved currency~~
+  (2026-09-05)
 - ~~Dedupe factor-breakdown percentage math: `SalaryCalculator.tsx`'s inline calc now calls the shared, tested `factorBreakdown()`~~
 - ~~Add glass/backdrop-blur effect to the header, matching the Dashboard's own nav~~
 - ~~Unify Facilitator Mode's storage key to the shared `agile-toolkit:facilitatorMode` so it persists across suite apps~~

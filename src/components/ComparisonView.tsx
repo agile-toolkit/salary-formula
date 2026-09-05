@@ -50,7 +50,7 @@ export default function ComparisonView({ profiles, factors, currency, onDelete, 
     const data = {
       profiles: profiles.map(p => {
         const merged = factors.map(f => ({ ...f, value: p.factors[f.id] ?? f.value }))
-        return { name: p.name, annualSalary: calcSalary(merged), currency }
+        return { name: p.name, annualSalary: calcSalary(merged), currency: p.currency ?? currency }
       }),
       exportedAt: new Date().toISOString(),
     }

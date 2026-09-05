@@ -2,6 +2,28 @@
 
 ## Unreleased
 
+## 0.3.4 — Fix residual mixed-currency mislabeling in cross-app bridge writes (2026-09-05)
+
+- **fix**: `ComparisonView.tsx`'s "Share with Sprint Metrics" export
+  (`sprint_metrics_salary_bridge_v1`) and `App.tsx`'s `writeLastSession`
+  (`salary-formula:lastSession`, read by the Dashboard) still labeled
+  every profile's salary with the current currency-selector value
+  instead of that profile's own saved currency — the same mislabeling
+  [#40](https://github.com/agile-toolkit/salary-formula/issues/40) fixed
+  on-screen in v0.2.0 (`EquityView`/`ComparisonView`), left over in the
+  two background/cross-app write paths that don't render per-row. The
+  Sprint Metrics bridge now writes each profile's own currency; the
+  Dashboard summary's `totalSalaryRange` gains an additive
+  `mixedCurrencies: boolean` flag (the `currency` field itself is kept
+  for backward compatibility with the existing Dashboard reader, which
+  ignores unknown fields).
+- **chore**: re-verified and closed
+  [#43](https://github.com/agile-toolkit/salary-formula/issues/43)
+  (localStorage write error handling) and
+  [#42](https://github.com/agile-toolkit/salary-formula/issues/42)
+  (canonical currency formatter) — both were already fully shipped in
+  v0.2.0 and just missed being closed at the time.
+
 ## 0.3.3 — Polish pass (2026-09-04)
 
 - **refactor**: `SalaryCalculator.tsx`'s "Factor breakdown" card now calls
