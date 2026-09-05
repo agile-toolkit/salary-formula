@@ -84,8 +84,9 @@ function writeLastSession(
     const multiplier = factors
       .filter(f => !f.isBase)
       .reduce((acc, f) => acc * (p.factors[f.id] ?? f.value), 1)
-    return Math.round(base * multiplier)
+    return { amount: Math.round(base * multiplier), currency: p.currency ?? currency }
   })
+  const mixedCurrencies = new Set(salaries.map(s => s.currency)).size > 1
   const lastScenario = scenarios.length > 0 ? scenarios[scenarios.length - 1].name : null
   safeSetItem(
     LAST_SESSION_KEY,
@@ -94,7 +95,12 @@ function writeLastSession(
       profileCount: profiles.length,
       totalSalaryRange:
         salaries.length > 0
-          ? { min: Math.min(...salaries), max: Math.max(...salaries), currency }
+          ? {
+              min: Math.min(...salaries.map(s => s.amount)),
+              max: Math.max(...salaries.map(s => s.amount)),
+              currency,
+              mixedCurrencies,
+            }
           : null,
       updatedAt: new Date().toISOString(),
     })
