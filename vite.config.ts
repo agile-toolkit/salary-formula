@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
+// `npm run build` is the production build and ships no sourcemaps;
+// `npm run build:debug` produces the same bundle with .map files.
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
   base: '/salary-formula/',
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: mode === 'debug',
   },
-})
+}))

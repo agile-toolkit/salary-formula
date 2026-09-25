@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- **build**: sourcemaps are now opt-in. `npm run build` (the production
+  build that `deploy.yml` publishes) no longer emits `.map` files into
+  `dist/`; `npm run build:debug` (`vite build --mode debug`) produces the
+  same bundle with sourcemaps for local debugging.
+
 ## 0.3.4 — Fix residual mixed-currency mislabeling in cross-app bridge writes (2026-09-05)
 
 - **fix**: `ComparisonView.tsx`'s "Share with Sprint Metrics" export
